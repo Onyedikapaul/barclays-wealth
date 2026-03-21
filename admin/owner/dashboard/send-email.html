@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Send Email</title>
+    <link rel="stylesheet" href="/admin/owner/dashboard/css/layout.css" />
+    <link rel="icon" href="/assets/images/logo.png" />
+
+    <style>
+      .card {
+        background: #f9f9fb;
+        border: 1px solid #e9e9ef;
+        border-radius: 16px;
+        padding: 14px;
+        margin-top: 14px;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      @media (max-width: 900px) {
+        .row {
+          grid-template-columns: 1fr;
+        }
+      }
+      label {
+        display: block;
+        font-size: 13px;
+        color: #475467;
+        margin-bottom: 6px;
+      }
+      .input,
+      .textarea,
+      .select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #e9e9ef;
+        border-radius: 12px;
+        outline: none;
+        background: #fff;
+      }
+      .textarea {
+        min-height: 160px;
+        resize: vertical;
+      }
+      .btn {
+        padding: 10px 14px;
+        border: 0;
+        border-radius: 12px;
+        cursor: pointer;
+        background: #0b2f55;
+        color: #fff;
+        font-weight: 600;
+      }
+      .btn:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+      }
+      .muted {
+        color: #667085;
+        font-size: 13px;
+      }
+      .alert {
+        padding: 10px 12px;
+        border-radius: 12px;
+        margin-top: 10px;
+      }
+      .alert-success {
+        background: #e7f7ee;
+        border: 1px solid #c6efd5;
+      }
+      .alert-danger {
+        background: #fdecec;
+        border: 1px solid #f7caca;
+      }
+      .table-wrap {
+        overflow: auto;
+        margin-top: 10px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 10px;
+        border-bottom: 1px solid #f0f0f5;
+        text-align: left;
+      }
+      th {
+        font-size: 13px;
+        color: #475467;
+      }
+      .pill {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #f1f3f9;
+        font-size: 12px;
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Topnav -->
+    <header id="topnav-mount"></header>
+
+    <div class="admin-shell">
+      <!-- Sidebar -->
+      <aside id="sidebar-mount" class="admin-sidebar"></aside>
+
+      <!-- Main -->
+      <main class="admin-main">
+        <div class="admin-container">
+          <h1>Send Email</h1>
+
+          <div class="card">
+            <form id="sendForm">
+              <div class="row">
+                <div>
+                  <label for="subject">Email Subject</label>
+                  <input
+                    id="subject"
+                    class="input"
+                    type="text"
+                    placeholder="Subject..."
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label for="audience">Send To</label>
+                  <select id="audience" class="select">
+                    <option value="all">All Users</option>
+                    <option value="selected">Selected Users</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="margin-top: 12px">
+                <label for="body">Email Body</label>
+                <textarea
+                  id="body"
+                  class="textarea"
+                  placeholder="Write message..."
+                  required
+                ></textarea>
+                <div class="muted" style="margin-top: 6px">
+                  Tip: Keep it clear. No HTML. Plain text.
+                </div>
+              </div>
+
+              <div
+                id="selectedBlock"
+                class="card"
+                style="display: none; margin-top: 12px"
+              >
+                <div class="actions">
+                  <span class="pill" id="selectedCount">0 selected</span>
+                  <input
+                    id="userSearch"
+                    class="input"
+                    style="max-width: 320px"
+                    type="search"
+                    placeholder="Search name or email..."
+                  />
+                  <button
+                    type="button"
+                    class="btn"
+                    id="selectAllBtn"
+                    style="background: #111827"
+                  >
+                    Select all
+                  </button>
+                  <button
+                    type="button"
+                    class="btn"
+                    id="clearAllBtn"
+                    style="background: #6b7280"
+                  >
+                    Clear
+                  </button>
+                </div>
+
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style="width: 40px">Pick</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                      </tr>
+                    </thead>
+                    <tbody id="usersTbody">
+                      <tr>
+                        <td colspan="3">Loading...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="actions" style="margin-top: 12px">
+                <button class="btn" id="sendBtn" type="submit">
+                  Send Email
+                </button>
+                <span class="muted" id="audienceHint"
+                  >This will send to all users.</span
+                >
+              </div>
+
+              <div id="result"></div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer-mount"></footer>
+
+    <script src="/admin-script/admin-auth-required.js"></script>
+
+    <script src="/admin-script/admin-logout.js"></script>
+
+    <script src="/admin-script/admin-layout.js"></script>
+
+    <script>
+      (function () {
+        // ✅ adjust if your endpoint differs
+        const USERS_API = "/api/admin/users";
+        const SEND_API = "/api/admin/messages/email"; // we’ll create this backend next
+
+        const audience = document.getElementById("audience");
+        const selectedBlock = document.getElementById("selectedBlock");
+        const audienceHint = document.getElementById("audienceHint");
+
+        const usersTbody = document.getElementById("usersTbody");
+        const userSearch = document.getElementById("userSearch");
+        const selectedCount = document.getElementById("selectedCount");
+
+        const selectAllBtn = document.getElementById("selectAllBtn");
+        const clearAllBtn = document.getElementById("clearAllBtn");
+
+        const sendForm = document.getElementById("sendForm");
+        const sendBtn = document.getElementById("sendBtn");
+        const result = document.getElementById("result");
+
+        const subjectEl = document.getElementById("subject");
+        const bodyEl = document.getElementById("body");
+
+        let allUsers = [];
+        let filteredUsers = [];
+        const picked = new Set(); // store userIds
+
+        function esc(str) {
+          return String(str ?? "").replace(
+            /[&<>"']/g,
+            (m) =>
+              ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;",
+              })[m],
+          );
+        }
+        function fullName(u) {
+          return (
+            [u.firstname, u.middlename, u.lastname]
+              .filter(Boolean)
+              .join(" ")
+              .trim() || "—"
+          );
+        }
+
+        function showAlert(type, msg) {
+          const cls =
+            type === "success" ? "alert alert-success" : "alert alert-danger";
+          result.innerHTML = `<div class="${cls}">${esc(msg)}</div>`;
+        }
+
+        function updateSelectedCount() {
+          selectedCount.textContent = `${picked.size} selected`;
+        }
+
+        function renderUsers(list) {
+          if (!list.length) {
+            usersTbody.innerHTML = `<tr><td colspan="3">No users found.</td></tr>`;
+            return;
+          }
+
+          usersTbody.innerHTML = list
+            .map((u) => {
+              const checked = picked.has(u._id) ? "checked" : "";
+              return `
+              <tr>
+                <td>
+                  <input type="checkbox" data-id="${esc(u._id)}" ${checked} />
+                </td>
+                <td>${esc(fullName(u))}</td>
+                <td>${esc(u.email)}</td>
+              </tr>
+            `;
+            })
+            .join("");
+
+          // bind checkbox events
+          usersTbody
+            .querySelectorAll("input[type='checkbox']")
+            .forEach((cb) => {
+              cb.addEventListener("change", (e) => {
+                const id = e.target.dataset.id;
+                if (e.target.checked) picked.add(id);
+                else picked.delete(id);
+                updateSelectedCount();
+              });
+            });
+        }
+
+        function applyFilter(q) {
+          const s = (q || "").toLowerCase().trim();
+          if (!s) return allUsers;
+
+          return allUsers.filter((u) => {
+            const name = fullName(u).toLowerCase();
+            const email = (u.email || "").toLowerCase();
+            return name.includes(s) || email.includes(s);
+          });
+        }
+
+        function onAudienceChange() {
+          const mode = audience.value;
+          const isSelected = mode === "selected";
+
+          selectedBlock.style.display = isSelected ? "block" : "none";
+          audienceHint.textContent = isSelected
+            ? "This will send only to selected users."
+            : "This will send to all users.";
+
+          if (!isSelected) {
+            picked.clear();
+            updateSelectedCount();
+          }
+        }
+
+        async function fetchUsers() {
+          try {
+            usersTbody.innerHTML = `<tr><td colspan="3">Loading...</td></tr>`;
+            const res = await fetch(USERS_API, { credentials: "include" });
+            if (!res.ok) throw new Error("Failed to load users");
+
+            const data = await res.json();
+            allUsers = Array.isArray(data) ? data : data.users || [];
+            filteredUsers = allUsers;
+
+            renderUsers(filteredUsers);
+            updateSelectedCount();
+          } catch (err) {
+            console.error(err);
+            usersTbody.innerHTML = `<tr><td colspan="3">Could not load users.</td></tr>`;
+          }
+        }
+
+        // Buttons
+        selectAllBtn.addEventListener("click", () => {
+          filteredUsers.forEach((u) => picked.add(u._id));
+          updateSelectedCount();
+          renderUsers(filteredUsers);
+        });
+
+        clearAllBtn.addEventListener("click", () => {
+          picked.clear();
+          updateSelectedCount();
+          renderUsers(filteredUsers);
+        });
+
+        userSearch.addEventListener("input", (e) => {
+          filteredUsers = applyFilter(e.target.value);
+          renderUsers(filteredUsers);
+        });
+
+        audience.addEventListener("change", onAudienceChange);
+
+        // Submit
+        sendForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          result.innerHTML = "";
+
+          const subject = subjectEl.value.trim();
+          const body = bodyEl.value.trim();
+          const mode = audience.value;
+
+          if (!subject || !body)
+            return showAlert("error", "Subject and body are required.");
+
+          if (mode === "selected" && picked.size === 0) {
+            return showAlert("error", "Select at least one user.");
+          }
+
+          const payload = {
+            subject,
+            body,
+            audience: mode, // "all" | "selected"
+            userIds: mode === "selected" ? Array.from(picked) : [],
+          };
+
+          try {
+            sendBtn.disabled = true;
+            sendBtn.textContent = "Sending...";
+
+            const res = await fetch(SEND_API, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              body: JSON.stringify(payload),
+            });
+
+            const data = await res.json().catch(() => ({}));
+
+            if (!res.ok) {
+              throw new Error(data.message || "Failed to send email");
+            }
+
+            showAlert(
+              "success",
+              data.message || "Email queued/sent successfully.",
+            );
+            sendForm.reset();
+            picked.clear();
+            updateSelectedCount();
+            onAudienceChange();
+            renderUsers(allUsers);
+          } catch (err) {
+            console.error(err);
+            showAlert("error", err.message || "Failed to send email");
+          } finally {
+            sendBtn.disabled = false;
+            sendBtn.textContent = "Send Email";
+          }
+        });
+
+        // init
+        onAudienceChange();
+        fetchUsers();
+      })();
+    </script>
+  </body>
+</html>

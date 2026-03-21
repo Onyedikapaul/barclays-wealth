@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Transactions</title>
+    <link rel="stylesheet" href="/admin/owner/dashboard/css/layout.css" />
+    <link
+      rel="stylesheet"
+      href="/admin/owner/dashboard/css/user-transactions.css"
+    />
+    <link rel="icon" href="/assets/images/logo.png" />
+  </head>
+  <body>
+    <header id="topnav-mount"></header>
+
+    <div class="admin-shell">
+      <main class="admin-main">
+        <div class="admin-container">
+          <div class="page-head" style="margin-top: 50px">
+            <div>
+              <h1 class="page-title">User Transactions</h1>
+
+              <!-- ✅ meta card -->
+              <div class="user-meta-card">
+                <div class="user-meta-left">
+                  <div class="user-meta-name" id="userNameText">Loading...</div>
+                  <div class="user-meta-email" id="userEmailText">—</div>
+                </div>
+
+                <div class="user-meta-right">
+                  <div class="meta-pill">
+                    <div class="meta-pill__k">Balance</div>
+                    <div class="meta-pill__v" id="userBalText">—</div>
+                  </div>
+
+                  <div class="meta-pill">
+                    <div class="meta-pill__k">User ID</div>
+                    <div class="meta-pill__v mono" id="userIdText">—</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="head-actions">
+              <a class="btn-back" href="/admin/owner/dashboard/users.html"
+                >← Back to Users</a
+              >
+            </div>
+          </div>
+
+          <div class="admin-card">
+            <div class="table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Ref</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Narration</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="txTbody">
+                  <tr>
+                    <td colspan="7">Loading...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- ✅ View Receipt Modal -->
+    <div id="txModal" class="tx-modal d-none" aria-hidden="true">
+      <div class="tx-backdrop" data-close="1"></div>
+
+      <div class="tx-sheet" role="dialog" aria-modal="true">
+        <div class="tx-topbar">
+          <div>
+            <div class="tx-topbar__title">Receipt Information</div>
+            <div class="tx-topbar__sub">Full transaction details</div>
+          </div>
+          <button class="tx-x" type="button" data-close="1">×</button>
+        </div>
+
+        <div class="tx-content">
+          <div class="tx-receipt">
+            <div class="tx-receipt__title">Transaction Receipt</div>
+            <div class="tx-receipt__ref">
+              Ref: <span id="txRefText">-</span>
+            </div>
+
+            <div class="tx-amount" id="txAmountText">—</div>
+            <div class="tx-status" id="txStatusPill">—</div>
+
+            <div class="tx-divider"></div>
+            <div class="tx-kv" id="txKvMount"></div>
+
+            <button id="txReceiptBtn" type="button" class="tx-download">
+              ⬇ Download Receipt (PDF)
+            </button>
+
+            <div class="tx-footnote">Powered by Reallegal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ Edit Modal -->
+    <div id="editTxModal" class="edit-modal d-none" aria-hidden="true">
+      <div class="edit-backdrop" data-edit-close="1"></div>
+
+      <div class="edit-dialog" role="dialog" aria-modal="true">
+        <div class="edit-head">
+          <div>
+            <div class="edit-title">Edit Transaction</div>
+            <div class="edit-sub" id="editTxRef">—</div>
+          </div>
+          <button class="edit-x" type="button" data-edit-close="1">×</button>
+        </div>
+
+        <div class="edit-body">
+          <label class="lbl">Status</label>
+          <select id="editStatus" class="inp">
+            <option value="draft">draft</option>
+            <option value="pending">pending</option>
+            <option value="success">success</option>
+            <option value="failed">failed</option>
+            <option value="reversed">reversed</option>
+          </select>
+
+          <label class="lbl mt">Admin Note</label>
+          <textarea
+            id="editNote"
+            class="inp"
+            rows="3"
+            placeholder="Reason / note..."
+          ></textarea>
+
+          <label class="chk mt">
+            <input type="checkbox" id="editRefund" />
+            <span>Refund user (reverse money back)</span>
+          </label>
+
+          <div class="edit-warn" id="refundHint">
+            Refund works only for <b>debit + done=true</b> and only once.
+          </div>
+
+          <div class="edit-actions">
+            <button class="btn-lite" type="button" data-edit-close="1">
+              Cancel
+            </button>
+            <button class="btn-dark" id="saveEditBtn" type="button">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/admin-script/admin-auth-required.js"></script>
+    <script src="/admin-script/admin-layout.js"></script>
+    <script src="/admin-script/user-transactions.js"></script>
+  </body>
+</html>

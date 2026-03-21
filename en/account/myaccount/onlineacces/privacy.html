@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Privacy Policy | Barclays Wealth </title>
+    <meta name="description" content="Privacy Policy for Barclays Wealth." />
+    <link rel="icon" href="/assets/images/logo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --bg: #0b1220;
+        --card: rgba(255, 255, 255, 0.06);
+        --card-2: rgba(255, 255, 255, 0.08);
+        --text: rgba(255, 255, 255, 0.92);
+        --muted: rgba(255, 255, 255, 0.65);
+        --line: rgba(255, 255, 255, 0.12);
+        --brand: #2f81f7;
+        --brand-2: #6ae4ff;
+        --good: #29d391;
+        --warn: #ffcc66;
+        --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+        --radius: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Helvetica,
+          Arial,
+          "Apple Color Emoji",
+          "Segoe UI Emoji";
+        color: var(--text);
+        background:
+          radial-gradient(
+            1200px 600px at 20% 0%,
+            rgba(47, 129, 247, 0.35),
+            transparent 60%
+          ),
+          radial-gradient(
+            900px 500px at 90% 10%,
+            rgba(106, 228, 255, 0.22),
+            transparent 60%
+          ),
+          radial-gradient(
+            800px 500px at 30% 100%,
+            rgba(41, 211, 145, 0.14),
+            transparent 60%
+          ),
+          var(--bg);
+        line-height: 1.55;
+      }
+
+      a {
+        color: var(--brand-2);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .wrap {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 28px 18px 70px;
+      }
+
+      .topbar {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        box-shadow: 0 12px 30px rgba(47, 129, 247, 0.3);
+      }
+
+      .brand h1 {
+        font-size: 14px;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .pill {
+        font-size: 12px;
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--muted);
+      }
+
+      header.hero {
+        border: 1px solid var(--line);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.09),
+          rgba(255, 255, 255, 0.05)
+        );
+        border-radius: var(--radius);
+        padding: 22px 20px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        position: relative;
+      }
+
+      header.hero::after {
+        content: "";
+        position: absolute;
+        inset: -60px -80px auto auto;
+        width: 280px;
+        height: 280px;
+        background: radial-gradient(
+          circle at 30% 30%,
+          rgba(106, 228, 255, 0.25),
+          transparent 65%
+        );
+        transform: rotate(10deg);
+      }
+
+      .hero h2 {
+        margin: 0 0 8px;
+        font-size: 28px;
+        letter-spacing: -0.02em;
+      }
+
+      .hero p {
+        margin: 0;
+        max-width: 76ch;
+        color: var(--muted);
+      }
+
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .meta .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        color: var(--muted);
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 16px;
+      }
+
+      @media (min-width: 860px) {
+        .grid {
+          grid-template-columns: 330px 1fr;
+        }
+      }
+
+      nav.toc {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: var(--radius);
+        padding: 16px;
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+        height: fit-content;
+        position: sticky;
+        top: 14px;
+      }
+
+      .toc h3 {
+        margin: 0 0 10px;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.9px;
+        color: var(--muted);
+      }
+
+      .toc a {
+        display: block;
+        padding: 10px 10px;
+        border-radius: 12px;
+        color: var(--text);
+        border: 1px solid transparent;
+      }
+
+      .toc a:hover {
+        background: rgba(47, 129, 247, 0.1);
+        border-color: rgba(47, 129, 247, 0.25);
+        text-decoration: none;
+      }
+
+      main.content {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: var(--radius);
+        padding: 18px;
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+      }
+
+      section {
+        padding: 14px 0;
+        border-top: 1px solid var(--line);
+      }
+      section:first-child {
+        border-top: 0;
+        padding-top: 0;
+      }
+
+      h3.sec {
+        margin: 0 0 8px;
+        font-size: 18px;
+      }
+
+      p {
+        margin: 0 0 10px;
+        color: var(--muted);
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--muted);
+      }
+      li {
+        margin: 6px 0;
+      }
+
+      .callouts {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin: 12px 0 6px;
+      }
+      @media (min-width: 700px) {
+        .callouts {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      .callout {
+        border: 1px solid var(--line);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.08),
+          rgba(255, 255, 255, 0.04)
+        );
+        border-radius: 16px;
+        padding: 12px;
+      }
+      .callout strong {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--text);
+      }
+      .callout span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .note {
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 204, 102, 0.35);
+        background: rgba(255, 204, 102, 0.08);
+        color: var(--muted);
+      }
+
+      .footer {
+        margin-top: 18px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 999px;
+        padding: 10px 14px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text);
+        cursor: pointer;
+      }
+      .btn:hover {
+        background: rgba(47, 129, 247, 0.12);
+        border-color: rgba(47, 129, 247, 0.25);
+      }
+
+      .kbd {
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        font-size: 12px;
+        padding: 2px 6px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.25);
+        color: var(--text);
+      }
+
+      /* ---------- Mobile polish (paste at end) ---------- */
+
+      /* smoother anchors when using TOC */
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 12px;
+      }
+
+      /* Better mobile spacing */
+      @media (max-width: 859px) {
+        .wrap {
+          padding: 18px 14px 60px;
+        }
+
+        .topbar {
+          gap: 10px;
+        }
+
+        .logo {
+          width: 34px;
+          height: 34px;
+          border-radius: 10px;
+        }
+
+        /* Hero: smaller, tighter */
+        header.hero {
+          padding: 18px 16px;
+          border-radius: 16px;
+        }
+
+        .hero h2 {
+          font-size: 22px;
+          line-height: 1.15;
+        }
+
+        .hero p {
+          font-size: 14px;
+        }
+
+        /* Badges & callouts stack nicely */
+        .meta .badge {
+          padding: 7px 9px;
+          font-size: 12px;
+        }
+
+        .callouts {
+          gap: 10px;
+        }
+
+        .callout {
+          padding: 12px;
+        }
+
+        /* Grid becomes single column already, but improve flow */
+        .grid {
+          gap: 12px;
+        }
+
+        /* TOC becomes a horizontal “chips” bar on mobile */
+        nav.toc {
+          position: static; /* disable sticky on mobile */
+          top: auto;
+          padding: 12px;
+          border-radius: 16px;
+        }
+
+        .toc h3 {
+          margin-bottom: 8px;
+        }
+
+        .toc a {
+          display: inline-flex;
+          white-space: nowrap;
+          padding: 10px 12px;
+          margin: 6px 6px 0 0;
+          border-radius: 999px;
+          border: 1px solid var(--line);
+          background: rgba(255, 255, 255, 0.04);
+        }
+
+        .toc a:hover {
+          background: rgba(47, 129, 247, 0.12);
+        }
+
+        /* enable horizontal scroll for TOC links */
+        nav.toc {
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+        nav.toc::-webkit-scrollbar {
+          height: 6px;
+        }
+
+        /* Content card: more comfortable reading */
+        main.content {
+          padding: 16px;
+          border-radius: 16px;
+        }
+
+        section {
+          padding: 12px 0;
+        }
+
+        h3.sec {
+          font-size: 17px;
+          line-height: 1.25;
+        }
+
+        p,
+        li {
+          font-size: 14px;
+        }
+
+        .footer {
+          gap: 12px;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+          padding: 12px 14px;
+        }
+      }
+
+      /* Ultra small phones */
+      @media (max-width: 380px) {
+        .hero h2 {
+          font-size: 20px;
+        }
+        .brand h1 {
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">
+            <img
+              src="/assets/images/logo.png"
+              alt="logo"
+              style="width: 100%; height: 100%; border-radius: inherit"
+            />
+          </div>
+
+          <h1>Barclays Wealth</h1>
+        </div>
+        <a href="/en/account/myaccount/onlineacces/" class="btn btn-sm">
+          <i class="fas fa-arrow-left"></i> Home
+        </a>
+      </div>
+
+      <header class="hero">
+        <h2>Privacy Policy</h2>
+        <p>
+          This Privacy Policy explains how Barclays Wealth (“we”, “us”, “our”)
+          collects, uses, shares, and protects your information when you use our
+          website and services.
+        </p>
+        <div class="meta">
+          <!-- <div class="badge">
+            Effective date: <strong>&nbsp;[Insert Date]</strong>
+          </div> -->
+          <!-- <div class="badge">
+            Last updated: <strong>&nbsp;[Insert Date]</strong>
+          </div> -->
+          <div class="badge">
+            Contact:
+            <a href="mailto:info@barclaystandardplc.pro">info@barclaystandardplc.pro</a>
+          </div>
+        </div>
+
+        <div class="callouts">
+          <div class="callout">
+            <strong>We collect only what we need</strong>
+            <span>Account creation, verification, and service delivery.</span>
+          </div>
+          <div class="callout">
+            <strong>We protect your data</strong>
+            <span>Security controls, access limits, and monitoring.</span>
+          </div>
+          <div class="callout">
+            <strong>You have rights</strong>
+            <span>Access, correction, deletion, and objections.</span>
+          </div>
+        </div>
+
+        <div class="note">
+          <strong style="color: var(--warn)">Important:</strong>
+          If you are integrating real payments, System rails, or regulated
+          KYC/AML flows, you should obtain legal advice to ensure compliance
+          with applicable laws in your region.
+        </div>
+      </header>
+
+      <div class="grid">
+        <nav class="toc" aria-label="Table of contents">
+          <h3>On this page</h3>
+          <a href="#info-we-collect">1. Information we collect</a>
+          <a href="#how-we-use">2. How we use information</a>
+          <a href="#how-we-share">3. How we share information</a>
+          <a href="#uploads">4. Uploads & media (Cloudinary)</a>
+          <a href="#cookies">5. Cookies & sessions</a>
+          <a href="#security">6. Security</a>
+          <a href="#retention">7. Data retention</a>
+          <a href="#your-rights">8. Your rights</a>
+          <a href="#children">9. Children’s privacy</a>
+          <a href="#international">10. International transfers</a>
+          <a href="#changes">11. Changes to this policy</a>
+          <a href="#contact">12. Contact</a>
+        </nav>
+
+        <main class="content">
+          <section id="info-we-collect">
+            <h3 class="sec">1. Information we collect</h3>
+            <p>
+              We collect information you provide directly and information
+              generated through your use of the service.
+            </p>
+            <ul>
+              <li>
+                <strong>Account details:</strong> name, email, phone number,
+                address, and other information you submit during registration.
+              </li>
+              <li>
+                <strong>Verification information:</strong> email verification
+                codes and status; in some cases, identity or supporting
+                documents if required by your account workflow.
+              </li>
+              <li>
+                <strong>Transaction and service data:</strong> records of
+                activities you initiate (e.g., requests, deposits, card
+                actions).
+              </li>
+              <li>
+                <strong>Device and usage data:</strong> IP address, browser
+                type, timestamps, pages viewed, and error logs.
+              </li>
+            </ul>
+          </section>
+
+          <section id="how-we-use">
+            <h3 class="sec">2. How we use information</h3>
+            <p>
+              We use your information to operate, maintain, improve, and secure
+              the service, including:
+            </p>
+            <ul>
+              <li>Creating and managing your account.</li>
+              <li>Providing customer support and responding to requests.</li>
+              <li>
+                Sending service communications (e.g., verification emails,
+                security alerts).
+              </li>
+              <li>Preventing fraud, abuse, and unauthorized access.</li>
+              <li>Monitoring performance and debugging issues.</li>
+              <li>Complying with legal obligations where applicable.</li>
+            </ul>
+          </section>
+
+          <section id="how-we-share">
+            <h3 class="sec">3. How we share information</h3>
+            <p>
+              We do not sell your personal information. We may share data in
+              these situations:
+            </p>
+            <ul>
+              <li>
+                <strong>Service providers:</strong> vendors that help us run the
+                service (e.g., email delivery, hosting, media storage).
+              </li>
+              <li>
+                <strong>Legal requests:</strong> if required to comply with a
+                law, regulation, subpoena, or court order.
+              </li>
+              <li>
+                <strong>Safety and security:</strong> to protect rights,
+                property, users, and the integrity of the platform.
+              </li>
+              <li>
+                <strong>Business changes:</strong> in connection with a merger,
+                acquisition, or sale of assets (with notice where required).
+              </li>
+            </ul>
+          </section>
+
+          <section id="uploads">
+            <h3 class="sec">4. Uploads & media (Cloudinary)</h3>
+            <p>
+              If you upload images or documents (for example, profile images,
+              verification documents, or check deposit images), we may store
+              them using third-party media storage services such as Cloudinary.
+            </p>
+            <ul>
+              <li>
+                <strong>What we store:</strong> the media file (image/document),
+                a URL to access it, and identifiers (e.g., a “public_id”).
+              </li>
+              <li>
+                <strong>Why we store it:</strong> to provide the feature you
+                requested (e.g., verification, recordkeeping, or support).
+              </li>
+              <li>
+                <strong>Access control:</strong> media access is restricted
+                based on your account permissions and our internal controls.
+              </li>
+            </ul>
+            <p class="note">
+              Tip: Avoid uploading sensitive information unless it’s required
+              for the service you’re using.
+            </p>
+          </section>
+
+          <section id="cookies">
+            <h3 class="sec">5. Cookies & sessions</h3>
+            <p>
+              We use cookies and similar technologies to keep you signed in,
+              remember preferences, and improve security. Examples include:
+            </p>
+            <ul>
+              <li>
+                <strong>Authentication cookies:</strong> to maintain your
+                session (often httpOnly for security).
+              </li>
+              <li>
+                <strong>Security features:</strong> to detect suspicious
+                activity and prevent abuse.
+              </li>
+              <li>
+                <strong>Preferences:</strong> to remember basic settings where
+                applicable.
+              </li>
+            </ul>
+            <p>
+              You can control cookies via your browser settings. Some features
+              may not work properly if cookies are disabled.
+            </p>
+          </section>
+
+          <section id="security">
+            <h3 class="sec">6. Security</h3>
+            <p>
+              We implement reasonable administrative, technical, and physical
+              safeguards to protect personal information. These may include
+              encryption in transit (HTTPS), access controls, monitoring, and
+              secure credential handling.
+            </p>
+            <ul>
+              <li>Least-privilege access for staff and systems.</li>
+              <li>
+                Monitoring, logging, and alerting for suspicious activity.
+              </li>
+              <li>Secure storage practices for sensitive credentials.</li>
+            </ul>
+          </section>
+
+          <section id="retention">
+            <h3 class="sec">7. Data retention</h3>
+            <p>
+              We retain information for as long as needed to provide the
+              service, comply with legal obligations, resolve disputes, and
+              enforce our agreements.
+            </p>
+            <ul>
+              <li>
+                Account data is kept while your account is active and for a
+                reasonable period after closure.
+              </li>
+              <li>
+                Uploaded media may be retained for verification, audit, or
+                support needs.
+              </li>
+              <li>
+                Logs may be retained for security, debugging, and compliance
+                purposes.
+              </li>
+            </ul>
+          </section>
+
+          <section id="your-rights">
+            <h3 class="sec">8. Your rights</h3>
+            <p>Depending on your location, you may have rights to:</p>
+            <ul>
+              <li>Request access to your personal information.</li>
+              <li>Request correction of inaccurate information.</li>
+              <li>
+                Request deletion of certain information (subject to exceptions).
+              </li>
+              <li>Object to or restrict certain processing activities.</li>
+              <li>
+                Request a copy of your data in a portable format, where
+                applicable.
+              </li>
+            </ul>
+            <p>
+              To make a request, contact us at
+              <a href="mailto:info@barclaystandardplc.pro"
+                >info@barclaystandardplc.pro</a
+              >. We may need to verify your identity before fulfilling requests.
+            </p>
+          </section>
+
+          <section id="children">
+            <h3 class="sec">9. Children’s privacy</h3>
+            <p>
+              Our services are not directed to children under the age of 13 (or
+              the minimum age required in your jurisdiction). If you believe a
+              child has provided us personal information, contact us and we will
+              take appropriate steps.
+            </p>
+          </section>
+
+          <section id="international">
+            <h3 class="sec">10. International transfers</h3>
+            <p>
+              Your information may be processed in countries other than where
+              you live. When we transfer data internationally, we take steps
+              designed to ensure appropriate safeguards are in place.
+            </p>
+          </section>
+
+          <section id="changes">
+            <h3 class="sec">11. Changes to this policy</h3>
+            <p>
+              We may update this Privacy Policy from time to time. If changes
+              are material, we will provide notice as required. The “Last
+              updated” date at the top indicates when this policy was last
+              revised.
+            </p>
+          </section>
+
+          <section id="contact">
+            <h3 class="sec">12. Contact</h3>
+            <p>
+              If you have questions or requests about this Privacy Policy,
+              contact us:
+            </p>
+            <ul>
+              <li>
+                Email:
+                <a href="mailto:info@barclaystandardplc.pro"
+                  >info@barclaystandardplc.pro</a
+                >
+              </li>
+              <li>Company:  Barclays Wealth</li>
+              <!-- <li>
+                Address: <span class="kbd">[Insert Company Address]</span>
+              </li> -->
+            </ul>
+
+            <div class="footer">
+              <span
+                >© <span id="year"></span> Barclays Wealth. All rights
+                reserved.</span
+              >
+              <button
+                class="btn"
+                type="button"
+                onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+              >
+                ↑ Back to top
+              </button>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+
+
+<!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+var _smartsupp = _smartsupp || {};
+_smartsupp.key = 'd553c5070f6a39abb09396691a6327737271a601';
+window.smartsupp||(function(d) {
+  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+  c.type='text/javascript';c.charset='utf-8';c.async=true;
+  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+})(document);
+</script>
+<noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
+
+  </body>
+</html>

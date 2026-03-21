@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Messages</title>
+    <link rel="stylesheet" href="/admin/owner/dashboard/css/layout.css" />
+    <link rel="icon" href="/assets/images/logo.png" />
+
+    <style>
+      .messages-wrap {
+        max-width: 1100px;
+      }
+
+      #result {
+        margin: 10px 0 14px;
+      }
+
+      .messages-card {
+        border-radius: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        background: #fff;
+        overflow: hidden;
+      }
+
+      .messages-header {
+        padding: 14px 16px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        background: rgba(0, 0, 0, 0.02);
+        font-weight: 900;
+      }
+
+      .messages-body {
+        padding: 16px;
+      }
+
+      .messages-feed {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .msg-card {
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 16px;
+        padding: 14px;
+        background: #fff;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.04);
+      }
+
+      .msg-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: flex-start;
+      }
+
+      .msg-ticket {
+        font-weight: 900;
+        font-size: 13px;
+        color: #111;
+        letter-spacing: 0.2px;
+      }
+
+      .msg-email {
+        margin-top: 6px;
+        font-size: 12px;
+        font-weight: 800;
+        color: rgba(0, 0, 0, 0.78);
+      }
+
+      .msg-name {
+        margin-top: 3px;
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.65);
+      }
+
+      .msg-right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+      }
+
+      .msg-dept {
+        font-size: 11px;
+        font-weight: 800;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(3, 61, 117, 0.08);
+        border: 1px solid rgba(3, 61, 117, 0.14);
+        color: #033d75;
+        white-space: nowrap;
+      }
+
+      .msg-date {
+        font-size: 11px;
+        opacity: 0.65;
+      }
+
+      .msg-body {
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 14px;
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(0, 0, 0, 0.07);
+        font-size: 14px;
+        line-height: 1.45;
+        white-space: pre-wrap;
+        color: rgba(0, 0, 0, 0.92);
+      }
+
+      .msg-empty {
+        opacity: 0.6;
+        font-size: 13px;
+      }
+
+      .loading,
+      .empty-state {
+        padding: 12px;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(0, 0, 0, 0.07);
+        opacity: 0.75;
+      }
+
+      @media (max-width: 700px) {
+        .msg-right {
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header id="topnav-mount"></header>
+
+    <div class="admin-shell">
+      <aside id="sidebar-mount" class="admin-sidebar"></aside>
+
+      <main class="admin-main">
+        <div class="admin-container messages-wrap">
+          <h1>Customer Messages</h1>
+
+          <!-- <div id="result"></div> -->
+
+          <section class="messages-card">
+            <div class="messages-header">Tickets Feed</div>
+            <div class="messages-body">
+              <div id="messagesMount"></div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <footer id="footer-mount"></footer>
+
+    <script src="/admin-script/admin-auth-required.js"></script>
+
+    <script src="/admin-script/admin-logout.js"></script>
+
+    <script src="/admin-script/customer-messages.js"></script>
+    <script src="/admin-script/admin-layout.js"></script>
+  </body>
+</html>

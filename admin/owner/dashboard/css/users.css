@@ -1,0 +1,95 @@
+.admin-card {
+  background: #f9f9fb;
+  border: 1px solid #e9e9ef;
+  border-radius: 16px;
+  padding: 14px;
+}
+.admin-card-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.admin-input {
+  padding: 10px 12px;
+  border: 1px solid #e9e9ef;
+  border-radius: 12px;
+  min-width: 240px;
+  outline: none;
+}
+.table-wrap {
+  overflow: auto;
+}
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.admin-table th,
+.admin-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #f0f0f5;
+  text-align: left;
+}
+.muted {
+  color: #667085;
+  font-size: 14px;
+}
+
+.badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  display: inline-block;
+}
+.badge-success {
+  background: #e7f7ee;
+}
+.badge-danger {
+  background: #fdecec;
+}
+
+
+.toggle {
+  position: relative;
+  width: 42px;
+  height: 22px;
+  display: inline-block;
+}
+
+.toggle input {
+  display: none;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  background: #e5e7eb;
+  border-radius: 999px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: .2s;
+}
+
+.toggle-slider::before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  top: 2px;
+  background: white;
+  border-radius: 50%;
+  transition: .2s;
+}
+
+.toggle input:checked + .toggle-slider {
+  background: #16a34a;
+}
+
+.toggle input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}

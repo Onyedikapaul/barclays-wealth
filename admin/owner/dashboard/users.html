@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users</title>
+    <link rel="stylesheet" href="/admin/owner/dashboard/css/layout.css" />
+    <link rel="stylesheet" href="/admin/owner/dashboard/css/users.css" />
+    <link rel="icon" href="/assets/images/logo.png" />
+
+    <style>
+      /* Modal Styles */
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .modal-content h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: #0b2f55;
+        font-size: 20px;
+      }
+
+      .modal-content p {
+        color: #495057;
+        margin-bottom: 20px;
+      }
+
+      .modal-content textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        font-size: 14px;
+        font-family: inherit;
+        resize: vertical;
+        box-sizing: border-box;
+      }
+
+      .modal-content textarea:focus {
+        outline: none;
+        border-color: #0b2f55;
+        box-shadow: 0 0 0 3px rgba(11, 47, 85, 0.1);
+      }
+
+      .modal-buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+
+      .modal-btn {
+        padding: 10px 24px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .modal-btn-secondary {
+        background-color: #6c757d;
+        color: white;
+      }
+
+      .modal-btn-secondary:hover {
+        background-color: #5a6268;
+      }
+
+      .modal-btn-primary {
+        background-color: #0b2f55;
+        color: white;
+      }
+
+      .modal-btn-primary:hover {
+        background-color: #08213d;
+      }
+
+      .modal-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    </style>
+
+    <style>
+      /* ===== Modal Wrapper ===== */
+      .am-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* ===== Backdrop ===== */
+      .am-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(3px);
+      }
+
+      /* ===== Dialog ===== */
+      .am-dialog {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        background: #ffffff;
+        border-radius: 14px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        animation: amFadeIn 0.2s ease;
+        z-index: 2;
+        overflow: hidden;
+      }
+
+      /* ===== Animation ===== */
+      @keyframes amFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(15px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ===== Header ===== */
+      .am-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 22px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .am-title {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .am-sub {
+        font-size: 13px;
+        color: #6b7280;
+      }
+
+      .am-x {
+        background: none;
+        border: none;
+        font-size: 22px;
+        cursor: pointer;
+        color: #888;
+      }
+
+      .am-x:hover {
+        color: #000;
+      }
+
+      /* ===== Body ===== */
+      .am-body {
+        padding: 22px;
+      }
+
+      /* User Info */
+      .am-userline {
+        margin-bottom: 30px;
+        padding-bottom: 5px;
+        display: flex;
+        gap: 5px;
+        border-bottom: #888 2px solid;
+      }
+
+      .am-name {
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .am-email {
+        font-size: 13px;
+        color: #6b7280;
+      }
+
+      /* ===== Buttons Grid ===== */
+      .am-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      /* Buttons */
+      .am-btn {
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      /* Variants */
+      .am-primary {
+        background: #1f2937;
+        color: #fff;
+      }
+
+      .am-primary:hover {
+        background: #111827;
+      }
+
+      .am-light {
+        background: #f3f4f6;
+        color: #111;
+      }
+
+      .am-light:hover {
+        background: #e5e7eb;
+      }
+
+      .am-danger {
+        background: #dc2626;
+        color: #fff;
+        grid-column: span 2; /* full width */
+      }
+
+      .am-danger:hover {
+        background: #b91c1c;
+      }
+
+      /* ===== Mobile ===== */
+      @media (max-width: 500px) {
+        .am-dialog {
+          margin: 20px;
+        }
+
+        .am-actions {
+          grid-template-columns: 1fr;
+        }
+
+        .am-danger {
+          grid-column: span 1;
+        }
+      }
+
+      /* ✅ Force hide when d-none is present */
+      .d-none {
+        display: none !important;
+      }
+
+      /* ✅ Modal should not block clicks when hidden */
+      .am-modal.d-none {
+        display: none !important;
+        pointer-events: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Topnav -->
+    <header id="topnav-mount"></header>
+
+    <div class="admin-shell">
+      <!-- Sidebar -->
+      <aside id="sidebar-mount" class="admin-sidebar"></aside>
+
+      <!-- Main -->
+      <main class="admin-main">
+        <div class="admin-container">
+          <h1>All Users</h1>
+
+          <div class="admin-card">
+            <div class="table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Allowed To Transfer</th>
+                    <th>Login</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="usersTbody">
+                  <tr>
+                    <td colspan="5">Loading...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Reason Modal -->
+    <div id="reasonModal" class="modal">
+      <div class="modal-content">
+        <h3>Disable Transfers</h3>
+        <p>
+          Please provide a reason why you're disabling transfers for this user.
+          This message will be shown to the user when they attempt to make a
+          transfer.
+        </p>
+
+        <textarea
+          id="transferReasonInput"
+          rows="4"
+          placeholder="Enter reason for disabling transfers..."
+        ></textarea>
+
+        <div class="modal-buttons">
+          <button id="cancelReasonBtn" class="modal-btn modal-btn-secondary">
+            Cancel
+          </button>
+          <button id="submitReasonBtn" class="modal-btn modal-btn-primary">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ More Actions Modal -->
+    <div id="moreActionsModal" class="am-modal d-none" aria-hidden="true">
+      <div class="am-backdrop" data-am-close="1"></div>
+
+      <div
+        class="am-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="amTitle"
+      >
+        <div class="am-header">
+          <div>
+            <div id="amTitle" class="am-title">User Actions</div>
+            <div class="am-sub">Choose what you want to do</div>
+          </div>
+          <button type="button" class="am-x" data-am-close="1">×</button>
+        </div>
+
+        <div class="am-body">
+          <div class="am-userline">
+            <div class="am-name" id="amUserName">—</div>
+            (<span class="am-email" id="amUserEmail">—</span>)
+          </div>
+
+          <div style="display: flex; gap: 12px">
+            <button id="amEditBtn" class="am-btn am-primary" style="flex: 1">
+              Edit User
+            </button>
+            <button id="amEmailBtn" class="am-btn am-light" style="flex: 1">
+              Send Email
+            </button>
+          </div>
+
+          <div style="margin-top: 20px; display: flex; gap: 12px">
+            <button id="amTxBtn" class="am-btn am-light" style="flex: 1">
+              User Transactions
+            </button>
+             <button id="addTransactionBtn" class="am-btn am-danger" style="flex: 1">
+              Add Transaction
+            </button>
+            <!-- <button id="amDeleteBtn" class="am-btn am-danger" style="flex: 1">
+              Delete User
+            </button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer-mount"></footer>
+
+    <script src="/admin-script/admin-auth-required.js"></script>
+    <script src="/admin-script/admin-logout.js"></script>
+    <script src="/admin-script/get-all-users.js"></script>
+    <script src="/admin-script/admin-layout.js"></script>
+  </body>
+</html>

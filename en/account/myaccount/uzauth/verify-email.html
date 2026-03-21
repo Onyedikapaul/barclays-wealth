@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Email | Next Gen Union</title>
+    <link rel="icon" href="/assets/images/logo.png" />
+
+    <style>
+      :root {
+        --primary: #033d75;
+        --border: rgba(0, 0, 0, 0.12);
+        --muted: rgba(0, 0, 0, 0.6);
+        --bg: #f6f8fb;
+        --card: #ffffff;
+        --radius: 14px;
+      }
+
+      * {
+        box-sizing: border-box;
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 440px;
+        background: var(--card);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 24px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .title {
+        margin: 0 0 6px;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .subtitle {
+        margin: 0 0 16px;
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 10px;
+      }
+
+      .form-group {
+        margin-bottom: 14px;
+      }
+
+      label {
+        display: block;
+        font-size: 13px;
+        margin-bottom: 6px;
+        color: var(--muted);
+      }
+
+      input {
+        width: 100%;
+        padding: 12px 14px;
+        font-size: 16px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        outline: none;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+      }
+
+      input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(3, 61, 117, 0.12);
+      }
+
+      input[inputmode="numeric"] {
+        letter-spacing: 0.3em;
+        text-align: center;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        background: var(--primary);
+        color: #fff;
+        transition:
+          transform 0.12s,
+          box-shadow 0.12s,
+          opacity 0.12s;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(3, 61, 117, 0.25);
+      }
+
+      .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .btn-secondary {
+        width: auto;
+        padding: 10px 12px;
+        font-size: 14px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: #fff;
+        color: #111;
+        cursor: pointer;
+      }
+
+      .btn-secondary:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .timer {
+        font-size: 13px;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .error {
+        margin-top: 10px;
+        font-size: 13px;
+        color: #c0392b;
+      }
+
+      .success {
+        margin-top: 10px;
+        font-size: 13px;
+        color: #2e7d32;
+      }
+
+      .warn {
+        margin-top: 10px;
+        font-size: 13px;
+        color: #b26a00;
+      }
+
+      .hint {
+        margin-top: 10px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <!-- STEP 1: VERIFY EMAIL -->
+      <div id="stepVerify">
+        <h1 class="title">Verify your email</h1>
+        <p class="subtitle">
+          Enter the 6-digit code we sent to your email.
+          <!-- If you didn’t receive
+          it, you can resend after the timer finishes. -->
+        </p>
+
+        <div class="form-group">
+          <label for="code">Verification code</label>
+          <input
+            id="code"
+            maxlength="6"
+            inputmode="numeric"
+            placeholder="••••••"
+            autocomplete="one-time-code"
+          />
+        </div>
+
+        <button class="btn" id="verifyBtn">Verify Email</button>
+
+        <div class="row">
+          <button class="btn-secondary" id="resendBtn" disabled>
+            Resend code
+          </button>
+          <div class="timer" id="timerText">Resend available in 02:00</div>
+        </div>
+
+        <div id="verifyMsg"></div>
+        <div class="hint" id="debugHint"></div>
+      </div>
+
+      <!-- STEP 2: SET TRANSACTION PIN -->
+      <div id="stepPin" class="hidden">
+        <h1 class="title">Set transaction PIN</h1>
+        <p class="subtitle">
+          Create a 4-digit PIN you’ll use to approve transactions.
+        </p>
+
+        <div class="form-group">
+          <label for="pin">Transaction PIN</label>
+          <input
+            id="pin"
+            maxlength="4"
+            inputmode="numeric"
+            placeholder="••••"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="cpin">Confirm PIN</label>
+          <input
+            id="cpin"
+            maxlength="4"
+            inputmode="numeric"
+            placeholder="••••"
+          />
+        </div>
+
+        <button class="btn" id="setPinBtn">Save PIN</button>
+        <div id="pinMsg"></div>
+      </div>
+    </div>
+
+    <script>
+      // ------- helpers ----------
+      const $ = (id) => document.getElementById(id);
+
+      function getQueryParam(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+      }
+
+      function onlyDigits(str) {
+        return String(str || "").replace(/\D/g, "");
+      }
+
+      function showMsg(el, type, msg) {
+        el.innerHTML = `<div class="${type}">${msg}</div>`;
+      }
+
+      // ------- get userId from query ----------
+      const userId = getQueryParam("userId");
+
+      // Optional: show hint during development (remove later)
+      if (!userId) {
+        $("debugHint").textContent =
+          "Missing userId in URL. Example: verify.html?userId=YOUR_ID";
+      } else {
+        $("debugHint").textContent = "";
+      }
+
+      // ------- timer / resend ----------
+      let secondsLeft = 120;
+      let timerHandle = null;
+
+      function fmtMMSS(sec) {
+        const m = String(Math.floor(sec / 60)).padStart(2, "0");
+        const s = String(sec % 60).padStart(2, "0");
+        return `${m}:${s}`;
+      }
+
+      function startResendTimer(resetSeconds = 120) {
+        secondsLeft = resetSeconds;
+        $("resendBtn").disabled = true;
+        $("timerText").textContent =
+          `Resend available in ${fmtMMSS(secondsLeft)}`;
+
+        if (timerHandle) clearInterval(timerHandle);
+
+        timerHandle = setInterval(() => {
+          secondsLeft -= 1;
+
+          if (secondsLeft <= 0) {
+            clearInterval(timerHandle);
+            timerHandle = null;
+            $("timerText").textContent = "You can resend now";
+            $("resendBtn").disabled = false;
+            return;
+          }
+
+          $("timerText").textContent =
+            `Resend available in ${fmtMMSS(secondsLeft)}`;
+        }, 1000);
+      }
+
+      // Start timer immediately on page load
+      startResendTimer(120);
+
+      // ------- elements ----------
+      const stepVerify = $("stepVerify");
+      const stepPin = $("stepPin");
+
+      const verifyBtn = $("verifyBtn");
+      const setPinBtn = $("setPinBtn");
+      const resendBtn = $("resendBtn");
+
+      const verifyMsg = $("verifyMsg");
+      const pinMsg = $("pinMsg");
+
+      // enforce numeric typing
+      $("code").addEventListener("input", (e) => {
+        e.target.value = onlyDigits(e.target.value).slice(0, 6);
+      });
+      $("pin").addEventListener("input", (e) => {
+        e.target.value = onlyDigits(e.target.value).slice(0, 4);
+      });
+      $("cpin").addEventListener("input", (e) => {
+        e.target.value = onlyDigits(e.target.value).slice(0, 4);
+      });
+
+      // ------- verify email ----------
+      verifyBtn.onclick = async () => {
+        verifyMsg.innerHTML = "";
+
+        if (!userId) {
+          showMsg(verifyMsg, "error", "Missing userId. Please register again.");
+          return;
+        }
+
+        const code = $("code").value.trim();
+        if (code.length !== 6) {
+          showMsg(verifyMsg, "error", "Enter a valid 6-digit code.");
+          return;
+        }
+
+        verifyBtn.disabled = true;
+        verifyBtn.textContent = "Verifying…";
+
+        try {
+          const res = await fetch("/api/verify-email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId, code }),
+          });
+
+          const data = await res.json().catch(() => ({}));
+
+          if (!res.ok) {
+            throw new Error(data.message || `Failed (${res.status})`);
+          }
+
+          if (data.ok) {
+            stepVerify.classList.add("hidden");
+            stepPin.classList.remove("hidden");
+          } else {
+            showMsg(verifyMsg, "error", data.message || "Invalid code.");
+          }
+        } catch (err) {
+          console.error(err);
+          showMsg(verifyMsg, "error", err.message || "Server error.");
+        } finally {
+          verifyBtn.disabled = false;
+          verifyBtn.textContent = "Verify Email";
+        }
+      };
+
+      // ------- resend code ----------
+      resendBtn.onclick = async () => {
+        verifyMsg.innerHTML = "";
+
+        if (!userId) {
+          showMsg(verifyMsg, "error", "Missing userId. Please register again.");
+          return;
+        }
+
+        resendBtn.disabled = true;
+
+        try {
+          const res = await fetch("/api/resend-verification-code", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId }),
+          });
+
+          const data = await res.json().catch(() => ({}));
+
+          if (!res.ok) {
+            throw new Error(data.message || `Failed (${res.status})`);
+          }
+
+          if (data.ok) {
+            showMsg(verifyMsg, "success", "New code sent. Check your email.");
+            // reset timer to 2 mins again
+            startResendTimer(120);
+          } else {
+            showMsg(
+              verifyMsg,
+              "error",
+              data.message || "Could not resend code.",
+            );
+            // if resend failed, allow retry sooner
+            resendBtn.disabled = false;
+          }
+        } catch (err) {
+          console.error(err);
+          showMsg(verifyMsg, "error", err.message || "Server error.");
+          resendBtn.disabled = false;
+        }
+      };
+
+      // ------- set transaction pin ----------
+      setPinBtn.onclick = async () => {
+        pinMsg.innerHTML = "";
+
+        if (!userId) {
+          showMsg(pinMsg, "error", "Missing userId. Please register again.");
+          return;
+        }
+
+        const pin = $("pin").value.trim();
+        const cpin = $("cpin").value.trim();
+
+        if (pin.length !== 4 || cpin.length !== 4) {
+          showMsg(pinMsg, "error", "PIN must be 4 digits.");
+          return;
+        }
+        if (pin !== cpin) {
+          showMsg(pinMsg, "error", "PINs do not match.");
+          return;
+        }
+
+        setPinBtn.disabled = true;
+        setPinBtn.textContent = "Saving…";
+
+        try {
+          const res = await fetch("/api/set-transaction-pin", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId, pin, cpin }),
+          });
+
+          const data = await res.json().catch(() => ({}));
+
+          if (!res.ok) {
+            throw new Error(data.message || `Failed (${res.status})`);
+          }
+
+          if (data.ok) {
+            window.location.href = "/en/account/myaccount/uzauth/login.html";
+          } else {
+            showMsg(pinMsg, "error", data.message || "Could not save PIN.");
+          }
+        } catch (err) {
+          console.error(err);
+          showMsg(pinMsg, "error", err.message || "Server error.");
+        } finally {
+          setPinBtn.disabled = false;
+          setPinBtn.textContent = "Save PIN";
+        }
+      };
+    </script>
+
+<!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+var _smartsupp = _smartsupp || {};
+_smartsupp.key = 'd1c78e2381dfaf2784b54f6a3148c7da2036d747';
+window.smartsupp||(function(d) {
+  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+  c.type='text/javascript';c.charset='utf-8';c.async=true;
+  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+})(document);
+</script>
+<noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Next Gen Union</a></noscript>
+
+</body>
+</html>
