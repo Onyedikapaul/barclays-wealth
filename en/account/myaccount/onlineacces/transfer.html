@@ -805,6 +805,24 @@ color:#000;
     display: none;
   }
 
+  .tx-sheet {
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+}
+
+  /* Make the sheet scrollable */
+.tx-sheet {
+  max-height: 90vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Optional — smooth scroll on iOS */
+.tx-content {
+  -webkit-overflow-scrolling: touch;
+}
+
   /* Backdrop */
   #otpModal .am-modal__backdrop {
     position: absolute;

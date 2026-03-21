@@ -96,22 +96,19 @@
   async function submitBillPay(form) {
     const btn = qs("#billPaySubmitBtn", form);
 
-    const payload = {
-      payeeid: qs("#billPayPayeeSelect", form).value,
-      dated: qs("#billPayDate", form).value,
-      amount: Number(qs("#billPayAmount", form).value),
-      memo: qs("#billPayMemo", form).value.trim(),
-      transactionPin: qs("#billPayPin", form).value.trim(),
-    };
+  const payload = {
+  payeeid: qs("#billPayPayeeSelect", form).value,
+  amount: Number(qs("#billPayAmount", form).value),
+  memo: qs("#billPayMemo", form).value.trim(),
+  transactionPin: qs("#billPayPin", form).value.trim(),
+};
 
-    if (!payload.payeeid)
-      return showResult("warning", "Select a payee", form);
-    if (!payload.dated)
-      return showResult("warning", "Select delivery date", form);
-    if (!payload.amount || payload.amount <= 0)
-      return showResult("warning", "Enter valid amount", form);
-    if (!payload.transactionPin)
-      return showResult("warning", "Transaction PIN required", form);
+if (!payload.payeeid)
+  return showResult("warning", "Select a payee", form);
+if (!payload.amount || payload.amount <= 0)
+  return showResult("warning", "Enter valid amount", form);
+if (!payload.transactionPin)
+  return showResult("warning", "Transaction PIN required", form);
 
     const fee = round2(payload.amount * FEE_RATE);
     const total = round2(payload.amount + fee);

@@ -41,9 +41,9 @@ export const createBillPay = async (req, res) => {
     const userId = req.user?._id;
     if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
-    const { payeeid, dated, amount, memo, transactionPin } = req.body;
+    const { payeeid, amount, memo, transactionPin } = req.body;
 
-    if (!payeeid || !dated || !amount || !transactionPin) {
+    if (!payeeid || !amount || !transactionPin) {
       return res
         .status(400)
         .json({ message: "Please fill all required fields" });
@@ -54,10 +54,10 @@ export const createBillPay = async (req, res) => {
       return res.status(400).json({ message: "Invalid amount" });
     }
 
-    const deliveryDate = new Date(dated);
-    if (Number.isNaN(deliveryDate.getTime())) {
-      return res.status(400).json({ message: "Invalid delivery date" });
-    }
+    // const deliveryDate = new Date(dated);
+    // if (Number.isNaN(deliveryDate.getTime())) {
+    //   return res.status(400).json({ message: "Invalid delivery date" });
+    // }
 
     // payee must belong to user
     const payee = await Payee.findOne({ _id: payeeid, userId });
@@ -137,7 +137,7 @@ export const createBillPay = async (req, res) => {
       feeRate: FEE_RATE,
       fee,
       totalDebit,
-      deliveryDate,
+      deliveryDate: null,
       memo: memo?.trim() || "",
       status: "completed",
       reference,

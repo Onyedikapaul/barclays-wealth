@@ -98,11 +98,14 @@ async function hydrateUserUI() {
     setTextById("accountNumber", u.accountNumber || "");
     setTextByClass(
       "user-account-balance",
-      Number(u.accountBalance || 0).toFixed(2),
+      "$" +
+        Number(u.accountBalance || 0).toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }),
     );
 
     setTextByClass("user-passport", u.passportUrl);
-    
 
     // welcome line
     setTextByClass("welcome-user-message", `Good day ${fullName || "User"}`);
