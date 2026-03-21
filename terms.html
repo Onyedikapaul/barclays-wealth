@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Terms & Privacy — Barclays Wealth</title>
+<link rel="icon" href="/assets/images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy: #0d1f3c; --navy-mid: #162d50;
+    --gold: #b8912a; --gold-light: #d4aa4e;
+    --white: #ffffff; --off-white: #f7f8fc;
+    --border: #e2e6ef; --text: #1a2540;
+    --text-mid: #4a5568; --muted: #7a8599;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 60px;
+    background: rgba(255,255,255,0.97); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border); box-shadow: 0 1px 20px rgba(0,0,0,0.05);
+  }
+  .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo-icon {
+    width: 38px; height: 38px; background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: var(--gold-light);
+  }
+  .logo-text { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--navy); }
+  .logo-text span { color: var(--gold); }
+  .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--text-mid); font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--navy); }
+  .nav-cta { display: flex; gap: 12px; align-items: center; }
+  .btn-outline {
+    padding: 10px 22px; border: 1.5px solid var(--navy); border-radius: 8px;
+    color: var(--navy); background: transparent; font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.2s;
+    display: inline-flex; align-items: center;
+  }
+  .btn-outline:hover { background: var(--navy); color: white; }
+  .btn-primary {
+    padding: 10px 22px; border-radius: 8px; background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+    color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600;
+    cursor: pointer; border: none; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(13,31,60,0.25); }
+
+  /* HAMBURGER */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; z-index: 300; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* MOBILE MENU */
+  .mobile-menu {
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: white; z-index: 150; flex-direction: column;
+    padding: 100px 32px 40px; transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); overflow-y: auto;
+  }
+  .mobile-menu.open { transform: translateX(0); }
+  .mobile-menu a {
+    display: block; padding: 18px 0; font-size: 24px; font-weight: 500; color: var(--text);
+    text-decoration: none; border-bottom: 1px solid var(--border);
+    font-family: 'Playfair Display', serif; transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--gold); }
+  .mobile-menu-cta { display: flex; flex-direction: column; gap: 12px; margin-top: 36px; }
+  .mobile-menu-cta a {
+    display: block !important; border: none !important; font-family: 'DM Sans', sans-serif !important;
+    font-size: 16px !important; font-weight: 600 !important; text-align: center;
+    padding: 16px !important; border-radius: 12px !important;
+  }
+  .m-outline { border: 1.5px solid var(--navy) !important; color: var(--navy) !important; background: transparent !important; }
+  .m-primary { background: linear-gradient(135deg, var(--navy), var(--navy-mid)) !important; color: white !important; }
+
+  /* ===== PAGE HEADER ===== */
+  .page-header {
+    padding: 140px 60px 80px; text-align: center;
+    background: var(--off-white); position: relative; overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 50% 80% at 50% 30%, rgba(184,145,42,0.07) 0%, transparent 70%);
+  }
+  .page-header-inner { position: relative; z-index: 2; }
+  .page-label { display: inline-block; font-size: 11px; font-weight: 700; color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 58px); color: var(--navy); margin-bottom: 14px; line-height: 1.15; }
+  .page-header p { font-size: 15px; color: var(--text-mid); }
+
+  /* ===== TERMS LAYOUT ===== */
+  .terms-layout {
+    display: grid; grid-template-columns: 260px 1fr; gap: 0;
+    max-width: 1100px; margin: 0 auto; padding: 60px 60px 100px; align-items: start;
+  }
+
+  /* SIDEBAR */
+  .terms-sidebar { position: sticky; top: 90px; padding-right: 40px; }
+  .sidebar-title { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
+  .sidebar-nav { list-style: none; display: flex; flex-direction: column; gap: 3px; }
+  .sidebar-nav a {
+    display: block; padding: 8px 12px; font-size: 13px; color: var(--text-mid);
+    text-decoration: none; border-radius: 8px; border-left: 2px solid transparent;
+    transition: all 0.2s; line-height: 1.4;
+  }
+  .sidebar-nav a:hover { color: var(--navy); background: var(--off-white); border-left-color: var(--gold); }
+  .sidebar-nav a.active { color: var(--gold); background: rgba(184,145,42,0.07); border-left-color: var(--gold); font-weight: 500; }
+
+  /* TERMS CONTENT */
+  .terms-content { padding-left: 48px; border-left: 1px solid var(--border); }
+
+  .last-updated {
+    display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px;
+    background: rgba(13,31,60,0.05); border: 1px solid var(--border);
+    border-radius: 100px; font-size: 12px; color: var(--text-mid); margin-bottom: 44px;
+  }
+
+  .terms-section { margin-bottom: 56px; scroll-margin-top: 100px; }
+
+  .terms-section h2 {
+    font-family: 'Playfair Display', serif; font-size: 22px; color: var(--navy);
+    margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .section-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 6px;
+    background: rgba(184,145,42,0.1); border: 1px solid rgba(184,145,42,0.25);
+    font-size: 12px; font-weight: 700; color: var(--gold); flex-shrink: 0;
+  }
+
+  .terms-section p { font-size: 14px; color: var(--text-mid); line-height: 1.85; margin-bottom: 16px; }
+
+  .terms-section ul { margin: 12px 0 16px; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .terms-section ul li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text-mid); line-height: 1.7; }
+  .terms-section ul li::before { content: '—'; color: var(--gold); flex-shrink: 0; font-weight: 600; margin-top: 1px; }
+
+  .highlight-box {
+    background: var(--off-white); border: 1px solid rgba(184,145,42,0.2);
+    border-left: 3px solid var(--gold);
+    border-radius: 10px; padding: 18px 22px; margin: 20px 0;
+  }
+  .highlight-box p { margin: 0; font-size: 14px; color: var(--text-mid); }
+  .highlight-box strong { color: var(--navy); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+  /* ===== FOOTER ===== */
+  footer { background: var(--navy); padding: 60px; }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.4); line-height: 1.7; margin-top: 16px; max-width: 260px; }
+  .footer-col h5 { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { font-size: 14px; color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--gold-light); }
+  .footer-bottom { padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    nav .nav-links { display: none; }
+    nav .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .mobile-menu { display: flex; }
+    .page-header { padding: 110px 24px 60px; }
+    .terms-layout { grid-template-columns: 1fr; padding: 40px 24px 60px; }
+    .terms-sidebar { display: none; }
+    .terms-content { padding-left: 0; border-left: none; }
+    footer { padding: 40px 24px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">
+    <div class="logo-icon">BW</div>
+    <span class="logo-text">Barclays <span>Wealth</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#features">Services</a></li>
+    <li><a href="index.html#security">Security</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="terms.html" class="active">Terms</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="/en/account/myaccount/uzauth/login.html" class="btn-outline">Login</a>
+    <a href="/en/account/myaccount/uzauth/signup.html" class="btn-primary">Get Started →</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<nav class="mobile-menu" id="mobileMenu">
+  <a href="index.html" onclick="closeMenu()">Home</a>
+  <a href="index.html#features" onclick="closeMenu()">Services</a>
+  <a href="index.html#security" onclick="closeMenu()">Security</a>
+  <a href="contact.html">Contact</a>
+  <a href="terms.html">Terms</a>
+  <div class="mobile-menu-cta">
+    <a href="/en/account/myaccount/uzauth/login.html" class="m-outline">Login</a>
+    <a href="/en/account/myaccount/uzauth/signup.html" class="m-primary">Get Started →</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="page-header-inner">
+    <p class="page-label">Legal</p>
+    <h1>Terms & Privacy Policy</h1>
+    <p>Last updated: January 1, 2026</p>
+  </div>
+</header>
+
+<!-- LAYOUT -->
+<div class="terms-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="terms-sidebar">
+    <p class="sidebar-title">Contents</p>
+    <ul class="sidebar-nav">
+      <li><a href="#acceptance" class="active">1. Acceptance of Terms</a></li>
+      <li><a href="#eligibility">2. Eligibility</a></li>
+      <li><a href="#account">3. Account Responsibilities</a></li>
+      <li><a href="#services">4. Our Services</a></li>
+      <li><a href="#transfers">5. Transfers & Payments</a></li>
+      <li><a href="#security">6. Security</a></li>
+      <li><a href="#privacy">7. Privacy Policy</a></li>
+      <li><a href="#data">8. Data Collection & Use</a></li>
+      <li><a href="#cookies">9. Cookies</a></li>
+      <li><a href="#prohibited">10. Prohibited Activities</a></li>
+      <li><a href="#liability">11. Limitation of Liability</a></li>
+      <li><a href="#changes">12. Changes to Terms</a></li>
+      <li><a href="#contact-section">13. Contact</a></li>
+    </ul>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="terms-content">
+    <div class="last-updated">📅 Effective: January 1, 2026</div>
+
+    <section class="terms-section" id="acceptance">
+      <h2><span class="section-num">1</span> Acceptance of Terms</h2>
+      <p>By accessing or using the Barclays Wealth online platform ("Platform"), you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any part of these terms, you are prohibited from using or accessing this Platform.</p>
+      <p>These terms apply to all users, visitors, and any other persons who access or use the Platform. Continued use of the Platform following the posting of any changes constitutes acceptance of those changes.</p>
+    </section>
+
+    <section class="terms-section" id="eligibility">
+      <h2><span class="section-num">2</span> Eligibility</h2>
+      <p>To use this Platform, you must:</p>
+      <ul>
+        <li>Be at least 18 years of age or the age of majority in your jurisdiction</li>
+        <li>Be a registered account holder with valid credentials</li>
+        <li>Have not been previously suspended or removed from the Platform</li>
+        <li>Comply with all applicable local, national, and international laws</li>
+      </ul>
+      <p>We reserve the right to refuse service, terminate accounts, or cancel transactions at our sole discretion.</p>
+    </section>
+
+    <section class="terms-section" id="account">
+      <h2><span class="section-num">3</span> Account Responsibilities</h2>
+      <p>You are responsible for maintaining the security of your account credentials, including your password and transaction PIN. You agree to:</p>
+      <ul>
+        <li>Keep your login credentials confidential and not share them with any third party</li>
+        <li>Notify us immediately of any unauthorized access or security breach</li>
+        <li>Accept responsibility for all activities that occur under your account</li>
+        <li>Ensure that the information you provide is accurate and up to date</li>
+      </ul>
+      <div class="highlight-box">
+        <p><strong>Important:</strong> Barclays Wealth will never ask for your password, full PIN, or one-time passcode via email, phone, or live chat. If you receive such a request, it is fraudulent — contact us immediately.</p>
+      </div>
+    </section>
+
+    <section class="terms-section" id="services">
+      <h2><span class="section-num">4</span> Our Services</h2>
+      <p>The Platform provides access to a range of wealth management and financial tools, including but not limited to:</p>
+      <ul>
+        <li>Account balance viewing and transaction history</li>
+        <li>Domestic and cross-border fund transfers</li>
+        <li>Bill payment and deposit check services</li>
+        <li>External card linking and management</li>
+        <li>Account security settings and 2FA management</li>
+      </ul>
+      <p>All services are subject to availability and may be temporarily suspended for maintenance, upgrades, or unforeseen technical issues. We will provide reasonable notice where possible.</p>
+    </section>
+
+    <section class="terms-section" id="transfers">
+      <h2><span class="section-num">5</span> Transfers & Payments</h2>
+      <p>All fund transfers initiated through the Platform are subject to verification and may be reviewed for security purposes. By initiating a transfer, you confirm that:</p>
+      <ul>
+        <li>You are the authorized account holder or have proper authorization</li>
+        <li>The transfer details including amount, account number, and recipient are accurate</li>
+        <li>Sufficient funds are available or will be available at the time of processing</li>
+        <li>The transfer does not violate any applicable law or these Terms</li>
+      </ul>
+      <p>Once a transfer has been processed and confirmed, it may not be reversible. Please verify all details carefully before submission.</p>
+    </section>
+
+    <section class="terms-section" id="security">
+      <h2><span class="section-num">6</span> Security</h2>
+      <p>We employ industry-standard security measures to protect your data and transactions, including:</p>
+      <ul>
+        <li>256-bit SSL/TLS encryption for all data in transit</li>
+        <li>Two-Factor Authentication (2FA) via mobile app</li>
+        <li>Activity logging and anomaly detection</li>
+        <li>4-digit transaction PIN required for all financial actions</li>
+        <li>Session timeouts for inactive periods</li>
+      </ul>
+      <p>While we take every reasonable precaution, no system is entirely immune to risk. We encourage all users to enable 2FA and regularly review their activity logs.</p>
+    </section>
+
+    <hr class="divider"/>
+
+    <section class="terms-section" id="privacy">
+      <h2><span class="section-num">7</span> Privacy Policy</h2>
+      <p>Your privacy is of paramount importance to us. This Privacy Policy describes how Barclays Wealth collects, uses, and protects personal information provided by users of the Platform.</p>
+      <p>By using the Platform, you consent to the collection and use of information in accordance with this policy. We do not sell, trade, or rent your personal information to third parties without your explicit consent, except as outlined in this policy.</p>
+    </section>
+
+    <section class="terms-section" id="data">
+      <h2><span class="section-num">8</span> Data Collection & Use</h2>
+      <p>We collect personal data to provide, maintain, and improve our services. The types of data we collect include:</p>
+      <ul>
+        <li>Identification data: name, date of birth, government-issued ID</li>
+        <li>Contact information: email address, phone number, mailing address</li>
+        <li>Transaction data: payment history, transfer records, account balances</li>
+        <li>Technical data: IP address, device identifiers, browser type, session logs</li>
+        <li>Activity data: login history, feature usage, security events</li>
+      </ul>
+      <p>This data is used to authenticate your identity, process transactions, comply with legal obligations, detect fraud, improve our services, and communicate with you regarding your account.</p>
+    </section>
+
+    <section class="terms-section" id="cookies">
+      <h2><span class="section-num">9</span> Cookies</h2>
+      <p>We use cookies and similar tracking technologies to enhance your experience on the Platform. Cookies help us remember your preferences, maintain your session, and understand how you use the Platform.</p>
+      <p>You can choose to disable cookies through your browser settings, however this may affect the functionality of certain features. We use the following types of cookies:</p>
+      <ul>
+        <li><strong style="color:var(--navy)">Essential cookies</strong> — required for core Platform functionality including session management and security</li>
+        <li><strong style="color:var(--navy)">Preference cookies</strong> — remember your settings and personalization choices</li>
+        <li><strong style="color:var(--navy)">Analytics cookies</strong> — help us understand usage patterns to improve the Platform</li>
+      </ul>
+    </section>
+
+    <section class="terms-section" id="prohibited">
+      <h2><span class="section-num">10</span> Prohibited Activities</h2>
+      <p>Users are strictly prohibited from engaging in the following activities:</p>
+      <ul>
+        <li>Using the Platform for money laundering, fraud, or any illegal financial activity</li>
+        <li>Attempting to gain unauthorized access to any account, system, or network</li>
+        <li>Providing false or misleading information during registration or transactions</li>
+        <li>Reverse engineering, decompiling, or tampering with Platform software</li>
+        <li>Using automated tools, bots, or scripts to access the Platform</li>
+        <li>Sharing account credentials with unauthorized third parties</li>
+      </ul>
+      <p>Violation of these prohibitions may result in immediate account suspension, legal action, and reporting to relevant authorities.</p>
+    </section>
+
+    <section class="terms-section" id="liability">
+      <h2><span class="section-num">11</span> Limitation of Liability</h2>
+      <p>To the maximum extent permitted by law, Barclays Wealth shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, or goodwill.</p>
+      <p>Our liability to you for any cause whatsoever and regardless of the form of the action will at all times be limited to the amount paid by you for the service giving rise to the claim, if any, during the six months prior to the incident.</p>
+      <div class="highlight-box">
+        <p><strong>Note:</strong> Some jurisdictions do not allow the exclusion or limitation of certain warranties or liabilities. In such jurisdictions, our liability is limited to the fullest extent permitted by applicable law.</p>
+      </div>
+    </section>
+
+    <section class="terms-section" id="changes">
+      <h2><span class="section-num">12</span> Changes to These Terms</h2>
+      <p>We reserve the right to update or modify these Terms and Privacy Policy at any time. When we make changes, we will update the "Last Updated" date at the top of this page and, where required, notify you via email or in-Platform notification.</p>
+      <p>Your continued use of the Platform after any such changes constitutes your acceptance of the new terms. If you do not agree to the revised terms, you must stop using the Platform.</p>
+    </section>
+
+    <section class="terms-section" id="contact-section">
+      <h2><span class="section-num">13</span> Contact</h2>
+      <p>If you have any questions, concerns, or requests regarding these Terms or our Privacy Policy, please reach out to us:</p>
+      <ul>
+        <li>Email: <strong style="color:var(--gold)">info@bw-web-ing-uk.pro</strong></li>
+        <li>Phone: <strong style="color:var(--gold)">+1 800 555 1234</strong> (Mon–Fri, 8AM–8PM GMT)</li>
+        <li>Post: Legal Department, Barclays Wealth, 1 Churchill Place, London E14 5HP</li>
+        <li>Online: Via the <a href="contact.html" style="color:var(--gold);text-decoration:none;font-weight:500;">Contact page</a></li>
+      </ul>
+      <p>We aim to respond to all legal and privacy-related inquiries within 5 business days.</p>
+    </section>
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">BW</div>
+        <span class="logo-text" style="color:white;">Barclays <span>Wealth</span></span>
+      </a>
+      <p>Secure, seamless access to your wealth. Trusted by millions of clients worldwide.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Platform</h5>
+      <ul>
+        <li><a href="index.html#features">Services</a></li>
+        <li><a href="index.html#how">How it works</a></li>
+        <li><a href="index.html#security">Security</a></li>
+        <li><a href="/en/account/myaccount/onlineacces/">Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="terms.html">Terms of Use</a></li>
+        <li><a href="terms.html#privacy">Privacy Policy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Access</h5>
+      <ul>
+        <li><a href="/en/account/myaccount/uzauth/login.html">Login</a></li>
+        <li><a href="/en/account/myaccount/uzauth/signup.html">Get Started</a></li>
+        <li><a href="/en/account/myaccount/onlineacces/account-setting.html">Settings</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <a href="index.html" class="logo">
+      <div class="logo-icon" style="width:30px;height:30px;font-size:11px;">BW</div>
+      <span class="logo-text" style="font-size:16px;color:white;">Barclays <span>Wealth</span></span>
+    </a>
+    <p>© 2026 Barclays Wealth. All rights reserved.</p>
+    <p>🔒 SSL Secured &nbsp;|&nbsp; ISO 27001 Certified</p>
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  function closeMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Active sidebar on scroll
+  const sections = document.querySelectorAll('.terms-section');
+  const links = document.querySelectorAll('.sidebar-nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 120) current = sec.getAttribute('id');
+    });
+    links.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+    });
+  });
+</script>
+
+<!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+var _smartsupp = _smartsupp || {};
+_smartsupp.key = '6ac6b13247fdf991d48240106c53a8068eab1632';
+window.smartsupp||(function(d) {
+  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+  c.type='text/javascript';c.charset='utf-8';c.async=true;
+  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+})(document);
+</script>
+<noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
+
+</body>
+</html>

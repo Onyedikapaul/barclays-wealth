@@ -1,0 +1,1051 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact — Barclays Wealth</title>
+    <link rel="icon" href="/assets/images/logo.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --navy: #0d1f3c;
+        --navy-mid: #162d50;
+        --gold: #b8912a;
+        --gold-light: #d4aa4e;
+        --white: #ffffff;
+        --off-white: #f7f8fc;
+        --border: #e2e6ef;
+        --text: #1a2540;
+        --text-mid: #4a5568;
+        --muted: #7a8599;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--white);
+        color: var(--text);
+        overflow-x: hidden;
+      }
+
+      /* ===== NAV (same as index) ===== */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 60px;
+        background: rgba(255, 255, 255, 0.97);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 1px 20px rgba(0, 0, 0, 0.05);
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+      .logo-icon {
+        width: 38px;
+        height: 38px;
+        background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Playfair Display", serif;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--gold-light);
+      }
+      .logo-text {
+        font-family: "Playfair Display", serif;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--navy);
+      }
+      .logo-text span {
+        color: var(--gold);
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+        list-style: none;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text-mid);
+        font-size: 14px;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--navy);
+      }
+      .nav-cta {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .btn-outline {
+        padding: 10px 22px;
+        border: 1.5px solid var(--navy);
+        border-radius: 8px;
+        color: var(--navy);
+        background: transparent;
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+      }
+      .btn-outline:hover {
+        background: var(--navy);
+        color: white;
+      }
+      .btn-primary {
+        padding: 10px 22px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+        color: var(--white);
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s;
+      }
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 24px rgba(13, 31, 60, 0.25);
+      }
+
+      /* HAMBURGER */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 4px;
+        background: none;
+        border: none;
+        z-index: 300;
+      }
+      .hamburger span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--navy);
+        border-radius: 2px;
+        transition: all 0.3s;
+      }
+      .hamburger.open span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      .hamburger.open span:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+      .hamburger.open span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+
+      /* MOBILE MENU */
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: white;
+        z-index: 150;
+        flex-direction: column;
+        padding: 100px 32px 40px;
+        transform: translateX(100%);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+      }
+      .mobile-menu.open {
+        transform: translateX(0);
+      }
+      .mobile-menu a {
+        display: block;
+        padding: 18px 0;
+        font-size: 24px;
+        font-weight: 500;
+        color: var(--text);
+        text-decoration: none;
+        border-bottom: 1px solid var(--border);
+        font-family: "Playfair Display", serif;
+        transition: color 0.2s;
+      }
+      .mobile-menu a:hover {
+        color: var(--gold);
+      }
+      .mobile-menu-cta {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 36px;
+      }
+      .mobile-menu-cta a {
+        display: block !important;
+        border: none !important;
+        font-family: "DM Sans", sans-serif !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        text-align: center;
+        padding: 16px !important;
+        border-radius: 12px !important;
+      }
+      .m-outline {
+        border: 1.5px solid var(--navy) !important;
+        color: var(--navy) !important;
+        background: transparent !important;
+      }
+      .m-primary {
+        background: linear-gradient(
+          135deg,
+          var(--navy),
+          var(--navy-mid)
+        ) !important;
+        color: white !important;
+      }
+
+      /* ===== PAGE HEADER ===== */
+      .page-header {
+        padding: 140px 60px 80px;
+        text-align: center;
+        background: var(--off-white);
+        position: relative;
+        overflow: hidden;
+      }
+      .page-header::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 60% 60% at 50% 100%,
+            rgba(184, 145, 42, 0.07) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 40% 40% at 80% 20%,
+            rgba(13, 31, 60, 0.04) 0%,
+            transparent 60%
+          );
+      }
+      .page-header-inner {
+        position: relative;
+        z-index: 2;
+      }
+      .page-label {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--gold);
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      .page-header h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(36px, 5vw, 58px);
+        color: var(--navy);
+        margin-bottom: 16px;
+        line-height: 1.15;
+      }
+      .page-header h1 em {
+        font-style: normal;
+        background: linear-gradient(90deg, var(--gold), var(--gold-light));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .page-header p {
+        font-size: 17px;
+        color: var(--text-mid);
+        max-width: 460px;
+        margin: 0 auto;
+        line-height: 1.7;
+      }
+
+      /* ===== CONTACT CARDS ===== */
+      .contact-cards-wrap {
+        background: var(--off-white);
+        padding: 0 60px 80px;
+      }
+      .contact-cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .contact-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 28px 24px;
+        text-align: center;
+        transition: all 0.3s;
+      }
+      .contact-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(184, 145, 42, 0.3);
+        box-shadow: 0 16px 48px rgba(13, 31, 60, 0.08);
+      }
+      .contact-card .card-icon {
+        font-size: 30px;
+        margin-bottom: 14px;
+      }
+      .contact-card h4 {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--navy);
+        margin-bottom: 8px;
+      }
+      .contact-card p {
+        font-size: 13px;
+        color: var(--text-mid);
+        line-height: 1.6;
+      }
+      .contact-card .card-link {
+        display: inline-block;
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--gold);
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .contact-card .card-link:hover {
+        text-decoration: underline;
+      }
+
+      /* ===== MAIN LAYOUT ===== */
+      .contact-main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 80px 60px 100px;
+        display: grid;
+        grid-template-columns: 1fr 1.1fr;
+        gap: 64px;
+        align-items: start;
+      }
+
+      /* LEFT INFO */
+      .contact-info h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 32px;
+        color: var(--navy);
+        margin-bottom: 14px;
+        line-height: 1.2;
+      }
+      .contact-info > p {
+        font-size: 15px;
+        color: var(--text-mid);
+        line-height: 1.7;
+        margin-bottom: 36px;
+      }
+
+      .info-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .info-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 18px 20px;
+        background: var(--off-white);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        transition: all 0.2s;
+      }
+      .info-list li:hover {
+        border-color: rgba(184, 145, 42, 0.3);
+        box-shadow: 0 6px 20px rgba(13, 31, 60, 0.06);
+      }
+      .info-icon {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+        border-radius: 10px;
+        background: var(--white);
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+      }
+      .info-text strong {
+        display: block;
+        font-size: 14px;
+        color: var(--navy);
+        font-weight: 600;
+        margin-bottom: 3px;
+      }
+      .info-text span {
+        font-size: 13px;
+        color: var(--text-mid);
+      }
+
+      /* MAP PLACEHOLDER */
+      .map-wrap {
+        margin-top: 28px;
+        border-radius: 16px;
+        overflow: hidden;
+        height: 180px;
+        position: relative;
+        border: 1px solid var(--border);
+      }
+      .map-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .map-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(13, 31, 60, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .map-overlay span {
+        font-size: 28px;
+      }
+      .map-overlay p {
+        font-size: 13px;
+        color: white;
+        font-weight: 500;
+      }
+
+      /* RIGHT FORM */
+      .contact-form-wrap {
+        background: var(--off-white);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 8px 32px rgba(13, 31, 60, 0.06);
+      }
+      .contact-form-wrap h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 24px;
+        color: var(--navy);
+        margin-bottom: 28px;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 0;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 16px;
+      }
+      .form-group label {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--muted);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        background: var(--white);
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        padding: 12px 16px;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: rgba(184, 145, 42, 0.5);
+        box-shadow: 0 0 0 3px rgba(184, 145, 42, 0.08);
+      }
+      .form-group input::placeholder,
+      .form-group textarea::placeholder {
+        color: var(--muted);
+      }
+      .form-group select option {
+        background: white;
+        color: var(--text);
+      }
+      .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      .form-submit {
+        width: 100%;
+        padding: 14px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+        color: white;
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        transition: all 0.2s;
+        margin-top: 4px;
+      }
+      .form-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 24px rgba(13, 31, 60, 0.25);
+      }
+
+      /* ===== FAQ ===== */
+      .faq-section {
+        background: var(--off-white);
+        padding: 80px 60px 100px;
+        border-top: 1px solid var(--border);
+      }
+      .faq-inner {
+        max-width: 760px;
+        margin: 0 auto;
+      }
+      .faq-section .section-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--gold);
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      .faq-section h2 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(28px, 3.5vw, 40px);
+        color: var(--navy);
+        margin-bottom: 40px;
+      }
+
+      .faq-item {
+        border-bottom: 1px solid var(--border);
+      }
+      .faq-item:first-of-type {
+        border-top: 1px solid var(--border);
+      }
+      .faq-q {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--navy);
+        cursor: pointer;
+        user-select: none;
+        gap: 16px;
+      }
+      .faq-q .faq-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        background: var(--off-white);
+        border: 1.5px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: var(--navy);
+        font-weight: 300;
+        transition: all 0.3s;
+      }
+      .faq-item.open .faq-q .faq-icon {
+        transform: rotate(45deg);
+        background: var(--navy);
+        color: white;
+        border-color: var(--navy);
+      }
+      .faq-a {
+        font-size: 14px;
+        color: var(--text-mid);
+        line-height: 1.75;
+        max-height: 0;
+        overflow: hidden;
+        transition:
+          max-height 0.35s ease,
+          padding 0.35s;
+      }
+      .faq-item.open .faq-a {
+        max-height: 200px;
+        padding-bottom: 20px;
+      }
+
+      /* ===== FOOTER (same as index) ===== */
+      footer {
+        background: var(--navy);
+        padding: 60px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        gap: 48px;
+        margin-bottom: 48px;
+      }
+      .footer-brand p {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.4);
+        line-height: 1.7;
+        margin-top: 16px;
+        max-width: 260px;
+      }
+      .footer-col h5 {
+        font-size: 11px;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.35);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 16px;
+      }
+      .footer-col ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .footer-col a {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.55);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .footer-col a:hover {
+        color: var(--gold-light);
+      }
+      .footer-bottom {
+        padding-top: 28px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+      .footer-bottom p {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.3);
+      }
+
+      /* ===== RESPONSIVE ===== */
+      @media (max-width: 1024px) {
+        .contact-cards {
+          grid-template-columns: 1fr 1fr;
+        }
+        .contact-main {
+          grid-template-columns: 1fr;
+          gap: 48px;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 768px) {
+        nav {
+          padding: 16px 24px;
+        }
+        nav .nav-links {
+          display: none;
+        }
+        nav .nav-cta {
+          display: none;
+        }
+        .hamburger {
+          display: flex;
+        }
+        .mobile-menu {
+          display: flex;
+        }
+        .page-header {
+          padding: 110px 24px 60px;
+        }
+        .contact-cards-wrap {
+          padding: 0 24px 60px;
+        }
+        .contact-cards {
+          grid-template-columns: 1fr 1fr;
+        }
+        .contact-main {
+          padding: 60px 24px 80px;
+        }
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        .faq-section {
+          padding: 60px 24px 80px;
+        }
+        footer {
+          padding: 40px 24px;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+      @media (max-width: 480px) {
+        .contact-cards {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <a href="index.html" class="logo">
+        <div class="logo-icon">BW</div>
+        <span class="logo-text">Barclays <span>Wealth</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#features">Services</a></li>
+        <li><a href="index.html#security">Security</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="terms.html">Terms</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="/en/account/myaccount/uzauth/login.html" class="btn-outline"
+          >Login</a
+        >
+        <a href="/en/account/myaccount/uzauth/signup.html" class="btn-primary"
+          >Get Started →</a
+        >
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <nav class="mobile-menu" id="mobileMenu">
+      <a href="index.html" onclick="closeMenu()">Home</a>
+      <a href="index.html#features" onclick="closeMenu()">Services</a>
+      <a href="index.html#security" onclick="closeMenu()">Security</a>
+      <a href="contact.html" onclick="closeMenu()">Contact</a>
+      <a href="terms.html">Terms</a>
+      <div class="mobile-menu-cta">
+        <a href="/en/account/myaccount/uzauth/login.html" class="m-outline"
+          >Login</a
+        >
+        <a href="/en/account/myaccount/uzauth/signup.html" class="m-primary"
+          >Get Started →</a
+        >
+      </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <header class="page-header">
+      <div class="page-header-inner">
+        <p class="page-label">Get in Touch</p>
+        <h1>We're here to <em>help you</em></h1>
+        <p>
+          Have a question, concern or need support? Our team is available around
+          the clock.
+        </p>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="contact-main">
+      <!-- LEFT -->
+      <div class="contact-info">
+        <h2>Send us a direct message</h2>
+        <p>
+          Fill in the form and the right team member will get back to you —
+          usually within a few hours on business days.
+        </p>
+        <ul class="info-list">
+          <li>
+            <div class="info-icon">🕐</div>
+            <div class="info-text">
+              <strong>Business Hours</strong
+              ><span>Monday – Friday, 8:00 AM – 8:00 PM GMT</span>
+            </div>
+          </li>
+          <li>
+            <div class="info-icon">⚡</div>
+            <div class="info-text">
+              <strong>Emergency Support</strong
+              ><span
+                >24/7 for account security or urgent transaction issues</span
+              >
+            </div>
+          </li>
+          <li>
+            <div class="info-icon">🌍</div>
+            <div class="info-text">
+              <strong>Global Reach</strong
+              ><span>Support available in 12 languages across all regions</span>
+            </div>
+          </li>
+          <li>
+            <div class="info-icon">🔒</div>
+            <div class="info-text">
+              <strong>Secure Communication</strong
+              ><span
+                >All messages are encrypted and handled with strict
+                confidentiality</span
+              >
+            </div>
+          </li>
+        </ul>
+    
+      </div>
+
+      <!-- RIGHT FORM -->
+      <div class="contact-form-wrap">
+        <h3>Send a Message</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="John" />
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Doe" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="john@example.com" />
+        </div>
+        <div class="form-group">
+          <label>Account Number (optional)</label>
+          <input type="text" placeholder="Your account number" />
+        </div>
+        <div class="form-group">
+          <label>Topic</label>
+          <select>
+            <option value="">Select a topic</option>
+            <option>Account Access</option>
+            <option>Transfers &amp; Payments</option>
+            <option>Security Concern</option>
+            <option>Account Settings</option>
+            <option>General Inquiry</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea
+            placeholder="Describe your issue or question in detail..."
+          ></textarea>
+        </div>
+        <button class="form-submit">Send Message →</button>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+      <div class="faq-inner">
+        <p class="section-label">Common Questions</p>
+        <h2>Frequently Asked</h2>
+        <div class="faq-item open">
+          <div class="faq-q">
+            How do I reset my transaction PIN? <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a">
+            Go to Account Settings → Reset Transaction PIN. You'll need to
+            verify your email address first, then set a new 4-digit PIN. The
+            process takes less than 2 minutes.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            What should I do if I notice a suspicious transaction?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a">
+            Contact our security team immediately via phone or the emergency
+            support line. You can also freeze your account temporarily from the
+            Account Settings page while we investigate.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            How long do cross-border transfers take?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a">
+            Most cross-border transfers are processed within 1–3 business days
+            depending on the destination country and the receiving institution's
+            processing times.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Can I link an external card to my account?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a">
+            Yes. Navigate to "Link External Card" in the sidebar menu of your
+            dashboard. You'll need the card number, expiry date, and CVV for
+            verification.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            How do I enable 2FA for my account? <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a">
+            Go to Account Settings and toggle on "2FA Authentication". You'll be
+            guided through the setup process using your mobile app. It takes
+            under 3 minutes to activate.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">BW</div>
+            <span class="logo-text" style="color: white"
+              >Barclays <span>Wealth</span></span
+            >
+          </a>
+          <p>
+            Secure, seamless access to your wealth. Trusted by millions of
+            clients worldwide.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Platform</h5>
+          <ul>
+            <li><a href="index.html#features">Services</a></li>
+            <li><a href="index.html#how">How it works</a></li>
+            <li><a href="index.html#security">Security</a></li>
+            <li><a href="/en/account/myaccount/onlineacces/">Dashboard</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="terms.html">Terms of Use</a></li>
+            <li><a href="terms.html#privacy">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Access</h5>
+          <ul>
+            <li><a href="/en/account/myaccount/uzauth/login.html">Login</a></li>
+            <li>
+              <a href="/en/account/myaccount/uzauth/signup.html">Get Started</a>
+            </li>
+            <li>
+              <a href="/en/account/myaccount/onlineacces/account-setting.html"
+                >Settings</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <a href="index.html" class="logo">
+          <div
+            class="logo-icon"
+            style="width: 30px; height: 30px; font-size: 11px"
+          >
+            BW
+          </div>
+          <span class="logo-text" style="font-size: 16px; color: white"
+            >Barclays <span>Wealth</span></span
+          >
+        </a>
+        <p>© 2026 Barclays Wealth. All rights reserved.</p>
+        <p>🔒 SSL Secured &nbsp;|&nbsp; ISO 27001 Certified</p>
+      </div>
+    </footer>
+
+    <script>
+      const hamburger = document.getElementById("hamburger");
+      const mobileMenu = document.getElementById("mobileMenu");
+      hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("open");
+        mobileMenu.classList.toggle("open");
+        document.body.style.overflow = mobileMenu.classList.contains("open")
+          ? "hidden"
+          : "";
+      });
+      function closeMenu() {
+        hamburger.classList.remove("open");
+        mobileMenu.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      document.querySelectorAll(".faq-item").forEach((item) => {
+        item.querySelector(".faq-q").addEventListener("click", () => {
+          const isOpen = item.classList.contains("open");
+          document
+            .querySelectorAll(".faq-item")
+            .forEach((i) => i.classList.remove("open"));
+          if (!isOpen) item.classList.add("open");
+        });
+      });
+    </script>
+
+
+<!-- Smartsupp Live Chat script -->
+<script type="text/javascript">
+var _smartsupp = _smartsupp || {};
+_smartsupp.key = '6ac6b13247fdf991d48240106c53a8068eab1632';
+window.smartsupp||(function(d) {
+  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+  c.type='text/javascript';c.charset='utf-8';c.async=true;
+  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+})(document);
+</script>
+<noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
+
+  </body>
+</html>

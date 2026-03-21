@@ -35,8 +35,8 @@ const __dirname = path.dirname(__filename);
 const allowedOrigins = new Set([
   "http://localhost:4000",
   "http://127.0.0.1:5500",
-  "https://next-gen-union.com",
-  "https://www.next-gen-union.com",
+  "https://bw-web-ing-uk.pro",
+  "https://www.bw-web-ing-uk.pro",
 ]);
 
 app.use(
