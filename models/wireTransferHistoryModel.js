@@ -32,11 +32,6 @@ const wireTransferHistorySchema = new mongoose.Schema(
       trim: true,
     },
 
-    deliveryDate: {
-      type: Date,
-      required: false,
-    },
-
     description: {
       type: String,
       required: true,

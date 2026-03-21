@@ -21,6 +21,7 @@ import AdminCreditUserRouter from "./route/adminTransferRoutes.js";
 import AdminEmailRouter from "./route/adminEmailRoutes.js";
 import AdminAuthRouter from "./route/adminAuthRoutes.js";
 import CaptchaRouter from "./route/CaptchaRoute.js";
+import AdminWireTransferRouter from "./route/adminWireTransferRouter.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -93,6 +94,8 @@ app.use("/api/admin/messages", AdminEmailRouter);
 app.use("/api/admin", AdminCreditUserRouter);
 
 app.use("/api/admin/auth", AdminAuthRouter);
+
+app.use("/api/admin/wire-transfers", AdminWireTransferRouter);
 
 
 //Captcha

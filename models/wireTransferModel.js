@@ -49,15 +49,7 @@ const wireTransferSchema = new mongoose.Schema(
     accountholder: { type: String, trim: true, default: "" },
     accounttype: { type: String, trim: true, default: "" },
     bankname: { type: String, trim: true, default: "" },
-
-    // Admin / processing states (recommended)
-    status: {
-      type: String,
-      enum: ["pending", "processing", "successful", "failed"],
-      default: "pending",
-      index: true,
-    },
-
+    
     // Optional reference for tracking
     reference: { type: String, trim: true, unique: true, sparse: true },
   },

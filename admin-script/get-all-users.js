@@ -323,6 +323,17 @@
       window.location.href = `/admin/owner/dashboard/add-transaction.html?userId=${encodeURIComponent(activeUserId)}`;
     });
 
+    // User Cross Border Transaction button
+    document.getElementById("amCrossBorderTxBtn")?.addEventListener("click", () => {
+      if (!activeUserId) return;
+      window.location.href = `/admin/owner/dashboard/user-cross-border-transaction.html?userId=${encodeURIComponent(activeUserId)}`;
+    });
+
+     // Add Cross Border Transaction button
+    document.getElementById("addCrossBorderTransactionBtn")?.addEventListener("click", () => {
+      if (!activeUserId) return;
+      window.location.href = `/admin/owner/dashboard/add-cross-border-transaction.html?userId=${encodeURIComponent(activeUserId)}`;
+    });
   
   }
 
