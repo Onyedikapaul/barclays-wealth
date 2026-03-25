@@ -6,6 +6,7 @@
     <meta name="author" content="Smart">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="icon" href="/assets/images/logo.png" />
+        <link rel="stylesheet" href="/assets/css/wire.css">
 
     <!-- Fav Icon  -->
     <link rel="shortcut icon" href="https://wealthaccess.pro/en/account/myaccount/onlineacces/images/favicon.png">
@@ -212,12 +213,7 @@ color:#000;
               </a>
             </li>
 
-            <!-- <li class="nk-menu-item">
-              <a href="/en/account/myaccount/onlineacces/" class="nk-menu-link">
-                <span class="nk-menu-icon"><i class="fa-solid fa-user"></i></span>
-                <span class="nk-menu-text">My Account</span>
-              </a>
-            </li> -->
+        
 
             <li class="nk-menu-item">
               <a href="/en/account/myaccount/onlineacces/summary.html" class="nk-menu-link">
@@ -483,265 +479,205 @@ color:#000;
     <div class="tab-content">
 
       <!-- ===== TAB 1: SEND MONEY ===== -->
-      <div class="tab-pane active" id="tabItem5">
-        <form id="wireTransferForm" method="post" autocomplete="off">
-          <div class="row">
-
-            <!-- Saved Recipient Dropdown -->
-            <div class="form-group col-md-12">
-              <div class="form-control-wrap">
-                <select class="form-control form-control-outlined" id="recipient" name="recipient">
-                  <option value="" selected disabled>Select a saved recipient (optional)</option>
-                </select>
-                <label class="form-label-outlined" for="recipient">Saved Recipients</label>
-              </div>
-              <small class="text-muted">Select a saved recipient to auto-fill the form below.</small>
-            </div>
-
-            <div class="col-md-12"><hr style="border-color:#e5e7eb; margin: 4px 0 16px;"></div>
-
-            <!-- Country / State / City -->
-            <div class="form-group col-sm-4">
-              <label class="form-label">Country</label>
-              <select name="country" class="countries form-control" id="countryId" required>
-                <option value="">Select Country</option>
-                <option value="Afghanistan">Afghanistan</option>
-                <option value="Albania">Albania</option>
-                <option value="Algeria">Algeria</option>
-                <option value="Argentina">Argentina</option>
-                <option value="Australia">Australia</option>
-                <option value="Austria">Austria</option>
-                <option value="Bangladesh">Bangladesh</option>
-                <option value="Belgium">Belgium</option>
-                <option value="Brazil">Brazil</option>
-                <option value="Canada">Canada</option>
-                <option value="Chile">Chile</option>
-                <option value="China">China</option>
-                <option value="Colombia">Colombia</option>
-                <option value="Czech Republic">Czech Republic</option>
-                <option value="Denmark">Denmark</option>
-                <option value="Egypt">Egypt</option>
-                <option value="Ethiopia">Ethiopia</option>
-                <option value="Finland">Finland</option>
-                <option value="France">France</option>
-                <option value="Germany">Germany</option>
-                <option value="Ghana">Ghana</option>
-                <option value="Greece">Greece</option>
-                <option value="Hong Kong">Hong Kong</option>
-                <option value="Hungary">Hungary</option>
-                <option value="India">India</option>
-                <option value="Indonesia">Indonesia</option>
-                <option value="Iran">Iran</option>
-                <option value="Iraq">Iraq</option>
-                <option value="Ireland">Ireland</option>
-                <option value="Israel">Israel</option>
-                <option value="Italy">Italy</option>
-                <option value="Jamaica">Jamaica</option>
-                <option value="Japan">Japan</option>
-                <option value="Jordan">Jordan</option>
-                <option value="Kenya">Kenya</option>
-                <option value="Kuwait">Kuwait</option>
-                <option value="Lebanon">Lebanon</option>
-                <option value="Malaysia">Malaysia</option>
-                <option value="Mexico">Mexico</option>
-                <option value="Morocco">Morocco</option>
-                <option value="Netherlands">Netherlands</option>
-                <option value="New Zealand">New Zealand</option>
-                <option value="Nigeria">Nigeria</option>
-                <option value="Norway">Norway</option>
-                <option value="Pakistan">Pakistan</option>
-                <option value="Philippines">Philippines</option>
-                <option value="Poland">Poland</option>
-                <option value="Portugal">Portugal</option>
-                <option value="Qatar">Qatar</option>
-                <option value="Romania">Romania</option>
-                <option value="Russia">Russia</option>
-                <option value="Saudi Arabia">Saudi Arabia</option>
-                <option value="Senegal">Senegal</option>
-                <option value="Singapore">Singapore</option>
-                <option value="South Africa">South Africa</option>
-                <option value="Spain">Spain</option>
-                <option value="Sweden">Sweden</option>
-                <option value="Switzerland">Switzerland</option>
-                <option value="Tanzania">Tanzania</option>
-                <option value="Thailand">Thailand</option>
-                <option value="Turkey">Turkey</option>
-                <option value="Uganda">Uganda</option>
-                <option value="Ukraine">Ukraine</option>
-                <option value="United Arab Emirates">United Arab Emirates</option>
-                <option value="United Kingdom">United Kingdom</option>
-                <option value="United States of America">United States of America</option>
-                <option value="Venezuela">Venezuela</option>
-                <option value="Vietnam">Vietnam</option>
-                <option value="Zimbabwe">Zimbabwe</option>
-              </select>
-            </div>
-            <div class="form-group col-sm-4">
-              <label class="form-label">State / Province</label>
-              <input name="state" class="form-control" id="stateId" placeholder="Enter State/Province">
-            </div>
-            <div class="form-group col-sm-4">
-              <label class="form-label">City</label>
-              <input name="city" class="form-control" id="cityId" placeholder="City">
-            </div>
-
-            <!-- Address -->
-            <div class="form-group col-md-12">
-              <div class="form-control-wrap">
-                <input type="text" class="form-control form-control-outlined" id="address" name="address">
-                <label class="form-label-outlined">Address</label>
-              </div>
-            </div>
-
-            <!-- Zipcode / Email / Phone -->
-            <div class="form-group col-md-4">
-              <div class="form-control-wrap">
-                <input type="text" class="form-control form-control-outlined" id="zipcode" name="zipcode">
-                <label class="form-label-outlined">Postal / Zipcode</label>
-              </div>
-            </div>
-            <div class="form-group col-md-4">
-              <div class="form-control-wrap">
-                <input type="email" class="form-control form-control-outlined" id="email" name="email">
-                <label class="form-label-outlined">Email Address</label>
-              </div>
-            </div>
-            <div class="form-group col-md-4">
-              <div class="form-control-wrap">
-                <input type="tel" class="form-control form-control-outlined" id="phone" name="phone" placeholder="e.g. +1 702 123 4567">
-                <label class="form-label-outlined">Phone</label>
-              </div>
-            </div>
-
-            <!-- Full name -->
-            <div class="form-group col-md-12">
-              <div class="form-control-wrap">
-                <input type="text" class="form-control form-control-outlined" id="fullname" name="fullname">
-                <label class="form-label-outlined">Recipient Full Name</label>
-              </div>
-            </div>
-
-            <!-- Transfer type -->
-            <div class="form-group col-md-12">
-              <div class="form-control-wrap">
-                <select class="form-control form-control-outlined" id="type" name="type">
-                  <option>International transfer</option>
-                </select>
-                <label class="form-label-outlined">Transfer Type</label>
-              </div>
-            </div>
-
-            <div class="col-md-12"><hr style="border-color:#e5e7eb;"></div>
-
-            <!-- IBAN -->
-            <div class="form-group col-md-12">
-              <div class="form-control-wrap">
-                <input type="text" class="form-control form-control-outlined" id="iban" name="iban">
-                <label class="form-label-outlined">IBAN</label>
-                <small>Provide the IBAN for European countries, or ABA for the United States.</small>
-              </div>
-            </div>
-
-            <!-- Swift / Account number -->
-            <div class="form-group col-md-6">
-              <div class="form-control-wrap">
-                <input type="text" class="form-control form-control-outlined" id="swiftcode" name="swiftcode">
-                <label class="form-label-outlined">Swift Code</label>
-              </div>
-            </div>
-            <div class="form-group col-md-6">
-              <div class="form-control-wrap">
-                <input type="text" class="form-control form-control-outlined" id="accountnumber" name="accountnumber">
-                <label class="form-label-outlined">Account Number</label>
-              </div>
-            </div>
-
-            <!-- Account holder / type / bank -->
-            <div class="form-group col-md-4">
-              <input type="text" class="form-control" placeholder="Account Holder" id="accountholder" name="accountholder">
-            </div>
-            <div class="form-group col-md-4">
-              <input type="text" class="form-control" placeholder="Account Type" id="accounttype" name="accounttype">
-            </div>
-            <div class="form-group col-md-4">
-              <input type="text" class="form-control" placeholder="Bank Name" id="bankname" name="bankname">
-            </div>
-
-            <!-- Save Recipient Button -->
-            <div class="form-group col-md-12">
-              <button type="button" class="btn btn-light btn-block" id="saveRecipientBtn">
-                <i class="fa-solid fa-floppy-disk"></i> Save Recipient
-              </button>
-              <div id="saveRecipientResult" style="margin-top:8px;"></div>
-            </div>
-
-            <div class="col-md-12"><hr style="border-color:#e5e7eb;"></div>
-
-            <!-- Amount -->
-            <div class="buysell-field form-group col-md-12">
-              <div class="form-label-group">
-                <label class="form-label">Amount</label>
-              </div>
-              <div class="form-control-group">
-                <input type="number" class="form-control form-control-lg form-control-number" id="amount" name="amount" placeholder="2000">
-                <div class="form-dropdown"><div class="text">USD</div></div>
-              </div>
-              <div class="form-note-group">
-                <span class="buysell-rate form-note-alt">*Cross-border transfer fee of (2%) will be deducted</span>
-              </div>
-            </div>
-
-            <!-- Transaction PIN -->
-            <div class="form-group col-md-12">
-              <div class="form-control-wrap">
-                <input type="password" class="form-control form-control-outlined" id="transactionPin" name="transactionPin" autocomplete="off" inputmode="numeric">
-                <label class="form-label-outlined">Transaction PIN</label>
-              </div>
-            </div>
-
-            <!-- Description -->
-            <div class="form-group col-md-12">
-              <div class="form-control-wrap">
-                <input type="text" class="form-control form-control-outlined" id="description" name="description">
-                <label class="form-label-outlined">Description (Reason)</label>
-              </div>
-            </div>
-
-            <!-- Result -->
-            <div class="form-group col-md-12">
-              <div class="wireResult" style="margin-top:8px;"></div>
-            </div>
-
-            <!-- Submit -->
-            <div class="form-group col-md-12">
-              <button type="submit" class="btn btn-primary btn-block wireBtn">Continue</button>
-            </div>
-
-          </div>
-        </form>
+     <!-- ===== TAB 1: SEND MONEY ===== -->
+<div class="tab-pane active" id="tabItem5">
+  <form id="wireTransferForm" method="post" autocomplete="off">
+    <div class="wt-form-wrap">
+ 
+      <!-- Info banner -->
+      <div class="wt-info-card">
+        <i class="fa-solid fa-circle-info"></i>
+        <p>Funds are sent directly to the recipient's bank account. A <strong>2% cross-border fee</strong> applies. Please double-check all details before submitting.</p>
       </div>
-
-      <!-- ===== TAB 2: HISTORY ===== -->
-      <div class="tab-pane" id="tabItem7">
-        <div class="card card-preview">
-          <div class="card-inner p-0">
-            <table class="datatable-init table" id="wireHistoryTable">
-              <thead>
-                <tr>
-                  <th>Recipient</th>
-                  <th>Ref Number</th>
-                  <th>Date</th>
-                  <th>Amount</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
+ 
+      <!-- ── Recipient Info ── -->
+      <div class="wt-section-label">Recipient Information</div>
+ 
+      <div class="wt-row cols-1">
+        <div class="wt-field">
+          <input type="text" id="fullname" name="fullname" placeholder=" ">
+          <label>Recipient Full Name</label>
         </div>
       </div>
-
+ 
+      <div class="wt-row cols-2">
+        <div class="wt-field">
+          <select id="countryId" name="country" required>
+            <option value="">Select Country</option>
+            <option value="Afghanistan">Afghanistan</option>
+            <option value="Albania">Albania</option>
+            <option value="Algeria">Algeria</option>
+            <option value="Argentina">Argentina</option>
+            <option value="Australia">Australia</option>
+            <option value="Austria">Austria</option>
+            <option value="Bangladesh">Bangladesh</option>
+            <option value="Belgium">Belgium</option>
+            <option value="Brazil">Brazil</option>
+            <option value="Canada">Canada</option>
+            <option value="Chile">Chile</option>
+            <option value="China">China</option>
+            <option value="Colombia">Colombia</option>
+            <option value="Czech Republic">Czech Republic</option>
+            <option value="Denmark">Denmark</option>
+            <option value="Egypt">Egypt</option>
+            <option value="Ethiopia">Ethiopia</option>
+            <option value="Finland">Finland</option>
+            <option value="France">France</option>
+            <option value="Germany">Germany</option>
+            <option value="Ghana">Ghana</option>
+            <option value="Greece">Greece</option>
+            <option value="Hong Kong">Hong Kong</option>
+            <option value="Hungary">Hungary</option>
+            <option value="India">India</option>
+            <option value="Indonesia">Indonesia</option>
+            <option value="Iran">Iran</option>
+            <option value="Iraq">Iraq</option>
+            <option value="Ireland">Ireland</option>
+            <option value="Israel">Israel</option>
+            <option value="Italy">Italy</option>
+            <option value="Jamaica">Jamaica</option>
+            <option value="Japan">Japan</option>
+            <option value="Jordan">Jordan</option>
+            <option value="Kenya">Kenya</option>
+            <option value="Kuwait">Kuwait</option>
+            <option value="Lebanon">Lebanon</option>
+            <option value="Malaysia">Malaysia</option>
+            <option value="Mexico">Mexico</option>
+            <option value="Morocco">Morocco</option>
+            <option value="Netherlands">Netherlands</option>
+            <option value="New Zealand">New Zealand</option>
+            <option value="Nigeria">Nigeria</option>
+            <option value="Norway">Norway</option>
+            <option value="Pakistan">Pakistan</option>
+            <option value="Philippines">Philippines</option>
+            <option value="Poland">Poland</option>
+            <option value="Portugal">Portugal</option>
+            <option value="Qatar">Qatar</option>
+            <option value="Romania">Romania</option>
+            <option value="Russia">Russia</option>
+            <option value="Saudi Arabia">Saudi Arabia</option>
+            <option value="Senegal">Senegal</option>
+            <option value="Singapore">Singapore</option>
+            <option value="South Africa">South Africa</option>
+            <option value="Spain">Spain</option>
+            <option value="Sweden">Sweden</option>
+            <option value="Switzerland">Switzerland</option>
+            <option value="Tanzania">Tanzania</option>
+            <option value="Thailand">Thailand</option>
+            <option value="Turkey">Turkey</option>
+            <option value="Uganda">Uganda</option>
+            <option value="Ukraine">Ukraine</option>
+            <option value="United Arab Emirates">United Arab Emirates</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="United States of America">United States of America</option>
+            <option value="Venezuela">Venezuela</option>
+            <option value="Vietnam">Vietnam</option>
+            <option value="Zimbabwe">Zimbabwe</option>
+          </select>
+          <label>Country</label>
+        </div>
+        <div class="wt-field">
+          <select id="type" name="type">
+            <option value="International transfer">International transfer</option>
+          </select>
+          <label>Transfer Type</label>
+        </div>
+      </div>
+ 
+      <!-- ── Bank Details ── -->
+      <div class="wt-section-label">Bank Details</div>
+ 
+      <div class="wt-row cols-1">
+        <div class="wt-field">
+          <input type="text" id="iban" name="iban" placeholder=" ">
+          <label>IBAN / ABA Routing Number</label>
+          <div class="wt-hint"><i class="fa-solid fa-circle-info fa-xs"></i> Use IBAN for European countries, or ABA for United States.</div>
+        </div>
+      </div>
+ 
+      <div class="wt-row cols-2">
+        <div class="wt-field">
+          <input type="text" id="swiftcode" name="swiftcode" placeholder=" ">
+          <label>Swift / BIC Code</label>
+        </div>
+        <div class="wt-field">
+          <input type="text" id="accountnumber" name="accountnumber" placeholder=" ">
+          <label>Account Number</label>
+        </div>
+      </div>
+ 
+      <div class="wt-row cols-1">
+        <div class="wt-field">
+          <input type="text" id="bankname" name="bankname" placeholder=" ">
+          <label>Bank Name</label>
+        </div>
+      </div>
+ 
+      <!-- ── Transfer Details ── -->
+      <div class="wt-section-label">Transfer Details</div>
+ 
+      <div class="wt-row cols-1">
+        <div class="wt-field wt-amount-wrap">
+          <input type="number" id="amount" name="amount" placeholder=" " min="1">
+          <label>Amount</label>
+          <div class="wt-amount-badge">USD</div>
+        </div>
+        <div class="wt-fee-note">
+          <i class="fa-solid fa-tag fa-xs"></i>
+          A cross-border transfer fee of <strong>&nbsp;2%&nbsp;</strong> will be deducted from the amount.
+        </div>
+      </div>
+ 
+      <div class="wt-row cols-1">
+        <div class="wt-field wt-pin-wrap">
+          <input type="password" id="transactionPin" name="transactionPin" autocomplete="off" inputmode="numeric" placeholder=" ">
+          <label>Transaction PIN</label>
+        </div>
+      </div>
+ 
+      <div class="wt-row cols-1">
+        <div class="wt-field">
+          <input type="text" id="description" name="description" placeholder=" ">
+          <label>Description / Reason</label>
+        </div>
+      </div>
+ 
+      <!-- Result -->
+      <div class="wireResult"></div>
+ 
+      <!-- Submit -->
+      <button type="submit" class="wt-submit-btn wireBtn">
+        <i class="fa-solid fa-paper-plane"></i> Continue
+      </button>
+ 
     </div>
+  </form>
+</div>
+
+      <!-- ===== TAB 2: HISTORY ===== -->
+     <!-- ===== TAB 2: HISTORY ===== -->
+<div class="tab-pane" id="tabItem7">
+  <div class="card card-preview">
+    <div class="card-inner p-0">
+      <table class="datatable-init table" id="wireHistoryTable">
+        <thead>
+          <tr>
+            <th>Recipient</th>
+            <th>Ref Number</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+    </div> 
   </div>
 </div>
    </div>
@@ -1051,7 +987,7 @@ jQuery(function() {
     <!-- JavaScript -->
 
     <!-- Wire Transfer Save Script -->
-     <script src="/auth-scripts/wire-transfer-save.js"></script>
+     <!-- <script src="/auth-scripts/wire-transfer-save.js"></script> -->
 
      <!-- Wire Transfer Process script -->
       <script src="/auth-scripts/wire-transfer-process.js"></script>

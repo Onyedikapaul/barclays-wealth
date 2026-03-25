@@ -6,427 +6,84 @@
     <title>Add Cross Border Transaction</title>
     <link rel="stylesheet" href="/admin/owner/dashboard/css/layout.css" />
     <link rel="icon" href="/assets/images/logo.png" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
     <style>
-      * {
-        box-sizing: border-box;
-      }
-      body {
-        font-family: "DM Sans", sans-serif;
-      
-      }
+      * { box-sizing: border-box; }
+      body { font-family: "DM Sans", sans-serif; }
 
-      .page-wrap {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 90%;
-        margin-top: 25px;
-        margin-bottom: 60px;
-      }
-      .page-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        width: 90%;
-        margin: 40px 0 1.5rem;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-      .page-head h1 {
-        margin: 0;
-        font-size: 1.6rem;
-        font-weight: 600;
-        color: #111827;
-      }
-      .page-head p {
-        margin: 5px 0 0;
-        color: #6b7280;
-        font-size: 0.875rem;
-      }
+      .page-wrap { display: flex; flex-direction: column; align-items: center; width: 90%; margin-top: 25px; margin-bottom: 60px; }
+      .page-head { display: flex; justify-content: space-between; align-items: flex-start; width: 90%; margin: 40px 0 1.5rem; flex-wrap: wrap; gap: 12px; }
+      .page-head h1 { margin: 0; font-size: 1.6rem; font-weight: 600; color: #111827; }
+      .page-head p { margin: 5px 0 0; color: #6b7280; font-size: 0.875rem; }
 
-      .btn-ghost {
-        background: transparent;
-        border: 1px solid #d1d5db;
-        color: #374151;
-        font-family: inherit;
-        font-size: 0.875rem;
-        font-weight: 500;
-        padding: 0.5rem 1.1rem;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background 0.15s;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-      }
-      .btn-ghost:hover {
-        background: #f3f4f6;
-      }
+      .btn-ghost { background: transparent; border: 1px solid #d1d5db; color: #374151; font-family: inherit; font-size: 0.875rem; font-weight: 500; padding: 0.5rem 1.1rem; border-radius: 8px; cursor: pointer; transition: background 0.15s; text-decoration: none; display: inline-flex; align-items: center; }
+      .btn-ghost:hover { background: #f3f4f6; }
 
-      /* User card */
-      .user-card {
-        width: 90%;
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 14px;
-        padding: 16px 20px;
-        margin-bottom: 24px;
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        flex-wrap: wrap;
-        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
-      }
-      .user-avatar {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        flex-shrink: 0;
-        background: linear-gradient(135deg, #033d75, #0a5298);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        font-size: 16px;
-        font-weight: 700;
-      }
-      .user-info .name {
-        font-size: 15px;
-        font-weight: 700;
-        color: #111827;
-      }
-      .user-info .email {
-        font-size: 12px;
-        color: #9ca3af;
-        margin-top: 2px;
-      }
-      .user-balances {
-        margin-left: auto;
-      }
-      .bal-label {
-        font-size: 10px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        color: #9ca3af;
-      }
-      .bal-value {
-        font-size: 18px;
-        font-weight: 700;
-        color: #111827;
-        margin-top: 2px;
-      }
+      .user-card { width: 90%; background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+      .user-avatar { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, #033d75, #0a5298); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; font-weight: 700; }
+      .user-info .name { font-size: 15px; font-weight: 700; color: #111827; }
+      .user-info .email { font-size: 12px; color: #9ca3af; margin-top: 2px; }
+      .user-balances { margin-left: auto; }
+      .bal-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #9ca3af; }
+      .bal-value { font-size: 18px; font-weight: 700; color: #111827; margin-top: 2px; }
 
-      /* Form card */
-      .form-card {
-        width: 90%;
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 14px;
-        overflow: hidden;
-        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
-      }
-      .form-section {
-        padding: 20px 24px;
-        border-bottom: 1px solid #f3f4f6;
-      }
-      .form-section:last-of-type {
-        border-bottom: none;
-      }
-      .section-title {
-        font-size: 13px;
-        font-weight: 700;
-        color: #033d75;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        margin-bottom: 16px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .section-title::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background: #e5e7eb;
-      }
+      .form-card { width: 90%; background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+      .form-section { padding: 20px 24px; border-bottom: 1px solid #f3f4f6; }
+      .form-section:last-of-type { border-bottom: none; }
+      .section-title { font-size: 13px; font-weight: 700; color: #033d75; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+      .section-title::after { content: ""; flex: 1; height: 1px; background: #e5e7eb; }
 
-      .form-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-      }
-      .form-grid.three {
-        grid-template-columns: 1fr 1fr 1fr;
-      }
-      .form-grid.full {
-        grid-template-columns: 1fr;
-      }
+      .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .form-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+      .form-grid.full { grid-template-columns: 1fr; }
 
-      .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-      .form-group label {
-        font-size: 11px;
-        font-weight: 700;
-        color: #6b7280;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-      }
-      .form-group input,
-      .form-group select,
-      .form-group textarea {
-        padding: 10px 14px;
-        border: 1.5px solid #e5e7eb;
-        border-radius: 9px;
-        font-size: 14px;
-        font-family: inherit;
-        color: #111827;
-        outline: none;
-        transition:
-          border-color 0.2s,
-          box-shadow 0.2s;
-        background: #fff;
-      }
-      .form-group input:focus,
-      .form-group select:focus,
-      .form-group textarea:focus {
-        border-color: #033d75;
-        box-shadow: 0 0 0 3px rgba(3, 61, 117, 0.08);
-      }
-      .form-group input::placeholder,
-      .form-group textarea::placeholder {
-        color: #9ca3af;
-      }
-      .form-group textarea {
-        resize: vertical;
-        min-height: 80px;
-      }
-      .form-group small {
-        font-size: 11px;
-        color: #9ca3af;
-        margin-top: 2px;
-      }
+      .form-group { display: flex; flex-direction: column; gap: 6px; }
+      .form-group label { font-size: 11px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; }
+      .form-group input, .form-group select, .form-group textarea { padding: 10px 14px; border: 1.5px solid #e5e7eb; border-radius: 9px; font-size: 14px; font-family: inherit; color: #111827; outline: none; transition: border-color 0.2s, box-shadow 0.2s; background: #fff; }
+      .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #033d75; box-shadow: 0 0 0 3px rgba(3,61,117,0.08); }
+      .form-group input::placeholder, .form-group textarea::placeholder { color: #9ca3af; }
+      .form-group textarea { resize: vertical; min-height: 80px; }
+      .form-group small { font-size: 11px; color: #9ca3af; margin-top: 2px; }
 
-      /* Status selector */
-      .status-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
-      }
-      .status-opt {
-        position: relative;
-      }
-      .status-opt input[type="radio"] {
-        display: none;
-      }
-      .status-opt label {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 6px;
-        padding: 12px 8px;
-        border: 2px solid #e5e7eb;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: all 0.2s;
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: none;
-        letter-spacing: 0;
-        color: #6b7280;
-        text-align: center;
-      }
-      .status-opt label .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-      }
-      .status-opt input:checked + label {
-        border-color: #033d75;
-        background: #eff6ff;
-        color: #033d75;
-      }
-      .status-opt.pending input:checked + label {
-        border-color: #f59e0b;
-        background: #fffaeb;
-        color: #92400e;
-      }
-      .status-opt.processing input:checked + label {
-        border-color: #3b82f6;
-        background: #eff6ff;
-        color: #1e3a8a;
-      }
-      .status-opt.successful input:checked + label {
-        border-color: #10b981;
-        background: #ecfdf5;
-        color: #065f46;
-      }
-      .status-opt.failed input:checked + label {
-        border-color: #ef4444;
-        background: #fef2f2;
-        color: #991b1b;
-      }
+      .status-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+      .status-opt { position: relative; }
+      .status-opt input[type="radio"] { display: none; }
+      .status-opt label { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 8px; border: 2px solid #e5e7eb; border-radius: 10px; cursor: pointer; transition: all 0.2s; font-size: 12px; font-weight: 600; text-transform: none; letter-spacing: 0; color: #6b7280; text-align: center; }
+      .status-opt label .dot { width: 10px; height: 10px; border-radius: 50%; }
+      .status-opt.pending input:checked + label { border-color: #f59e0b; background: #fffaeb; color: #92400e; }
+      .status-opt.processing input:checked + label { border-color: #3b82f6; background: #eff6ff; color: #1e3a8a; }
+      .status-opt.successful input:checked + label { border-color: #10b981; background: #ecfdf5; color: #065f46; }
+      .status-opt.failed input:checked + label { border-color: #ef4444; background: #fef2f2; color: #991b1b; }
 
-      /* Balance preview */
-      .balance-preview {
-        background: #f8fafc;
-        border: 1px solid #e5e7eb;
-        border-radius: 10px;
-        padding: 14px 18px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 6px;
-      }
-      .balance-preview .label {
-        font-size: 12px;
-        color: #6b7280;
-        font-weight: 500;
-      }
-      .balance-preview .value {
-        font-size: 16px;
-        font-weight: 700;
-        color: #111827;
-      }
-      .balance-preview .note {
-        font-size: 11px;
-        color: #9ca3af;
-        margin-top: 2px;
-      }
-      .deduct {
-        color: #ef4444 !important;
-      }
-      .nochange {
-        color: #9ca3af !important;
-      }
+      .balance-preview { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+      .balance-preview .label { font-size: 12px; color: #6b7280; font-weight: 500; }
+      .balance-preview .value { font-size: 16px; font-weight: 700; color: #111827; }
+      .balance-preview .note { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+      .deduct { color: #ef4444 !important; }
+      .nochange { color: #9ca3af !important; }
 
-      /* Submit */
-      .form-footer {
-        padding: 20px 24px;
-        background: #f9fafb;
-        border-top: 1px solid #e5e7eb;
-        display: flex;
-        gap: 12px;
-        align-items: center;
-        flex-wrap: wrap;
-      }
-      .btn-submit {
-        padding: 12px 32px;
-        background: linear-gradient(135deg, #033d75, #0a5298);
-        color: #fff;
-        border: none;
-        border-radius: 10px;
-        font-family: inherit;
-        font-size: 15px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-      .btn-submit:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 8px 24px rgba(3, 61, 117, 0.25);
-      }
-      .btn-submit:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-        transform: none;
-        box-shadow: none;
-      }
+      .form-footer { padding: 20px 24px; background: #f9fafb; border-top: 1px solid #e5e7eb; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+      .btn-submit { padding: 12px 32px; background: linear-gradient(135deg, #033d75, #0a5298); color: #fff; border: none; border-radius: 10px; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+      .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(3,61,117,0.25); }
+      .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
 
-      /* Result */
-      .result-wrap {
-        margin-top: 4px;
-      }
-      .alert {
-        padding: 12px 16px;
-        border-radius: 9px;
-        font-size: 14px;
-        font-weight: 500;
-      }
-      .alert-success {
-        background: #d1fae5;
-        color: #065f46;
-        border-left: 4px solid #10b981;
-      }
-      .alert-danger {
-        background: #fee2e2;
-        color: #991b1b;
-        border-left: 4px solid #ef4444;
-      }
-      .alert-warning {
-        background: #fef3c7;
-        color: #92400e;
-        border-left: 4px solid #f59e0b;
-      }
+      .result-wrap { margin-top: 4px; }
+      .alert { padding: 12px 16px; border-radius: 9px; font-size: 14px; font-weight: 500; }
+      .alert-success { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+      .alert-danger { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+      .alert-warning { background: #fef3c7; color: #92400e; border-left: 4px solid #f59e0b; }
 
-      /* Toast */
-      .toast-container {
-        position: fixed;
-        top: 1.5rem;
-        right: 1.5rem;
-        z-index: 9999;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-      .toast {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.85rem 1.2rem;
-        border-radius: 8px;
-        font-size: 0.875rem;
-        font-weight: 500;
-        min-width: 280px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-        animation: slideIn 0.25s ease;
-      }
-      .toast.success {
-        background: #d1fae5;
-        color: #065f46;
-        border-left: 4px solid #10b981;
-      }
-      .toast.error {
-        background: #fee2e2;
-        color: #991b1b;
-        border-left: 4px solid #ef4444;
-      }
-      @keyframes slideIn {
-        from {
-          opacity: 0;
-          transform: translateX(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
+      .toast-container { position: fixed; top: 1.5rem; right: 1.5rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.5rem; }
+      .toast { display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1.2rem; border-radius: 8px; font-size: 0.875rem; font-weight: 500; min-width: 280px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); animation: slideIn 0.25s ease; }
+      .toast.success { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+      .toast.error { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+      @keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
 
       @media (max-width: 768px) {
-        .page-head,
-        .user-card,
-        .form-card {
-          width: 95%;
-        }
-        .form-grid,
-        .form-grid.three {
-          grid-template-columns: 1fr;
-        }
-        .status-grid {
-          grid-template-columns: 1fr 1fr;
-        }
-        .user-balances {
-          margin-left: 0;
-        }
+        .page-head, .user-card, .form-card { width: 95%; }
+        .form-grid, .form-grid.three { grid-template-columns: 1fr; }
+        .status-grid { grid-template-columns: 1fr 1fr; }
+        .user-balances { margin-left: 0; }
       }
     </style>
   </head>
@@ -434,268 +91,141 @@
     <div class="toast-container" id="toastContainer"></div>
     <header id="topnav-mount"></header>
 
-   <div style="display: flex; justify-content: center; align-items: center;">
-     <div class="page-wrap">
-      <!-- Page head -->
-      <div class="page-head">
-        <div>
-          <h1>Add Cross-border Transfer</h1>
-          <p>Manually add a wire transfer record for this user.</p>
-        </div>
-        <button onclick="history.back()" class="btn-ghost">← Back</button>
-      </div>
+    <div style="display:flex;justify-content:center;align-items:center;">
+      <div class="page-wrap">
 
-      <!-- User card -->
-      <div class="user-card" id="userCard" style="display: none">
-        <div class="user-avatar" id="userAvatar">?</div>
-        <div class="user-info">
-          <div class="name" id="userName">—</div>
-          <div class="email" id="userEmail">—</div>
+        <div class="page-head">
+          <div>
+            <h1>Add Cross-border Transfer</h1>
+            <p>Manually add a wire transfer record for this user.</p>
+          </div>
+          <button onclick="history.back()" class="btn-ghost">← Back</button>
         </div>
-        <div class="user-balances">
-          <div class="bal-label">Current Balance</div>
-          <div class="bal-value" id="userBalance">—</div>
-        </div>
-      </div>
 
-      <!-- Form -->
-      <div class="form-card">
-        <!-- Transfer Details -->
-        <div class="form-section">
-          <div class="section-title">Transfer Details</div>
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Amount (USD) *</label>
-              <input
-                type="number"
-                id="amount"
-                placeholder="e.g. 5000"
-                min="0.01"
-                step="0.01"
-                oninput="updatePreview()"
-              />
-            </div>
-            <div class="form-group">
-              <label>Fee (USD)</label>
-              <input
-                type="number"
-                id="fee"
-                placeholder="e.g. 100"
-                min="0"
-                step="0.01"
-                value="0"
-                oninput="updatePreview()"
-              />
-              <small>Leave 0 if no fee</small>
-            </div>
+        <!-- User card -->
+        <div class="user-card" id="userCard" style="display:none">
+          <div class="user-avatar" id="userAvatar">?</div>
+          <div class="user-info">
+            <div class="name" id="userName">—</div>
+            <div class="email" id="userEmail">—</div>
           </div>
-          <div class="form-grid full" style="margin-top: 16px">
-            <div class="form-group">
-              <label>Description / Reason *</label>
-              <textarea
-                id="description"
-                placeholder="e.g. International wire transfer to Paul Bona - Access Bank Nigeria"
-              ></textarea>
-            </div>
-          </div>
-          <div class="form-grid" style="margin-top: 16px">
-            <div class="form-group">
-              <label>Custom Date (optional)</label>
-              <input type="datetime-local" id="createdAt" />
-              <small>Leave blank to use current date/time</small>
-            </div>
+          <div class="user-balances">
+            <div class="bal-label">Current Balance</div>
+            <div class="bal-value" id="userBalance">—</div>
           </div>
         </div>
 
-        <!-- Status -->
-        <div class="form-section">
-          <div class="section-title">Status</div>
-          <div class="status-grid">
-            <div class="status-opt pending">
-              <input
-                type="radio"
-                name="status"
-                id="s-pending"
-                value="pending"
-                checked
-                onchange="updatePreview()"
-              />
-              <label for="s-pending">
-                <span class="dot" style="background: #f59e0b"></span>
-                Pending
-              </label>
-            </div>
-            <div class="status-opt processing">
-              <input
-                type="radio"
-                name="status"
-                id="s-processing"
-                value="processing"
-                onchange="updatePreview()"
-              />
-              <label for="s-processing">
-                <span class="dot" style="background: #3b82f6"></span>
-                Processing
-              </label>
-            </div>
-            <div class="status-opt successful">
-              <input
-                type="radio"
-                name="status"
-                id="s-successful"
-                value="successful"
-                onchange="updatePreview()"
-              />
-              <label for="s-successful">
-                <span class="dot" style="background: #10b981"></span>
-                Successful
-              </label>
-            </div>
-            <div class="status-opt failed">
-              <input
-                type="radio"
-                name="status"
-                id="s-failed"
-                value="failed"
-                onchange="updatePreview()"
-              />
-              <label for="s-failed">
-                <span class="dot" style="background: #ef4444"></span>
-                Failed
-              </label>
-            </div>
-          </div>
+        <div class="form-card">
 
-          <!-- Balance preview -->
-          <div
-            class="balance-preview"
-            id="balancePreview"
-            style="margin-top: 16px"
-          >
-            <div>
-              <div class="label">Balance Impact</div>
-              <div class="note" id="previewNote">
-                Select status and enter amount to preview
+          <!-- Transfer Details -->
+          <div class="form-section">
+            <div class="section-title">Transfer Details</div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Amount (USD) *</label>
+                <input type="number" id="amount" placeholder="e.g. 5000" min="0.01" step="0.01" oninput="updatePreview()" />
+              </div>
+              <div class="form-group">
+                <label>Fee (USD)</label>
+                <input type="number" id="fee" placeholder="e.g. 100" min="0" step="0.01" value="0" oninput="updatePreview()" />
+                <small>Leave 0 if no fee</small>
               </div>
             </div>
-            <div class="value" id="previewValue">—</div>
+            <div class="form-grid full" style="margin-top:16px">
+              <div class="form-group">
+                <label>Description / Reason *</label>
+                <textarea id="description" placeholder="e.g. International wire transfer Reason"></textarea>
+              </div>
+            </div>
+            <div class="form-grid" style="margin-top:16px">
+              <div class="form-group">
+                <label>Custom Date (optional)</label>
+                <input type="datetime-local" id="createdAt" />
+                <small>Leave blank to use current date/time</small>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <!-- Recipient Details -->
-        <div class="form-section">
-          <div class="section-title">Recipient Details</div>
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Full Name *</label>
-              <input type="text" id="fullname" placeholder="e.g. Paul Bona" />
+          <!-- Status -->
+          <div class="form-section">
+            <div class="section-title">Status</div>
+            <div class="status-grid">
+              <div class="status-opt pending">
+                <input type="radio" name="status" id="s-pending" value="pending" checked onchange="updatePreview()" />
+                <label for="s-pending"><span class="dot" style="background:#f59e0b"></span>Pending</label>
+              </div>
+              <div class="status-opt processing">
+                <input type="radio" name="status" id="s-processing" value="processing" onchange="updatePreview()" />
+                <label for="s-processing"><span class="dot" style="background:#3b82f6"></span>Processing</label>
+              </div>
+              <div class="status-opt successful">
+                <input type="radio" name="status" id="s-successful" value="successful" onchange="updatePreview()" />
+                <label for="s-successful"><span class="dot" style="background:#10b981"></span>Successful</label>
+              </div>
+              <div class="status-opt failed">
+                <input type="radio" name="status" id="s-failed" value="failed" onchange="updatePreview()" />
+                <label for="s-failed"><span class="dot" style="background:#ef4444"></span>Failed</label>
+              </div>
             </div>
-            <div class="form-group">
-              <label>Bank Name</label>
-              <input type="text" id="bankname" placeholder="e.g. Access Bank" />
-            </div>
-          </div>
-          <div class="form-grid three" style="margin-top: 16px">
-            <div class="form-group">
-              <label>Account Number</label>
-              <input
-                type="text"
-                id="accountnumber"
-                placeholder="e.g. 0123456789"
-              />
-            </div>
-            <div class="form-group">
-              <label>Account Holder</label>
-              <input
-                type="text"
-                id="accountholder"
-                placeholder="Account holder name"
-              />
-            </div>
-            <div class="form-group">
-              <label>Account Type</label>
-              <input type="text" id="accounttype" placeholder="e.g. Savings" />
-            </div>
-          </div>
-          <div class="form-grid" style="margin-top: 16px">
-            <div class="form-group">
-              <label>IBAN</label>
-              <input
-                type="text"
-                id="iban"
-                placeholder="e.g. GB29NWBK60161331926819"
-              />
-            </div>
-            <div class="form-group">
-              <label>Swift Code</label>
-              <input type="text" id="swiftcode" placeholder="e.g. GTBINGLA" />
-            </div>
-          </div>
-        </div>
 
-        <!-- Location -->
-        <div class="form-section">
-          <div class="section-title">Location & Contact</div>
-          <div class="form-grid three">
-            <div class="form-group">
-              <label>Country</label>
-              <input type="text" id="country" placeholder="e.g. Nigeria" />
-            </div>
-            <div class="form-group">
-              <label>State / Province</label>
-              <input type="text" id="state" placeholder="e.g. Lagos" />
-            </div>
-            <div class="form-group">
-              <label>City</label>
-              <input type="text" id="city" placeholder="e.g. Lagos Island" />
+            <div class="balance-preview" id="balancePreview">
+              <div>
+                <div class="label">Balance Impact</div>
+                <div class="note" id="previewNote">Select status and enter amount to preview</div>
+              </div>
+              <div class="value" id="previewValue">—</div>
             </div>
           </div>
-          <div class="form-grid" style="margin-top: 16px">
-            <div class="form-group">
-              <label>Address</label>
-              <input type="text" id="address" placeholder="Street address" />
-            </div>
-            <div class="form-group">
-              <label>Postal / Zipcode</label>
-              <input type="text" id="zipcode" placeholder="e.g. 100001" />
-            </div>
-          </div>
-          <div class="form-grid" style="margin-top: 16px">
-            <div class="form-group">
-              <label>Email</label>
-              <input
-                type="email"
-                id="email"
-                placeholder="recipient@email.com"
-              />
-            </div>
-            <div class="form-group">
-              <label>Phone</label>
-              <input
-                type="tel"
-                id="phone"
-                placeholder="e.g. +234 801 234 5678"
-              />
-            </div>
-          </div>
-        </div>
 
-        <!-- Footer -->
-        <div class="form-footer">
-          <button class="btn-submit" id="submitBtn" onclick="submitTransfer()">
-            Add Transfer
-          </button>
-          <div class="result-wrap" id="resultWrap"></div>
+          <!-- Recipient Details -->
+          <div class="form-section">
+            <div class="section-title">Recipient Details</div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Full Name *</label>
+                <input type="text" id="fullname" placeholder="e.g. Paul Bona" />
+              </div>
+              <div class="form-group">
+                <label>Bank Name</label>
+                <input type="text" id="bankname" placeholder="e.g. Access Bank" />
+              </div>
+            </div>
+            <div class="form-grid" style="margin-top:16px">
+              <div class="form-group">
+                <label>Account Number</label>
+                <input type="text" id="accountnumber" placeholder="e.g. 0123456789" />
+              </div>
+              <div class="form-group">
+                <label>Country</label>
+                <input type="text" id="country" placeholder="e.g. Nigeria" />
+              </div>
+            </div>
+            <div class="form-grid" style="margin-top:16px">
+              <div class="form-group">
+                <label>IBAN</label>
+                <input type="text" id="iban" placeholder="e.g. GB29NWBK60161331926819" />
+              </div>
+              <div class="form-group">
+                <label>Swift Code</label>
+                <input type="text" id="swiftcode" placeholder="e.g. GTBINGLA" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="form-footer">
+            <button class="btn-submit" id="submitBtn" onclick="submitTransfer()">Add Transfer</button>
+            <div class="result-wrap" id="resultWrap"></div>
+          </div>
+
         </div>
       </div>
     </div>
-   </div>
 
     <script>
       const userId = new URLSearchParams(window.location.search).get("userId");
       let currentBalance = 0;
 
-      // ── Toast ──
       function showToast(type, message) {
         const container = document.getElementById("toastContainer");
         const t = document.createElement("div");
@@ -707,8 +237,7 @@
       }
 
       function showResult(type, msg) {
-        document.getElementById("resultWrap").innerHTML =
-          `<div class="alert alert-${type}">${msg}</div>`;
+        document.getElementById("resultWrap").innerHTML = `<div class="alert alert-${type}">${msg}</div>`;
       }
 
       function clearResult() {
@@ -716,37 +245,28 @@
       }
 
       function money(n) {
-        return Number(n || 0).toLocaleString("en-US", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        });
+        return Number(n || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       }
 
       // ── Load user ──
       async function loadUser() {
         if (!userId) return;
         try {
-          const res = await fetch(`/api/admin/users/${userId}`, {
-            credentials: "include",
-          });
+          const res  = await fetch(`/api/admin/users/${userId}`, { credentials: "include" });
           const data = await res.json();
           if (!data.success || !data.user) return;
           const u = data.user;
 
-          currentBalance = Number(u.balance || 0);
+          // ── fix: firstname + lastname, accountBalance ──
+          const fullName = [u.firstname, u.lastname].filter(Boolean).join(" ") || u.name || "Unknown";
+          currentBalance = Number(u.accountBalance ?? u.balance ?? 0);
 
-          const initials = (u.name || "?")
-            .split(" ")
-            .map((w) => w[0])
-            .join("")
-            .slice(0, 2)
-            .toUpperCase();
-          document.getElementById("userAvatar").textContent = initials;
-          document.getElementById("userName").textContent = u.name || "—";
-          document.getElementById("userEmail").textContent = u.email || "—";
-          document.getElementById("userBalance").textContent =
-            `$${money(currentBalance)}`;
-          document.getElementById("userCard").style.display = "flex";
+          const initials = fullName.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
+          document.getElementById("userAvatar").textContent  = initials;
+          document.getElementById("userName").textContent    = fullName;
+          document.getElementById("userEmail").textContent   = u.email || "—";
+          document.getElementById("userBalance").textContent = `$${money(currentBalance)}`;
+          document.getElementById("userCard").style.display  = "flex";
 
           updatePreview();
         } catch (err) {
@@ -756,22 +276,18 @@
 
       // ── Balance preview ──
       function updatePreview() {
-        const amount = parseFloat(
-          document.getElementById("amount")?.value || 0,
-        );
-        const fee = parseFloat(document.getElementById("fee")?.value || 0);
-        const status =
-          document.querySelector("input[name='status']:checked")?.value ||
-          "pending";
-        const total = parseFloat((amount + fee).toFixed(2));
+        const amount = parseFloat(document.getElementById("amount")?.value || 0);
+        const fee    = parseFloat(document.getElementById("fee")?.value    || 0);
+        const status = document.querySelector("input[name='status']:checked")?.value || "pending";
+        const total  = parseFloat((amount + fee).toFixed(2));
 
-        const noteEl = document.getElementById("previewNote");
+        const noteEl  = document.getElementById("previewNote");
         const valueEl = document.getElementById("previewValue");
 
         if (!amount || amount <= 0) {
-          noteEl.textContent = "Enter an amount to preview balance impact";
+          noteEl.textContent  = "Enter an amount to preview balance impact";
           valueEl.textContent = "—";
-          valueEl.className = "value";
+          valueEl.className   = "value";
           return;
         }
 
@@ -779,13 +295,13 @@
 
         if (deducts) {
           const after = parseFloat((currentBalance - total).toFixed(2));
-          noteEl.textContent = `$${money(currentBalance)} → $${money(after)} (−$${money(total)})`;
+          noteEl.textContent  = `$${money(currentBalance)} → $${money(after)} (−$${money(total)})`;
           valueEl.textContent = `-$${money(total)}`;
-          valueEl.className = "value deduct";
+          valueEl.className   = "value deduct";
         } else {
-          noteEl.textContent = `No balance change for "${status}" status`;
+          noteEl.textContent  = `No balance change for "${status}" status`;
           valueEl.textContent = "No change";
-          valueEl.className = "value nochange";
+          valueEl.className   = "value nochange";
         }
       }
 
@@ -793,65 +309,42 @@
       async function submitTransfer() {
         clearResult();
 
-        const amount = parseFloat(
-          document.getElementById("amount")?.value || 0,
-        );
-        const fee = parseFloat(document.getElementById("fee")?.value || 0);
-        const description = document
-          .getElementById("description")
-          ?.value?.trim();
-        const status = document.querySelector(
-          "input[name='status']:checked",
-        )?.value;
-        const createdAt = document.getElementById("createdAt")?.value;
-        const fullname = document.getElementById("fullname")?.value?.trim();
+        const amount      = parseFloat(document.getElementById("amount")?.value || 0);
+        const fee         = parseFloat(document.getElementById("fee")?.value    || 0);
+        const description = document.getElementById("description")?.value?.trim();
+        const status      = document.querySelector("input[name='status']:checked")?.value;
+        const createdAt   = document.getElementById("createdAt")?.value;
+        const fullname    = document.getElementById("fullname")?.value?.trim();
 
-        if (!amount || amount <= 0)
-          return showResult("danger", "Enter a valid amount.");
-        if (!description)
-          return showResult("danger", "Description is required.");
-        if (!fullname)
-          return showResult("danger", "Recipient full name is required.");
+        if (!amount || amount <= 0) return showResult("danger", "Enter a valid amount.");
+        if (!description)           return showResult("danger", "Description is required.");
+        if (!fullname)              return showResult("danger", "Recipient full name is required.");
 
         const payload = {
           amount,
           fee,
           description,
           status,
-          createdAt: createdAt || undefined,
+          createdAt:     createdAt || undefined,
           fullname,
-          bankname: document.getElementById("bankname")?.value?.trim() || "",
-          accountnumber:
-            document.getElementById("accountnumber")?.value?.trim() || "",
-          accountholder:
-            document.getElementById("accountholder")?.value?.trim() || "",
-          accounttype:
-            document.getElementById("accounttype")?.value?.trim() || "",
-          iban: document.getElementById("iban")?.value?.trim() || "",
-          swiftcode: document.getElementById("swiftcode")?.value?.trim() || "",
-          country: document.getElementById("country")?.value?.trim() || "",
-          state: document.getElementById("state")?.value?.trim() || "",
-          city: document.getElementById("city")?.value?.trim() || "",
-          address: document.getElementById("address")?.value?.trim() || "",
-          zipcode: document.getElementById("zipcode")?.value?.trim() || "",
-          email: document.getElementById("email")?.value?.trim() || "",
-          phone: document.getElementById("phone")?.value?.trim() || "",
+          bankname:      document.getElementById("bankname")?.value?.trim()      || "",
+          accountnumber: document.getElementById("accountnumber")?.value?.trim() || "",
+          iban:          document.getElementById("iban")?.value?.trim()          || "",
+          swiftcode:     document.getElementById("swiftcode")?.value?.trim()     || "",
+          country:       document.getElementById("country")?.value?.trim()       || "",
         };
 
         const btn = document.getElementById("submitBtn");
-        btn.disabled = true;
+        btn.disabled    = true;
         btn.textContent = "Adding...";
 
         try {
-          const res = await fetch(
-            `/api/admin/wire-transfers/user/${userId}/add`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              credentials: "include",
-              body: JSON.stringify(payload),
-            },
-          );
+          const res  = await fetch(`/api/admin/wire-transfers/user/${userId}/add`, {
+            method:  "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify(payload),
+          });
           const data = await res.json();
 
           if (!data.success) {
@@ -860,51 +353,28 @@
           }
 
           showToast("success", data.message || "Transfer added successfully!");
-          showResult(
-            "success",
-            `✅ ${data.message} — Ref: <strong>${data.transfer?.reference || "—"}</strong>`,
-          );
+          showResult("success", `✅ ${data.message} — Ref: <strong>${data.transfer?.reference || "—"}</strong>`);
 
-          // Refresh balance
           await loadUser();
 
-          // Reset form fields that should clear
-          [
-            "amount",
-            "fee",
-            "description",
-            "createdAt",
-            "fullname",
-            "bankname",
-            "accountnumber",
-            "accountholder",
-            "accounttype",
-            "iban",
-            "swiftcode",
-            "country",
-            "state",
-            "city",
-            "address",
-            "zipcode",
-            "email",
-            "phone",
-          ].forEach((id) => {
+          // Reset form
+          ["amount", "fee", "description", "createdAt", "fullname", "bankname",
+           "accountnumber", "iban", "swiftcode", "country"].forEach((id) => {
             const el = document.getElementById(id);
             if (el) el.value = id === "fee" ? "0" : "";
           });
 
-          // Reset status to pending
           document.getElementById("s-pending").checked = true;
           updatePreview();
+
         } catch (err) {
           showResult("danger", err.message || "Network error.");
         } finally {
-          btn.disabled = false;
+          btn.disabled    = false;
           btn.textContent = "Add Transfer";
         }
       }
 
-      // ── Init ──
       loadUser();
     </script>
 

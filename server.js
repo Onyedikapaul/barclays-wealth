@@ -14,8 +14,6 @@ import TicketRouter from "./route/ticketsRoute.js";
 import AdminTicketRouter from "./route/adminTicketsRoute.js";
 import SecuritySettingsRouter from "./route/securitySettingsRoutes.js";
 import CardRouter from "./route/cardRoutes.js";
-import PayeeRouter from "./route/payeeRoutes.js";
-import BillPayRouter from "./route/billPayRoutes.js";
 import AdminRouter from "./route/adminRoute.js";
 import AdminCreditUserRouter from "./route/adminTransferRoutes.js";
 import AdminEmailRouter from "./route/adminEmailRoutes.js";
@@ -75,16 +73,12 @@ app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.use("/api/check-deposit", CheckDepositRouter);
 
-app.use("/api/payees", PayeeRouter);
-
 app.use("/api/tickets", TicketRouter);
 app.use("/api/admin/tickets", AdminTicketRouter);
 
 app.use("/api/account", SecuritySettingsRouter);
 
 app.use("/api/cards", CardRouter);
-
-app.use("/api/bill-pay", BillPayRouter);
 
 // Admin routes
 app.use("/api/admin", AdminRouter);

@@ -6,565 +6,154 @@
     <title>User Cross Border Transactions</title>
     <link rel="stylesheet" href="/admin/owner/dashboard/css/layout.css" />
     <link rel="icon" href="/assets/images/logo.png" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
     <style>
-      * {
-        box-sizing: border-box;
-      }
-      body {
-        font-family: "DM Sans", sans-serif;
-      }
+      * { box-sizing: border-box; }
+      body { font-family: "DM Sans", sans-serif; }
 
-      .page-wrap {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        margin-top: 25px;
-        margin-bottom: 50px;
-      }
-      .page-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        width: 90%;
-        margin: 40px 0 1.5rem;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-      .page-head h1 {
-        margin: 0;
-        font-size: 1.6rem;
-        font-weight: 600;
-        color: #111827;
-      }
-      .page-head p {
-        margin: 5px 0 0;
-        color: #6b7280;
-        font-size: 0.875rem;
-      }
+      .page-wrap { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 25px; margin-bottom: 50px; }
+      .page-head { display: flex; justify-content: space-between; align-items: flex-start; width: 90%; margin: 40px 0 1.5rem; flex-wrap: wrap; gap: 12px; }
+      .page-head h1 { margin: 0; font-size: 1.6rem; font-weight: 600; color: #111827; }
+      .page-head p { margin: 5px 0 0; color: #6b7280; font-size: 0.875rem; }
 
-      .btn-ghost {
-        background: transparent;
-        border: 1px solid #d1d5db;
-        color: #374151;
-        font-family: inherit;
-        font-size: 0.875rem;
-        font-weight: 500;
-        padding: 0.5rem 1.1rem;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background 0.15s;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-      }
-      .btn-ghost:hover {
-        background: #f3f4f6;
-      }
+      .btn-ghost { background: transparent; border: 1px solid #d1d5db; color: #374151; font-family: inherit; font-size: 0.875rem; font-weight: 500; padding: 0.5rem 1.1rem; border-radius: 8px; cursor: pointer; transition: background 0.15s; text-decoration: none; display: inline-flex; align-items: center; }
+      .btn-ghost:hover { background: #f3f4f6; }
 
-      /* User card */
-      .user-card {
-        width: 90%;
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 14px;
-        padding: 16px 20px;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        flex-wrap: wrap;
-        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
-      }
-      .user-avatar {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        flex-shrink: 0;
-        background: linear-gradient(135deg, #033d75, #0a5298);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        font-size: 16px;
-        font-weight: 700;
-      }
-      .user-info .name {
-        font-size: 15px;
-        font-weight: 700;
-        color: #111827;
-      }
-      .user-info .email {
-        font-size: 12px;
-        color: #9ca3af;
-        margin-top: 2px;
-      }
-      .user-balances {
-        margin-left: auto;
-        display: flex;
-        gap: 24px;
-        flex-wrap: wrap;
-      }
-      .bal-label {
-        font-size: 10px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        color: #9ca3af;
-      }
-      .bal-value {
-        font-size: 16px;
-        font-weight: 700;
-        color: #111827;
-        margin-top: 2px;
-      }
+      .user-card { width: 90%; background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+      .user-avatar { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, #033d75, #0a5298); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; font-weight: 700; }
+      .user-info .name { font-size: 15px; font-weight: 700; color: #111827; }
+      .user-info .email { font-size: 12px; color: #9ca3af; margin-top: 2px; }
+      .user-balances { margin-left: auto; display: flex; gap: 24px; flex-wrap: wrap; }
+      .bal-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #9ca3af; }
+      .bal-value { font-size: 16px; font-weight: 700; color: #111827; margin-top: 2px; }
 
-      /* Card/table */
-      .card {
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 14px;
-        width: 90%;
-        overflow: hidden;
-        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
-      }
-      .card-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 1.5rem;
-        border-bottom: 1px solid #e5e7eb;
-        background: #f9fafb;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-      }
-      .count-pill {
-        background: #f3f4f6;
-        color: #6b7280;
-        padding: 0.3rem 0.75rem;
-        border-radius: 999px;
-        font-size: 0.8rem;
-        font-weight: 500;
-      }
-      .table-wrap {
-        overflow-x: auto;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 0.875rem;
-        min-width: 780px;
-      }
-      thead tr {
-        background: #f8fafc;
-        border-bottom: 1px solid #e5e7eb;
-      }
-      th {
-        padding: 0.75rem 1.25rem;
-        text-align: left;
-        font-size: 0.72rem;
-        font-weight: 600;
-        color: #9ca3af;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        white-space: nowrap;
-      }
-      td {
-        padding: 1rem 1.25rem;
-        border-bottom: 1px solid #f3f4f6;
-        color: #374151;
-        vertical-align: middle;
-      }
-      tbody tr:last-child td {
-        border-bottom: none;
-      }
-      tbody tr:hover td {
-        background: #fafafa;
-      }
+      .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; width: 90%; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+      .card-head { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-bottom: 1px solid #e5e7eb; background: #f9fafb; flex-wrap: wrap; gap: 0.75rem; }
+      .count-pill { background: #f3f4f6; color: #6b7280; padding: 0.3rem 0.75rem; border-radius: 999px; font-size: 0.8rem; font-weight: 500; }
+      .table-wrap { overflow-x: auto; }
+      table { width: 100%; border-collapse: collapse; font-size: 0.875rem; min-width: 820px; }
+      thead tr { background: #f8fafc; border-bottom: 1px solid #e5e7eb; }
+      th { padding: 0.75rem 1.25rem; text-align: left; font-size: 0.72rem; font-weight: 600; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
+      td { padding: 1rem 1.25rem; border-bottom: 1px solid #f3f4f6; color: #374151; vertical-align: middle; }
+      tbody tr:last-child td { border-bottom: none; }
+      tbody tr:hover td { background: #fafafa; }
 
-      .amount-cell {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #111827;
-      }
-      .amount-cell small {
-        font-size: 0.75rem;
-        font-weight: 400;
-        color: #9ca3af;
-        margin-left: 2px;
-      }
+      .amount-cell { font-size: 0.95rem; font-weight: 600; color: #111827; }
+      .amount-cell small { font-size: 0.75rem; font-weight: 400; color: #9ca3af; margin-left: 2px; }
+      .txid { font-family: "Courier New", monospace; font-size: 0.78rem; color: #6b7280; background: #f3f4f6; padding: 0.2rem 0.5rem; border-radius: 4px; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; }
 
-      .txid {
-        font-family: "Courier New", monospace;
-        font-size: 0.78rem;
-        color: #6b7280;
-        background: #f3f4f6;
-        padding: 0.2rem 0.5rem;
-        border-radius: 4px;
-        max-width: 140px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        display: inline-block;
-      }
+      .badge { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.28rem 0.7rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
+      .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+      .badge-pending    { background: #fef3c7; color: #92400e; } .badge-pending::before    { background: #f59e0b; }
+      .badge-processing { background: #dbeafe; color: #1e3a8a; } .badge-processing::before { background: #3b82f6; }
+      .badge-successful { background: #d1fae5; color: #065f46; } .badge-successful::before { background: #10b981; }
+      .badge-failed     { background: #fee2e2; color: #991b1b; } .badge-failed::before     { background: #ef4444; }
 
-      /* Badges */
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.3rem;
-        padding: 0.28rem 0.7rem;
-        border-radius: 999px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        white-space: nowrap;
-      }
-      .badge::before {
-        content: "";
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        display: inline-block;
-      }
-      .badge-pending {
-        background: #fef3c7;
-        color: #92400e;
-      }
-      .badge-pending::before {
-        background: #f59e0b;
-      }
-      .badge-processing {
-        background: #dbeafe;
-        color: #1e3a8a;
-      }
-      .badge-processing::before {
-        background: #3b82f6;
-      }
-      .badge-successful {
-        background: #d1fae5;
-        color: #065f46;
-      }
-      .badge-successful::before {
-        background: #10b981;
-      }
-      .badge-failed {
-        background: #fee2e2;
-        color: #991b1b;
-      }
-      .badge-failed::before {
-        background: #ef4444;
-      }
+      .action-cell { display: flex; flex-direction: column; gap: 0.4rem; min-width: 110px; }
+      .btn { padding: 0.4rem 0.85rem; border-radius: 6px; border: none; cursor: pointer; font-size: 0.78rem; font-weight: 600; font-family: inherit; transition: all 0.18s; text-align: center; width: 100%; }
+      .btn-success { background: #ecfdf5; color: #065f46; border: 1px solid #6ee7b7; } .btn-success:hover { background: #10b981; color: #fff; border-color: #10b981; }
+      .btn-process { background: #eff6ff; color: #1e3a8a; border: 1px solid #93c5fd; } .btn-process:hover { background: #3b82f6; color: #fff; border-color: #3b82f6; }
+      .btn-fail    { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; } .btn-fail:hover    { background: #ef4444; color: #fff; border-color: #ef4444; }
+      .btn-pending { background: #fefce8; color: #92400e; border: 1px solid #fde68a; } .btn-pending:hover { background: #f59e0b; color: #fff; border-color: #f59e0b; }
+      .btn-view    { background: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; } .btn-view:hover    { background: #0ea5e9; color: #fff; border-color: #0ea5e9; }
+      .btn-delete  { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; } .btn-delete:hover  { background: #ef4444; color: #fff; border-color: #ef4444; }
+      .btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
-      /* Action buttons */
-      .action-cell {
-        display: flex;
-        flex-direction: column;
-        gap: 0.4rem;
-        min-width: 110px;
-      }
-      .btn {
-        padding: 0.4rem 0.85rem;
-        border-radius: 6px;
-        border: none;
-        cursor: pointer;
-        font-size: 0.78rem;
-        font-weight: 600;
-        font-family: inherit;
-        transition: all 0.18s;
-        text-align: center;
-        width: 100%;
-      }
-      .btn-success {
-        background: #ecfdf5;
-        color: #065f46;
-        border: 1px solid #6ee7b7;
-      }
-      .btn-success:hover {
-        background: #10b981;
-        color: #fff;
-        border-color: #10b981;
-      }
-      .btn-process {
-        background: #eff6ff;
-        color: #1e3a8a;
-        border: 1px solid #93c5fd;
-      }
-      .btn-process:hover {
-        background: #3b82f6;
-        color: #fff;
-        border-color: #3b82f6;
-      }
-      .btn-fail {
-        background: #fef2f2;
-        color: #991b1b;
-        border: 1px solid #fca5a5;
-      }
-      .btn-fail:hover {
-        background: #ef4444;
-        color: #fff;
-        border-color: #ef4444;
-      }
-      .btn-pending {
-        background: #fefce8;
-        color: #92400e;
-        border: 1px solid #fde68a;
-      }
-      .btn-pending:hover {
-        background: #f59e0b;
-        color: #fff;
-        border-color: #f59e0b;
-      }
-      .btn-view {
-        background: #f0f9ff;
-        color: #0369a1;
-        border: 1px solid #bae6fd;
-      }
-      .btn-view:hover {
-        background: #0ea5e9;
-        color: #fff;
-        border-color: #0ea5e9;
-      }
-      .btn:disabled {
-        opacity: 0.45;
-        cursor: not-allowed;
-      }
-
-      .empty {
-        text-align: center;
-        padding: 3.5rem;
-        color: #9ca3af;
-        font-size: 0.9rem;
-      }
+      .empty { text-align: center; padding: 3.5rem; color: #9ca3af; font-size: 0.9rem; }
 
       /* Toast */
-      .toast-container {
-        position: fixed;
-        top: 1.5rem;
-        right: 1.5rem;
-        z-index: 9999;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-      .toast {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.85rem 1.2rem;
-        border-radius: 8px;
-        font-size: 0.875rem;
-        font-weight: 500;
-        min-width: 280px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-        animation: slideIn 0.25s ease;
-      }
-      .toast.success {
-        background: #d1fae5;
-        color: #065f46;
-        border-left: 4px solid #10b981;
-      }
-      .toast.error {
-        background: #fee2e2;
-        color: #991b1b;
-        border-left: 4px solid #ef4444;
-      }
-      .toast.warning {
-        background: #fef3c7;
-        color: #92400e;
-        border-left: 4px solid #f59e0b;
-      }
-      @keyframes slideIn {
-        from {
-          opacity: 0;
-          transform: translateX(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
+      .toast-container { position: fixed; top: 1.5rem; right: 1.5rem; z-index: 9999; display: flex; flex-direction: column; gap: 0.5rem; }
+      .toast { display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1.2rem; border-radius: 8px; font-size: 0.875rem; font-weight: 500; min-width: 280px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); animation: slideIn 0.25s ease; }
+      .toast.success { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+      .toast.error   { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+      .toast.warning { background: #fef3c7; color: #92400e; border-left: 4px solid #f59e0b; }
+      @keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
 
-      /* Detail Modal */
-      .overlay {
+      /* Detail overlay */
+      .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 999; animation: fadeIn 0.2s ease; padding: 16px; }
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      .dialog { background: #fff; border-radius: 16px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); animation: modalIn 0.2s ease; }
+      @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+      .dialog-header { background: #033d75; border-radius: 16px 16px 0 0; padding: 18px 22px 14px; display: flex; align-items: flex-start; justify-content: space-between; }
+      .dialog-header h3 { color: #fff; font-size: 15px; font-weight: 700; margin: 0; }
+      .dialog-header p  { color: rgba(255,255,255,0.6); font-size: 12px; margin: 3px 0 0; }
+      .dialog-close { background: rgba(255,255,255,0.12); border: none; border-radius: 8px; color: #fff; width: 30px; height: 30px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+      .dialog-close:hover { background: rgba(255,255,255,0.2); }
+      .dialog-body { padding: 20px 22px 22px; }
+      .amount-hero { text-align: center; padding: 16px; background: #f8fafc; border-radius: 12px; margin-bottom: 16px; }
+      .amount-hero .amt { font-size: 26px; font-weight: 800; color: #033d75; }
+      .kv-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #f1f5f9; gap: 12px; }
+      .kv-row:last-child { border-bottom: none; }
+      .kv-row .k { font-size: 12px; color: #94a3b8; font-weight: 500; white-space: nowrap; }
+      .kv-row .v { font-size: 13px; color: #1e293b; font-weight: 600; text-align: right; word-break: break-all; }
+      .dialog-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+      .dialog-actions .btn-lg { padding: 11px; border-radius: 10px; font-size: 13px; font-weight: 700; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; transition: opacity 0.2s; }
+      .dialog-actions .btn-lg:hover { opacity: 0.85; }
+      .btn-success-lg { background: #10b981; color: #fff; }
+      .btn-process-lg { background: #3b82f6; color: #fff; }
+      .btn-pending-lg { background: #f59e0b; color: #fff; }
+      .btn-fail-lg    { background: #ef4444; color: #fff; }
+      .btn-delete-lg  { background: #fee2e2; color: #991b1b; border: 1.5px solid #fca5a5 !important; }
+      .btn-delete-lg:hover { background: #ef4444 !important; color: #fff !important; }
+      .btn-close-lg   { background: #f1f5f9; color: #374151; }
+
+      /* ── Delete confirm modal ── */
+      #wireDeleteModal {
         position: fixed;
         inset: 0;
-        background: rgba(0, 0, 0, 0.4);
-        display: flex;
+        z-index: 999999;
+        display: none;
         align-items: center;
         justify-content: center;
-        z-index: 999;
-        animation: fadeIn 0.2s ease;
         padding: 16px;
+        background: rgba(0,0,0,0.55);
+        backdrop-filter: blur(3px);
       }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      .dialog {
+      #wireDeleteModal.wdm-open { display: flex !important; }
+      .wdm-dialog {
         background: #fff;
         border-radius: 16px;
         width: 100%;
-        max-width: 500px;
+        max-width: 420px;
         max-height: 90vh;
         overflow-y: auto;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-        animation: modalIn 0.2s ease;
+        box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+        animation: wdmIn 0.2s ease;
       }
-      @keyframes modalIn {
-        from {
-          opacity: 0;
-          transform: scale(0.95) translateY(10px);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1) translateY(0);
-        }
-      }
-      .dialog-header {
-        background: #033d75;
-        border-radius: 16px 16px 0 0;
-        padding: 18px 22px 14px;
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-      }
-      .dialog-header h3 {
-        color: #fff;
-        font-size: 15px;
-        font-weight: 700;
-        margin: 0;
-      }
-      .dialog-header p {
-        color: rgba(255, 255, 255, 0.6);
-        font-size: 12px;
-        margin: 3px 0 0;
-      }
-      .dialog-close {
-        background: rgba(255, 255, 255, 0.12);
-        border: none;
-        border-radius: 8px;
-        color: #fff;
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-        font-size: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-      }
-      .dialog-close:hover {
-        background: rgba(255, 255, 255, 0.2);
-      }
-      .dialog-body {
-        padding: 20px 22px 22px;
-      }
-
-      .amount-hero {
-        text-align: center;
-        padding: 16px;
-        background: #f8fafc;
-        border-radius: 12px;
-        margin-bottom: 16px;
-      }
-      .amount-hero .amt {
-        font-size: 26px;
-        font-weight: 800;
-        color: #033d75;
-      }
-
-      .kv-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        padding: 8px 0;
-        border-bottom: 1px solid #f1f5f9;
-        gap: 12px;
-      }
-      .kv-row:last-child {
-        border-bottom: none;
-      }
-      .kv-row .k {
-        font-size: 12px;
-        color: #94a3b8;
-        font-weight: 500;
-        white-space: nowrap;
-      }
-      .kv-row .v {
-        font-size: 13px;
-        color: #1e293b;
-        font-weight: 600;
-        text-align: right;
-        word-break: break-all;
-      }
-
-      .dialog-actions {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        margin-top: 16px;
-      }
-      .dialog-actions .btn-lg {
-        padding: 11px;
-        border-radius: 10px;
-        font-size: 13px;
-        font-weight: 700;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 7px;
-        transition: opacity 0.2s;
-      }
-      .dialog-actions .btn-lg:hover {
-        opacity: 0.85;
-      }
-      .btn-success-lg {
-        background: #10b981;
-        color: #fff;
-      }
-      .btn-process-lg {
-        background: #3b82f6;
-        color: #fff;
-      }
-      .btn-pending-lg {
-        background: #f59e0b;
-        color: #fff;
-      }
-      .btn-fail-lg {
-        background: #ef4444;
-        color: #fff;
-      }
-      .btn-close-lg {
-        background: #f1f5f9;
-        color: #374151;
-      }
+      @keyframes wdmIn { from { opacity:0; transform:scale(0.95) translateY(8px); } to { opacity:1; transform:scale(1) translateY(0); } }
+      .wdm-head { background: #fff1f2; border-bottom: 1px solid #fecdd3; padding: 18px 22px 14px; display: flex; align-items: flex-start; justify-content: space-between; }
+      .wdm-head-left { display: flex; align-items: flex-start; gap: 12px; }
+      .wdm-icon { width: 38px; height: 38px; border-radius: 50%; background: #fee2e2; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+      .wdm-title { font-size: 15px; font-weight: 700; color: #991b1b; margin: 0; }
+      .wdm-sub   { font-size: 12px; color: #ef4444; margin: 3px 0 0; }
+      .wdm-x { background: rgba(239,68,68,0.1); border: none; border-radius: 8px; color: #ef4444; width: 30px; height: 30px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+      .wdm-x:hover { background: rgba(239,68,68,0.2); }
+      .wdm-body { padding: 20px 22px 22px; }
+      .wdm-warning { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 10px; padding: 13px 15px; font-size: 13px; color: #92400e; line-height: 1.55; margin-bottom: 16px; }
+      .wdm-warning strong { color: #c2410c; }
+      .wdm-info { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; }
+      .wdm-row { display: flex; justify-content: space-between; font-size: 12.5px; padding: 3px 0; }
+      .wdm-row .wk { color: #94a3b8; font-weight: 500; }
+      .wdm-row .wv { color: #1e293b; font-weight: 600; }
+      .wdm-input-wrap { margin-bottom: 18px; }
+      .wdm-input-wrap label { display: block; font-size: 11px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+      .wdm-input-wrap input { width: 100%; padding: 10px 14px; border: 1.5px solid #e5e7eb; border-radius: 9px; font-size: 14px; font-family: inherit; color: #111827; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+      .wdm-input-wrap input:focus { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.1); }
+      .wdm-input-wrap small { font-size: 11px; color: #94a3b8; margin-top: 4px; display: block; }
+      .wdm-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .wdm-cancel { padding: 11px; border-radius: 10px; border: 1.5px solid #e5e7eb; background: #fff; color: #374151; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+      .wdm-cancel:hover { background: #f3f4f6; }
+      .wdm-confirm { padding: 11px; border-radius: 10px; border: none; background: #ef4444; color: #fff; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: opacity 0.2s; }
+      .wdm-confirm:hover { opacity: 0.88; }
+      .wdm-confirm:disabled { opacity: 0.5; cursor: not-allowed; }
+      .wdm-result { margin-top: 12px; }
+      .wdm-result .wdm-ok  { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; padding: 10px 14px; border-radius: 9px; font-size: 13px; font-weight: 500; }
+      .wdm-result .wdm-err { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; padding: 10px 14px; border-radius: 9px; font-size: 13px; font-weight: 500; }
 
       @media (max-width: 768px) {
-        .page-head {
-          width: 95%;
-        }
-        .user-card {
-          width: 95%;
-        }
-        .card {
-          width: 95%;
-        }
-        .user-balances {
-          margin-left: 0;
-        }
-        .dialog-actions {
-          grid-template-columns: 1fr;
-        }
+        .page-head, .user-card, .card { width: 95%; }
+        .user-balances { margin-left: 0; }
+        .dialog-actions, .wdm-actions { grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -573,7 +162,6 @@
     <header id="topnav-mount"></header>
 
     <div class="page-wrap">
-      <!-- Page head -->
       <div class="page-head">
         <div>
           <h1>Cross-border Transactions</h1>
@@ -582,8 +170,7 @@
         <button onclick="history.back()" class="btn-ghost">← Back</button>
       </div>
 
-      <!-- User info card -->
-      <div class="user-card" id="userCard" style="display: none">
+      <div class="user-card" id="userCard" style="display:none">
         <div class="user-avatar" id="userAvatar">?</div>
         <div class="user-info">
           <div class="name" id="userName">—</div>
@@ -591,18 +178,15 @@
         </div>
         <div class="user-balances">
           <div>
-            <div class="bal-label">Fiat Balance</div>
+            <div class="bal-label">Account Balance</div>
             <div class="bal-value" id="userBalance">—</div>
           </div>
         </div>
       </div>
 
-      <!-- Transfers table -->
       <div class="card">
         <div class="card-head">
-          <span style="font-size: 0.9rem; font-weight: 600; color: #111827"
-            >Wire Transfers</span
-          >
+          <span style="font-size:0.9rem;font-weight:600;color:#111827;">Wire Transfers</span>
           <span class="count-pill" id="countPill"></span>
         </div>
         <div class="table-wrap">
@@ -611,6 +195,7 @@
               <tr>
                 <th>Date</th>
                 <th>Recipient</th>
+                <th>Bank</th>
                 <th>Amount</th>
                 <th>Fee</th>
                 <th>Reference</th>
@@ -620,9 +205,7 @@
               </tr>
             </thead>
             <tbody id="transfersTbody">
-              <tr>
-                <td colspan="8" class="empty">Loading transfers...</td>
-              </tr>
+              <tr><td colspan="9" class="empty">Loading transfers...</td></tr>
             </tbody>
           </table>
         </div>
@@ -630,7 +213,7 @@
     </div>
 
     <!-- Detail Modal -->
-    <div class="overlay" id="detailOverlay" style="display: none">
+    <div class="overlay" id="detailOverlay" style="display:none">
       <div class="dialog">
         <div class="dialog-header">
           <div>
@@ -643,11 +226,46 @@
       </div>
     </div>
 
+    <!-- Delete Confirm Modal -->
+    <div id="wireDeleteModal" aria-hidden="true">
+      <div class="wdm-dialog">
+        <div class="wdm-head">
+          <div class="wdm-head-left">
+            <div class="wdm-icon">🗑️</div>
+            <div>
+              <div class="wdm-title">Delete Transfer</div>
+              <div class="wdm-sub">This action cannot be undone</div>
+            </div>
+          </div>
+          <button class="wdm-x" id="wdmCloseBtn">×</button>
+        </div>
+        <div class="wdm-body">
+          <div class="wdm-warning">
+            ⚠️ You are about to <strong>permanently delete</strong> this wire transfer record.
+            This will <strong>not</strong> automatically refund the user's balance.
+            Handle any balance adjustments separately before deleting.
+          </div>
+          <div class="wdm-info" id="wdmInfo"></div>
+          <div class="wdm-input-wrap">
+            <label>Type <strong>DELETE</strong> to confirm</label>
+            <input type="text" id="wdmConfirmInput" placeholder='Type "DELETE" here' autocomplete="off" />
+            <small>Case-sensitive.</small>
+          </div>
+          <div class="wdm-actions">
+            <button class="wdm-cancel" id="wdmCancelBtn">Cancel</button>
+            <button class="wdm-confirm" id="wdmConfirmBtn" disabled>🗑️ Delete Permanently</button>
+          </div>
+          <div class="wdm-result" id="wdmResult"></div>
+        </div>
+      </div>
+    </div>
+
     <script>
       const userId = new URLSearchParams(window.location.search).get("userId");
       let transfersCache = [];
+      let deletingId     = null;
 
-      // ── Toast ──
+      // ── helpers ──
       function showToast(type, message) {
         const container = document.getElementById("toastContainer");
         const t = document.createElement("div");
@@ -659,115 +277,59 @@
       }
 
       function esc(str) {
-        return String(str ?? "").replace(
-          /[&<>"']/g,
-          (m) =>
-            ({
-              "&": "&amp;",
-              "<": "&lt;",
-              ">": "&gt;",
-              '"': "&quot;",
-              "'": "&#039;",
-            })[m],
+        return String(str ?? "").replace(/[&<>"']/g, m =>
+          ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[m]
         );
       }
 
       function money(n) {
-        return Number(n || 0).toLocaleString("en-US", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        });
+        return Number(n || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       }
 
       function formatDate(d) {
         if (!d) return "—";
         const dt = new Date(d);
-        return (
-          dt.toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          }) +
-          " · " +
-          dt.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
-        );
+        return dt.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+          + " · " + dt.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
       }
 
       function statusBadge(s) {
         return `<span class="badge badge-${s}">${s.charAt(0).toUpperCase() + s.slice(1)}</span>`;
       }
 
-      // ── Load user ──
-      // async function loadUser() {
-      //   if (!userId) return;
-      //   try {
-      //     const res = await fetch(`/api/admin/users/${userId}`, {
-      //       credentials: "include",
-      //     });
-      //     const data = await res.json();
-      //     if (!data.success || !data.user) return;
-      //     const u = data.user;
-
-      //     const initials = (u.name || "?")
-      //       .split(" ")
-      //       .map((w) => w[0])
-      //       .join("")
-      //       .slice(0, 2)
-      //       .toUpperCase();
-      //     document.getElementById("userAvatar").textContent = initials;
-      //     document.getElementById("userName").textContent = u.name || "—";
-      //     document.getElementById("userEmail").textContent = u.email || "—";
-      //     document.getElementById("userBalance").textContent =
-      //       `$${money(u.balance || 0)}`;
-      //     document.getElementById("userCard").style.display = "flex";
-      //   } catch (err) {
-      //     console.error("loadUser:", err);
-      //   }
-      // }
-
-
+      // ── load user ──
       async function loadUser() {
-  if (!userId) return;
-  try {
-    const res  = await fetch(`/api/admin/users/${userId}`, { credentials: "include" });
-    const data = await res.json();
-    if (!data.success || !data.user) return;
-    const u = data.user;
+        if (!userId) return;
+        try {
+          const res  = await fetch(`/api/admin/users/${userId}`, { credentials: "include" });
+          const data = await res.json();
+          if (!data.success || !data.user) return;
+          const u = data.user;
+          const fullName = [u.firstname, u.lastname].filter(Boolean).join(" ") || u.name || "Unknown";
+          const balance  = u.accountBalance ?? u.balance ?? 0;
+          const initials = fullName.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
+          document.getElementById("userAvatar").textContent  = initials;
+          document.getElementById("userName").textContent    = fullName;
+          document.getElementById("userEmail").textContent   = u.email || "—";
+          document.getElementById("userBalance").textContent = `$${money(balance)}`;
+          document.getElementById("userCard").style.display  = "flex";
+        } catch (err) { console.error("loadUser:", err); }
+      }
 
-    // ── fix: build name from firstname + lastname ──
-    const fullName = [u.firstname, u.lastname].filter(Boolean).join(" ") || u.name || "Unknown";
-
-    // ── fix: use accountBalance not balance ──
-    const balance = u.accountBalance ?? u.balance ?? 0;
-
-    const initials = fullName.split(" ").map(w => w[0]).join("").slice(0,2).toUpperCase();
-    document.getElementById("userAvatar").textContent  = initials;
-    document.getElementById("userName").textContent    = fullName;
-    document.getElementById("userEmail").textContent   = u.email || "—";
-    document.getElementById("userBalance").textContent = `$${money(balance)}`;
-    document.getElementById("userCard").style.display  = "flex";
-  } catch (err) {
-    console.error("loadUser:", err);
-  }
-}
-
-
-      // ── Load transfers ──
+      // ── load transfers ──
       async function loadTransfers() {
         if (!userId) {
           document.getElementById("transfersTbody").innerHTML =
-            `<tr><td colspan="8" class="empty">No userId in URL.</td></tr>`;
+            `<tr><td colspan="9" class="empty">No userId in URL.</td></tr>`;
           return;
         }
         try {
-          const res = await fetch(`/api/admin/wire-transfers/user/${userId}`, {
-            credentials: "include",
-          });
+          const res  = await fetch(`/api/admin/wire-transfers/user/${userId}`, { credentials: "include" });
           const data = await res.json();
 
           if (!data.success) {
             document.getElementById("transfersTbody").innerHTML =
-              `<tr><td colspan="8" class="empty">${esc(data.message || "Failed to load.")}</td></tr>`;
+              `<tr><td colspan="9" class="empty">${esc(data.message || "Failed to load.")}</td></tr>`;
             return;
           }
 
@@ -777,25 +339,15 @@
 
           if (!transfersCache.length) {
             document.getElementById("transfersTbody").innerHTML =
-              `<tr><td colspan="8" class="empty">No wire transfers found for this user.</td></tr>`;
+              `<tr><td colspan="9" class="empty">No wire transfers found for this user.</td></tr>`;
             return;
           }
 
-          document.getElementById("transfersTbody").innerHTML = transfersCache
-            .map((t, i) => {
-              const r = t.recipient || {};
-              const rec =
-                [
-                  r.fullname,
-                  r.bankname ? `(${r.bankname})` : "",
-                  r.country ? `- ${r.country}` : "",
-                ]
-                  .filter(Boolean)
-                  .join(" ") || "—";
-
-              return `<tr>
+          document.getElementById("transfersTbody").innerHTML = transfersCache.map((t, i) => `
+            <tr>
               <td style="white-space:nowrap;color:#6b7280;font-size:0.82rem;">${formatDate(t.createdAt)}</td>
-              <td style="font-size:0.82rem;">${esc(rec)}</td>
+              <td style="font-size:0.82rem;">${esc(t.fullname || "—")}</td>
+              <td style="font-size:0.82rem;">${esc(t.bankname  || "—")}</td>
               <td><div class="amount-cell">$${money(t.amount)}<small>USD</small></div></td>
               <td><div class="amount-cell" style="font-size:0.82rem;color:#6b7280;">$${money(t.fee || 0)}</div></td>
               <td><span class="txid" title="${esc(t.reference)}">${esc(t.reference || "—")}</span></td>
@@ -804,130 +356,95 @@
               <td>${statusBadge(t.status)}</td>
               <td>
                 <div class="action-cell">
-                  <button class="btn btn-view" onclick="openDetail(${i})">👁 View</button>
-                  ${t.status !== "successful" ? `<button class="btn btn-success"  onclick="updateStatus('${t._id}', 'successful')">✓ Successful</button>` : ""}
-                  ${t.status !== "processing" ? `<button class="btn btn-process"  onclick="updateStatus('${t._id}', 'processing')">⟳ Processing</button>` : ""}
-                  ${t.status !== "pending" ? `<button class="btn btn-pending"  onclick="updateStatus('${t._id}', 'pending')">↩ Pending</button>` : ""}
-                  ${t.status !== "failed" ? `<button class="btn btn-fail"     onclick="updateStatus('${t._id}', 'failed')">✕ Failed</button>` : ""}
+                  <button class="btn btn-view"   onclick="openDetail(${i})">👁 View</button>
+                  ${t.status !== "successful" ? `<button class="btn btn-success" onclick="updateStatus('${t._id}','successful')">✓ Successful</button>` : ""}
+                  ${t.status !== "processing" ? `<button class="btn btn-process" onclick="updateStatus('${t._id}','processing')">⟳ Processing</button>` : ""}
+                  ${t.status !== "pending"    ? `<button class="btn btn-pending" onclick="updateStatus('${t._id}','pending')">↩ Pending</button>`    : ""}
+                  ${t.status !== "failed"     ? `<button class="btn btn-fail"    onclick="updateStatus('${t._id}','failed')">✕ Failed</button>`       : ""}
+                  <button class="btn btn-delete" onclick="openDeleteModal(${i})">🗑 Delete</button>
                 </div>
               </td>
-            </tr>`;
-            })
-            .join("");
+            </tr>
+          `).join("");
+
         } catch (err) {
           document.getElementById("transfersTbody").innerHTML =
-            `<tr><td colspan="8" class="empty">Error loading transfers.</td></tr>`;
+            `<tr><td colspan="9" class="empty">Error loading transfers.</td></tr>`;
           console.error("loadTransfers:", err);
         }
       }
 
-      // ── Update status ──
+      // ── update status ──
       async function updateStatus(transferId, newStatus) {
-        const labels = {
-          successful: "mark as successful",
-          processing: "mark as processing",
-          pending: "set back to pending",
-          failed: "mark as failed",
-        };
-        if (
-          !confirm(
-            `Are you sure you want to ${labels[newStatus]} this transfer?`,
-          )
-        )
-          return;
-
+        const labels = { successful: "mark as successful", processing: "mark as processing", pending: "set back to pending", failed: "mark as failed" };
+        if (!confirm(`Are you sure you want to ${labels[newStatus]} this transfer?`)) return;
         try {
-          const res = await fetch(
-            `/api/admin/wire-transfers/${transferId}/status`,
-            {
-              method: "PATCH",
-              headers: { "Content-Type": "application/json" },
-              credentials: "include",
-              body: JSON.stringify({ status: newStatus }),
-            },
-          );
+          const res  = await fetch(`/api/admin/wire-transfers/${transferId}/status`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({ status: newStatus }),
+          });
           const data = await res.json();
-
-          if (!data.success) {
-            showToast("error", data.message || "Failed to update");
-            return;
-          }
-
+          if (!data.success) { showToast("error", data.message || "Failed to update"); return; }
           showToast("success", `Transfer marked as ${newStatus}`);
           await loadTransfers();
-          await loadUser(); // refresh balance
+          await loadUser();
           closeDetail();
-        } catch (err) {
-          showToast("error", err.message || "Network error");
-        }
+        } catch (err) { showToast("error", err.message || "Network error"); }
       }
 
-      // ── Detail modal ──
+      // ── detail modal ──
       function openDetail(index) {
         const t = transfersCache[index];
         if (!t) return;
-
-        const r = t.recipient || {};
-        const total = Number((t.amount + (t.fee || 0)).toFixed(2));
+        const total  = Number((t.amount + (t.fee || 0)).toFixed(2));
         const status = t.status || "pending";
-
         const statusColors = {
           successful: { bg: "#ecfdf3", color: "#027a48" },
-          pending: { bg: "#fffaeb", color: "#b54708" },
+          pending:    { bg: "#fffaeb", color: "#b54708" },
           processing: { bg: "#dbeafe", color: "#1e3a8a" },
-          failed: { bg: "#fef3f2", color: "#b42318" },
+          failed:     { bg: "#fef3f2", color: "#b42318" },
         };
         const sc = statusColors[status] || statusColors.pending;
 
         const kv = [
-          ["Reference", t.reference || "—"],
-          ["Amount", `$${money(t.amount)} USD`],
-          ["Fee", `$${money(t.fee || 0)} USD`],
+          ["Reference",     t.reference     || ""],
+          ["Amount",        `$${money(t.amount)} USD`],
+          ["Fee",           `$${money(t.fee || 0)} USD`],
           ["Total Debited", `$${money(total)} USD`],
-          ["Description", t.description || "—"],
-          ["Date", formatDate(t.createdAt)],
-          ["Status", status.charAt(0).toUpperCase() + status.slice(1)],
-          ["─── Recipient ───", ""],
-          ["Full Name", r.fullname || "—"],
-          ["Bank", r.bankname || "—"],
-          ["Account No.", r.accountnumber || "—"],
-          ["Account Holder", r.accountholder || "—"],
-          ["Account Type", r.accounttype || "—"],
-          ["IBAN", r.iban || "—"],
-          ["Swift Code", r.swiftcode || "—"],
-          ["Country", r.country || "—"],
-          ["City", r.city || "—"],
-          ["Address", r.address || "—"],
-          ["Email", r.email || "—"],
-          ["Phone", r.phone || "—"],
-        ].filter(([k, v]) => (v && v !== "—") || k.startsWith("───"));
+          ["Description",   t.description   || ""],
+          ["Date",          formatDate(t.createdAt)],
+          ["Status",        status.charAt(0).toUpperCase() + status.slice(1)],
+          ["── Recipient ──", ""],
+          ["Full Name",     t.fullname      || ""],
+          ["Bank",          t.bankname      || ""],
+          ["Account No.",   t.accountnumber || ""],
+          ["IBAN",          t.iban          || ""],
+          ["Swift Code",    t.swiftcode     || ""],
+          ["Country",       t.country       || ""],
+          ["Type",          t.type          || ""],
+        ].filter(([k, v]) => v || k.startsWith("──"));
 
-        const kvHtml = kv
-          .map(([k, v]) => {
-            if (k.startsWith("───"))
-              return `
-            <div style="padding:10px 0 4px;">
-              <span style="font-size:11px;font-weight:700;color:#033d75;text-transform:uppercase;letter-spacing:0.06em;">${esc(k)}</span>
-            </div>`;
-            return `<div class="kv-row"><span class="k">${esc(k)}</span><span class="v">${esc(v)}</span></div>`;
-          })
-          .join("");
+        const kvHtml = kv.map(([k, v]) => {
+          if (k.startsWith("──"))
+            return `<div style="padding:10px 0 4px;"><span style="font-size:11px;font-weight:700;color:#033d75;text-transform:uppercase;letter-spacing:0.06em;">${esc(k)}</span></div>`;
+          return `<div class="kv-row"><span class="k">${esc(k)}</span><span class="v">${esc(v)}</span></div>`;
+        }).join("");
 
         document.getElementById("detailBody").innerHTML = `
           <div class="amount-hero">
             <div class="amt">$${money(t.amount)} <small style="font-size:14px;font-weight:400;color:#9ca3af;">USD</small></div>
-            <span style="display:inline-block;margin-top:8px;padding:3px 14px;border-radius:20px;
-              font-size:11px;font-weight:700;background:${sc.bg};color:${sc.color};">
-              ${status.toUpperCase()}
-            </span>
+            <span style="display:inline-block;margin-top:8px;padding:3px 14px;border-radius:20px;font-size:11px;font-weight:700;background:${sc.bg};color:${sc.color};">${status.toUpperCase()}</span>
           </div>
           ${kvHtml}
-          <div class="dialog-actions" style="margin-top:16px;">
-            ${status !== "successful" ? `<button class="btn-lg btn-success-lg"  onclick="updateStatus('${t._id}','successful')">✓ Successful</button>` : ""}
-            ${status !== "processing" ? `<button class="btn-lg btn-process-lg"  onclick="updateStatus('${t._id}','processing')">⟳ Processing</button>` : ""}
-            ${status !== "pending" ? `<button class="btn-lg btn-pending-lg"  onclick="updateStatus('${t._id}','pending')">↩ Pending</button>` : ""}
-            ${status !== "failed" ? `<button class="btn-lg btn-fail-lg"     onclick="updateStatus('${t._id}','failed')">✕ Failed</button>` : ""}
-            <button class="btn-lg btn-close-lg" onclick="closeDetail()">✕ Close</button>
+          <div class="dialog-actions">
+            ${status !== "successful" ? `<button class="btn-lg btn-success-lg" onclick="updateStatus('${t._id}','successful')">✓ Successful</button>` : ""}
+            ${status !== "processing" ? `<button class="btn-lg btn-process-lg" onclick="updateStatus('${t._id}','processing')">⟳ Processing</button>` : ""}
+            ${status !== "pending"    ? `<button class="btn-lg btn-pending-lg" onclick="updateStatus('${t._id}','pending')">↩ Pending</button>`    : ""}
+            ${status !== "failed"     ? `<button class="btn-lg btn-fail-lg"    onclick="updateStatus('${t._id}','failed')">✕ Failed</button>`       : ""}
+            <button class="btn-lg btn-delete-lg" onclick="closeDetail();openDeleteModal(${index})">🗑 Delete</button>
+            <button class="btn-lg btn-close-lg"  onclick="closeDetail()">✕ Close</button>
           </div>
         `;
 
@@ -940,18 +457,89 @@
         document.body.style.overflow = "";
       }
 
-      document
-        .getElementById("detailOverlay")
-        .addEventListener("click", (e) => {
-          if (e.target === document.getElementById("detailOverlay"))
-            closeDetail();
-        });
+      // ── delete modal ──
+      function openDeleteModal(index) {
+        const t = transfersCache[index];
+        if (!t) return;
+        deletingId = t._id;
 
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeDetail();
+        document.getElementById("wdmInfo").innerHTML = `
+          <div class="wdm-row"><span class="wk">Recipient</span><span class="wv">${esc(t.fullname || "—")}</span></div>
+          <div class="wdm-row"><span class="wk">Bank</span><span class="wv">${esc(t.bankname || "—")}</span></div>
+          <div class="wdm-row"><span class="wk">Amount</span><span class="wv">$${money(t.amount)} USD</span></div>
+          <div class="wdm-row"><span class="wk">Reference</span><span class="wv">${esc(t.reference || "—")}</span></div>
+          <div class="wdm-row"><span class="wk">Status</span><span class="wv">${esc(t.status || "—")}</span></div>
+          <div class="wdm-row"><span class="wk">Date</span><span class="wv">${formatDate(t.createdAt)}</span></div>
+        `;
+
+        document.getElementById("wdmConfirmInput").value = "";
+        document.getElementById("wdmConfirmBtn").disabled = true;
+        document.getElementById("wdmResult").innerHTML = "";
+
+        const modal = document.getElementById("wireDeleteModal");
+        modal.classList.add("wdm-open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        setTimeout(() => document.getElementById("wdmConfirmInput")?.focus(), 80);
+      }
+
+      function closeDeleteModal() {
+        const modal = document.getElementById("wireDeleteModal");
+        modal.classList.remove("wdm-open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        deletingId = null;
+      }
+
+      async function executeDelete() {
+        if (!deletingId) return;
+        if (document.getElementById("wdmConfirmInput")?.value !== "DELETE") return;
+
+        const btn      = document.getElementById("wdmConfirmBtn");
+        const resultEl = document.getElementById("wdmResult");
+
+        btn.disabled  = true;
+        btn.innerHTML = "⏳ Deleting...";
+
+        try {
+          const res  = await fetch(`/api/admin/wire-transfers/${deletingId}`, {
+            method: "DELETE",
+            credentials: "include",
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok || !data.success) throw new Error(data.message || "Delete failed");
+
+          resultEl.innerHTML = `<div class="wdm-ok">✅ Transfer deleted successfully.</div>`;
+          showToast("success", "Wire transfer deleted.");
+          setTimeout(async () => { closeDeleteModal(); await loadTransfers(); await loadUser(); }, 1200);
+
+        } catch (err) {
+          resultEl.innerHTML = `<div class="wdm-err">❌ ${esc(err.message || "Delete failed.")}</div>`;
+          btn.disabled  = false;
+          btn.innerHTML = "🗑️ Delete Permanently";
+        }
+      }
+
+      // ── wire up delete modal buttons ──
+      document.getElementById("wdmConfirmInput").addEventListener("input", (e) => {
+        document.getElementById("wdmConfirmBtn").disabled = e.target.value !== "DELETE";
+      });
+      document.getElementById("wdmCloseBtn").addEventListener("click",  closeDeleteModal);
+      document.getElementById("wdmCancelBtn").addEventListener("click", closeDeleteModal);
+      document.getElementById("wdmConfirmBtn").addEventListener("click", executeDelete);
+      document.getElementById("wireDeleteModal").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("wireDeleteModal")) closeDeleteModal();
       });
 
-      // ── Init ──
+      // ── detail overlay close ──
+      document.getElementById("detailOverlay").addEventListener("click", e => {
+        if (e.target === document.getElementById("detailOverlay")) closeDetail();
+      });
+
+      document.addEventListener("keydown", e => {
+        if (e.key === "Escape") { closeDetail(); closeDeleteModal(); }
+      });
+
       loadUser();
       loadTransfers();
     </script>

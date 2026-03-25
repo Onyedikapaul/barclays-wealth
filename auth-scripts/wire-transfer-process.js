@@ -15,16 +15,6 @@
     if (mount) mount.innerHTML = "";
   }
 
-  function showSaveResult(type, msg) {
-    const mount = $("saveRecipientResult");
-    if (!mount) return;
-    const cls = type === "success" ? "alert alert-success"
-      : type === "warning" ? "alert alert-warning"
-      : "alert alert-danger";
-    mount.innerHTML = `<div class="${cls}">${msg}</div>`;
-    setTimeout(() => { mount.innerHTML = ""; }, 4000);
-  }
-
   function setBtnLoading(btn, loading, loadText = "Processing...") {
     if (!btn) return;
     btn.disabled = !!loading;
@@ -38,70 +28,246 @@
     });
   }
 
-  // ── Map: field ID → recipient object key ──
-  const FIELD_MAP = {
-    countryId:     "country",
-    stateId:       "state",
-    cityId:        "city",
-    address:       "address",
-    zipcode:       "zipcode",
-    email:         "email",
-    phone:         "phone",
-    fullname:      "fullname",
-    type:          "type",
-    iban:          "iban",
-    swiftcode:     "swiftcode",
-    accountnumber: "accountnumber",
-    accountholder: "accountholder",
-    accounttype:   "accounttype",
-    bankname:      "bankname",
-  };
+  function clearForm() {
+    [
+      "fullname", "countryId", "type",
+      "iban", "swiftcode", "accountnumber", "bankname",
+      "amount", "transactionPin", "description",
+    ].forEach((id) => {
+      const el = $(id);
+      if (el) el.value = "";
+    });
+  }
 
-  function fillFormFromRecipient(r) {
-    if (!r) return;
+  // ── OTP Modal ──────────────────────────────────────────────────────────────
+  function injectOtpModal() {
+    if (document.getElementById("wireOtpOverlay")) return;
 
-    Object.entries(FIELD_MAP).forEach(([fieldId, recipientKey]) => {
-      const el = $(fieldId);
-      if (!el) return;
-      const val = r[recipientKey] ?? "";
-
-      if (el.tagName === "SELECT") {
-        const opts  = Array.from(el.options);
-        const match = opts.find((o) => o.value.toLowerCase() === String(val).toLowerCase());
-        if (match) {
-          el.value = match.value;
-        } else if (val) {
-          const opt = document.createElement("option");
-          opt.value = val; opt.textContent = val;
-          el.appendChild(opt);
-          el.value = val;
+    const overlay = document.createElement("div");
+    overlay.id = "wireOtpOverlay";
+    overlay.style.cssText = `
+      position:fixed;inset:0;z-index:10000;
+      background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);
+      display:none;align-items:center;justify-content:center;padding:16px;
+    `;
+    overlay.innerHTML = `
+      <style>
+        @keyframes otpIn {
+          from{opacity:0;transform:scale(0.95) translateY(10px)}
+          to{opacity:1;transform:scale(1) translateY(0)}
         }
-      } else {
-        el.value = val;
+        .otp-modal {
+          background:#fff;border-radius:20px;width:100%;max-width:420px;
+          box-shadow:0 24px 64px rgba(0,0,0,0.22);
+          animation:otpIn 0.22s ease;overflow:hidden;
+        }
+        .otp-header {
+          background:#033d75;padding:22px 24px 18px;
+          display:flex;align-items:flex-start;justify-content:space-between;
+        }
+        .otp-header h3 { color:#fff;font-size:15px;font-weight:700;margin:0; }
+        .otp-header p  { color:rgba(255,255,255,0.6);font-size:12px;margin:4px 0 0; }
+        .otp-close {
+          background:rgba(255,255,255,0.12);border:none;border-radius:8px;
+          color:#fff;width:30px;height:30px;cursor:pointer;font-size:16px;
+          display:flex;align-items:center;justify-content:center;flex-shrink:0;
+        }
+        .otp-close:hover { background:rgba(255,255,255,0.22); }
+        .otp-body { padding:24px; }
+        .otp-icon {
+          width:54px;height:54px;border-radius:50%;
+          background:#eff6ff;display:flex;align-items:center;justify-content:center;
+          margin:0 auto 14px;font-size:22px;
+        }
+        .otp-desc {
+          text-align:center;font-size:13px;color:#64748b;
+          margin-bottom:20px;line-height:1.55;
+        }
+        .otp-desc strong { color:#0f1a2e; }
+        .otp-inputs {
+          display:flex;gap:10px;justify-content:center;margin-bottom:18px;
+        }
+        .otp-inputs input {
+          width:46px;height:54px;border:2px solid #dde4f0;border-radius:12px;
+          text-align:center;font-size:22px;font-weight:700;color:#033d75;
+          font-family:inherit;outline:none;
+          transition:border-color 0.2s,box-shadow 0.2s;
+          background:#fafbfe;
+        }
+        .otp-inputs input:focus {
+          border-color:#033d75;
+          box-shadow:0 0 0 3px rgba(3,61,117,0.1);
+          background:#fff;
+        }
+        .otp-inputs input.filled { border-color:#033d75;background:#fff; }
+        .otp-result { margin-bottom:14px;min-height:36px; }
+        .otp-result .alert { padding:10px 14px;border-radius:10px;font-size:13px;font-weight:500; }
+        .otp-submit {
+          width:100%;height:48px;background:#033d75;color:#fff;border:none;
+          border-radius:12px;font-family:inherit;font-size:14px;font-weight:700;
+          cursor:pointer;transition:opacity 0.2s;
+          display:flex;align-items:center;justify-content:center;gap:8px;
+        }
+        .otp-submit:hover { opacity:0.88; }
+        .otp-submit:disabled { opacity:0.55;cursor:not-allowed; }
+        .otp-resend {
+          text-align:center;margin-top:14px;font-size:12.5px;color:#94a3b8;
+        }
+        .otp-resend button {
+          background:none;border:none;color:#033d75;font-weight:600;
+          cursor:pointer;font-family:inherit;font-size:12.5px;padding:0;
+        }
+        .otp-resend button:disabled { color:#94a3b8;cursor:default; }
+      </style>
+      <div class="otp-modal">
+        <div class="otp-header">
+          <div>
+            <h3>Verify Your Identity</h3>
+            <p>We sent a 6-digit code to your email</p>
+          </div>
+          <button class="otp-close" id="otpCloseBtn">✕</button>
+        </div>
+        <div class="otp-body">
+          <div class="otp-icon">📧</div>
+          <p class="otp-desc">
+            Enter the <strong>6-digit code</strong> sent to your registered email address to authorize this transfer.
+          </p>
+          <div class="otp-inputs" id="otpInputs">
+            <input type="text" inputmode="numeric" maxlength="1" data-idx="0">
+            <input type="text" inputmode="numeric" maxlength="1" data-idx="1">
+            <input type="text" inputmode="numeric" maxlength="1" data-idx="2">
+            <input type="text" inputmode="numeric" maxlength="1" data-idx="3">
+            <input type="text" inputmode="numeric" maxlength="1" data-idx="4">
+            <input type="text" inputmode="numeric" maxlength="1" data-idx="5">
+          </div>
+          <div class="otp-result" id="otpResult"></div>
+          <button class="otp-submit" id="otpSubmitBtn">
+            <i class="fa-solid fa-shield-check"></i> Verify & Send Transfer
+          </button>
+          <div class="otp-resend">
+            Didn't receive it?
+            <button id="otpResendBtn">Resend code</button>
+            <span id="otpResendTimer"></span>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    // ── OTP digit inputs ──
+    const inputs = overlay.querySelectorAll(".otp-inputs input");
+    inputs.forEach((inp, i) => {
+      inp.addEventListener("input", (e) => {
+        const val = e.target.value.replace(/\D/g, "");
+        e.target.value = val ? val[0] : "";
+        if (val && i < inputs.length - 1) inputs[i + 1].focus();
+        inp.classList.toggle("filled", !!inp.value);
+      });
+      inp.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && !inp.value && i > 0) inputs[i - 1].focus();
+      });
+      inp.addEventListener("paste", (e) => {
+        e.preventDefault();
+        const pasted = (e.clipboardData || window.clipboardData)
+          .getData("text").replace(/\D/g, "").slice(0, 6);
+        pasted.split("").forEach((ch, j) => {
+          if (inputs[j]) { inputs[j].value = ch; inputs[j].classList.add("filled"); }
+        });
+        if (inputs[Math.min(pasted.length, inputs.length) - 1])
+          inputs[Math.min(pasted.length, inputs.length) - 1].focus();
+      });
+    });
+
+    document.getElementById("otpCloseBtn").addEventListener("click", closeOtpModal);
+    overlay.addEventListener("click", (e) => { if (e.target === overlay) closeOtpModal(); });
+
+    // ── OTP submit ──
+    document.getElementById("otpSubmitBtn").addEventListener("click", handleOtpSubmit);
+
+    // ── Resend ──
+    document.getElementById("otpResendBtn").addEventListener("click", async () => {
+      clearOtpResult();
+      clearOtpInputs();
+      try {
+        const res  = await fetch("/api/wire-transfer/send-otp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) return showOtpResult("danger", data?.message || "Failed to resend code.");
+        showOtpResult("success", "A new code has been sent to your email.");
+        startResendTimer();
+      } catch {
+        showOtpResult("danger", "Network error. Try again.");
       }
     });
-
-    const pin  = $("transactionPin");
-    const desc = $("description");
-    if (pin)  pin.value  = "";
-    if (desc) desc.value = "";
-
-    const amt = $("amount");
-    if (amt) { amt.value = ""; setTimeout(() => amt.focus(), 100); }
   }
 
-  function clearForm() {
-    Object.keys(FIELD_MAP).forEach((id) => {
-      const el = $(id);
-      if (el) el.value = "";
-    });
-    ["transactionPin", "amount", "description"].forEach((id) => {
-      const el = $(id);
-      if (el) el.value = "";
-    });
+  function getOtpValue() {
+    return Array.from(document.querySelectorAll(".otp-inputs input"))
+      .map(i => i.value).join("");
   }
 
-  // ── Show receipt modal ──
+  function clearOtpInputs() {
+    document.querySelectorAll(".otp-inputs input").forEach(i => {
+      i.value = ""; i.classList.remove("filled");
+    });
+    document.querySelectorAll(".otp-inputs input")[0]?.focus();
+  }
+
+  function showOtpResult(type, msg) {
+    const el = document.getElementById("otpResult");
+    if (!el) return;
+    const cls = type === "success" ? "alert alert-success"
+      : type === "warning" ? "alert alert-warning"
+      : "alert alert-danger";
+    el.innerHTML = `<div class="${cls}">${msg}</div>`;
+  }
+
+  function clearOtpResult() {
+    const el = document.getElementById("otpResult");
+    if (el) el.innerHTML = "";
+  }
+
+  function openOtpModal() {
+    injectOtpModal();
+    const overlay = document.getElementById("wireOtpOverlay");
+    overlay.style.display = "flex";
+    document.body.style.overflow = "hidden";
+    clearOtpInputs();
+    clearOtpResult();
+    document.querySelectorAll(".otp-inputs input")[0]?.focus();
+    startResendTimer();
+  }
+
+  function closeOtpModal() {
+    const overlay = document.getElementById("wireOtpOverlay");
+    if (overlay) overlay.style.display = "none";
+    document.body.style.overflow = "";
+  }
+
+  // ── Resend countdown ──
+  let resendTimer = null;
+  function startResendTimer(seconds = 60) {
+    const btn   = document.getElementById("otpResendBtn");
+    const timer = document.getElementById("otpResendTimer");
+    if (!btn || !timer) return;
+    btn.disabled = true;
+    let remaining = seconds;
+    clearInterval(resendTimer);
+    resendTimer = setInterval(() => {
+      timer.textContent = ` (${remaining}s)`;
+      remaining--;
+      if (remaining < 0) {
+        clearInterval(resendTimer);
+        btn.disabled = false;
+        timer.textContent = "";
+      }
+    }, 1000);
+  }
+
+  // ── Receipt modal ──────────────────────────────────────────────────────────
   function showReceiptModal(tx, payload) {
     const currency = tx.currency || "USD";
     const amount   = Number(tx.amount || payload.amount);
@@ -121,13 +287,13 @@
       ["Amount",        `${currency} ${money(amount)}`],
       ["Fee (2%)",      `${currency} ${money(fee)}`],
       ["Total Debited", `${currency} ${money(total)}`],
-      ["Recipient",     payload.fullname        || ""],
-      ["Bank",          payload.bankname        || ""],
-      ["Account No.",   payload.accountnumber   || ""],
-      ["IBAN",          payload.iban            || ""],
-      ["Swift Code",    payload.swiftcode       || ""],
-      ["Country",       payload.country         || ""],
-      ["Description",   payload.description     || ""],
+      ["Recipient",     payload.fullname        || tx.fullname      || ""],
+      ["Bank",          payload.bankname        || tx.bankname      || ""],
+      ["Account No.",   payload.accountnumber   || tx.accountnumber || ""],
+      ["IBAN",          payload.iban            || tx.iban          || ""],
+      ["Swift Code",    payload.swiftcode       || tx.swiftcode     || ""],
+      ["Country",       payload.country         || tx.country       || ""],
+      ["Description",   payload.description     || tx.description   || ""],
       ["Date",          new Date().toLocaleString()],
       ["Status",        "Pending Review"],
     ].filter(([, v]) => v);
@@ -140,7 +306,6 @@
       </div>
     `).join("");
 
-    // Create overlay once
     if (!document.getElementById("wireSuccessOverlay")) {
       const overlay = document.createElement("div");
       overlay.id = "wireSuccessOverlay";
@@ -182,13 +347,11 @@
         overlay.style.display = "none";
         document.body.style.overflow = "";
       };
-
       document.getElementById("wireSuccessCloseBtn").addEventListener("click", closeModal);
       overlay.addEventListener("click", (e) => { if (e.target === overlay) closeModal(); });
       document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
     }
 
-    // Fill body
     document.getElementById("wireSuccessBody").innerHTML = `
       <div style="text-align:center;padding:16px;background:#f8fafc;border-radius:12px;margin-bottom:16px;">
         <div style="font-size:26px;font-weight:800;color:#033d75;">
@@ -216,106 +379,20 @@
       </div>
     `;
 
-    // Wire up the close btn inside body (re-rendered each time)
     document.getElementById("wireSuccessCloseBtn2")?.addEventListener("click", () => {
       document.getElementById("wireSuccessOverlay").style.display = "none";
       document.body.style.overflow = "";
     });
 
-    // Show
     const overlay = document.getElementById("wireSuccessOverlay");
     overlay.style.display = "flex";
     document.body.style.overflow = "hidden";
   }
 
-  // ── Load saved recipients ──
-  let recipientsCache = [];
+  // ── Pending payload store ──
+  let _pendingPayload = null;
 
-  async function loadRecipients() {
-    const select = $("recipient");
-    if (!select) return;
-    select.innerHTML = `<option value="" disabled selected>Loading recipients...</option>`;
-
-    try {
-      const res  = await fetch("/api/wire-transfer/recipients", { credentials: "include" });
-      const data = await res.json().catch(() => ({}));
-      const list = Array.isArray(data?.data) ? data.data : [];
-      recipientsCache = list;
-
-      select.innerHTML = `<option value="">— Select a saved recipient (optional) —</option>`;
-      list.forEach((r) => {
-        const opt = document.createElement("option");
-        opt.value = r._id;
-        opt.textContent = [
-          r.fullname || "Unknown",
-          r.bankname ? `(${r.bankname})` : "",
-          r.country  ? `- ${r.country}`  : "",
-        ].filter(Boolean).join(" ");
-        select.appendChild(opt);
-      });
-    } catch {
-      select.innerHTML = `<option value="" disabled selected>Could not load recipients</option>`;
-    }
-  }
-
-  // ── Auto-fill on recipient select ──
-  $("recipient")?.addEventListener("change", function () {
-    const r = recipientsCache.find((x) => x._id === this.value);
-    if (r) fillFormFromRecipient(r);
-  });
-
-  // ── Save Recipient ──
-  $("saveRecipientBtn")?.addEventListener("click", async function () {
-    const btn = this;
-
-    const payload = {
-      country:       $("countryId")?.value?.trim(),
-      state:         $("stateId")?.value?.trim(),
-      city:          $("cityId")?.value?.trim(),
-      address:       $("address")?.value?.trim(),
-      zipcode:       $("zipcode")?.value?.trim(),
-      email:         $("email")?.value?.trim(),
-      phone:         $("phone")?.value?.trim(),
-      fullname:      $("fullname")?.value?.trim(),
-      type:          $("type")?.value?.trim() || "International transfer",
-      iban:          $("iban")?.value?.trim(),
-      swiftcode:     $("swiftcode")?.value?.trim(),
-      accountnumber: $("accountnumber")?.value?.trim(),
-      accountholder: $("accountholder")?.value?.trim(),
-      accounttype:   $("accounttype")?.value?.trim(),
-      bankname:      $("bankname")?.value?.trim(),
-    };
-
-    if (!payload.fullname || !payload.country)
-      return showSaveResult("warning", "At minimum, Country and Full Name are required to save a recipient.");
-
-    try {
-      setBtnLoading(btn, true, '<i class="fa-solid fa-spinner fa-spin"></i> Saving...');
-
-      const res  = await fetch("/api/wire-transfer/recipient", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(payload),
-      });
-      const data = await res.json().catch(() => ({}));
-
-      if (!res.ok) return showSaveResult("danger", data?.message || "Failed to save recipient.");
-
-      showSaveResult("success", "Recipient saved successfully!");
-      await loadRecipients();
-
-      const select = $("recipient");
-      if (select && data?.data?._id) select.value = data.data._id;
-
-    } catch (err) {
-      showSaveResult("danger", err?.message || "Network error.");
-    } finally {
-      setBtnLoading(btn, false);
-    }
-  });
-
-  // ── Submit Transfer ──
+  // ── Step 1: Form submit → validate → send OTP ──────────────────────────────
   $("wireTransferForm")?.addEventListener("submit", async function (e) {
     e.preventDefault();
     clearWireResult();
@@ -323,25 +400,16 @@
     const btn = this.querySelector(".wireBtn");
 
     const payload = {
-      recipient:      $("recipient")?.value      || "",
       amount:         Number($("amount")?.value  || 0),
       transactionPin: $("transactionPin")?.value?.trim() || "",
       description:    $("description")?.value?.trim()    || "",
-      country:        $("countryId")?.value?.trim(),
-      state:          $("stateId")?.value?.trim(),
-      city:           $("cityId")?.value?.trim(),
-      address:        $("address")?.value?.trim(),
-      zipcode:        $("zipcode")?.value?.trim(),
-      email:          $("email")?.value?.trim(),
-      phone:          $("phone")?.value?.trim(),
-      fullname:       $("fullname")?.value?.trim(),
-      type:           $("type")?.value?.trim(),
-      iban:           $("iban")?.value?.trim(),
-      swiftcode:      $("swiftcode")?.value?.trim(),
-      accountnumber:  $("accountnumber")?.value?.trim(),
-      accountholder:  $("accountholder")?.value?.trim(),
-      accounttype:    $("accounttype")?.value?.trim(),
-      bankname:       $("bankname")?.value?.trim(),
+      country:        $("countryId")?.value?.trim()      || "",
+      fullname:       $("fullname")?.value?.trim()       || "",
+      type:           $("type")?.value?.trim()           || "International transfer",
+      iban:           $("iban")?.value?.trim()           || "",
+      swiftcode:      $("swiftcode")?.value?.trim()      || "",
+      accountnumber:  $("accountnumber")?.value?.trim()  || "",
+      bankname:       $("bankname")?.value?.trim()       || "",
     };
 
     if (!payload.fullname)
@@ -354,29 +422,20 @@
       return showWireResult("warning", "Enter a description/reason.");
 
     try {
-      setBtnLoading(btn, true, '<i class="fa-solid fa-spinner fa-spin"></i> Processing...');
+      setBtnLoading(btn, true, '<i class="fa-solid fa-spinner fa-spin"></i> Sending code...');
 
-      const res  = await fetch("/api/wire-transfer/process", {
+      const res  = await fetch("/api/wire-transfer/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify(payload),
       });
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok)
-        return showWireResult("danger", data?.message || "Transfer failed. Try again.");
+        return showWireResult("danger", data?.message || "Failed to send verification code.");
 
-      // ── Success ──
-      clearForm();
-      const select = $("recipient");
-      if (select) select.value = "";
-
-      showReceiptModal(data?.data || {}, payload);
-
-      if (typeof window.loadRecentTransactions === "function") {
-        window.loadRecentTransactions();
-      }
+      _pendingPayload = payload;
+      openOtpModal();
 
     } catch (err) {
       showWireResult("danger", err?.message || "Network error. Try again.");
@@ -385,7 +444,53 @@
     }
   });
 
-  // ── Init ──
-  loadRecipients();
+  // ── Step 2: OTP verify → process transfer ──────────────────────────────────
+  async function handleOtpSubmit() {
+    clearOtpResult();
+
+    const otp = getOtpValue();
+    if (otp.length !== 6)
+      return showOtpResult("warning", "Please enter all 6 digits.");
+
+    if (!_pendingPayload)
+      return showOtpResult("danger", "Session expired. Please start over.");
+
+    const btn = document.getElementById("otpSubmitBtn");
+    setBtnLoading(btn, true, '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...');
+
+    try {
+      const res  = await fetch("/api/wire-transfer/process", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ ..._pendingPayload, otp }),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        showOtpResult("danger", data?.message || "Transfer failed. Try again.");
+        clearOtpInputs();
+        return;
+      }
+
+      // ── Success ──
+      const savedPayload = { ..._pendingPayload };
+      _pendingPayload = null;
+      closeOtpModal();
+      clearForm();
+
+      showReceiptModal(data?.data || {}, savedPayload);
+
+      if (typeof window.loadRecentTransactions === "function") {
+        window.loadRecentTransactions();
+      }
+
+    } catch (err) {
+      showOtpResult("danger", err?.message || "Network error. Try again.");
+      clearOtpInputs();
+    } finally {
+      setBtnLoading(btn, false);
+    }
+  }
 
 })();

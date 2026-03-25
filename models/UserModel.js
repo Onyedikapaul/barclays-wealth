@@ -86,6 +86,9 @@ const userSchema = new mongoose.Schema(
 
     emailVerifyCodeHash: { type: String, default: null },
     emailVerifyCodeExpiresAt: { type: Date, default: null },
+
+    wireOtpHash: { type: String },
+    wireOtpExpiresAt: { type: Date },
   },
   { timestamps: true },
 );

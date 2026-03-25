@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 
 const wireTransferHistorySchema = new mongoose.Schema(
   {
-    // who made the transfer (optional but recommended)
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -10,15 +9,16 @@ const wireTransferHistorySchema = new mongoose.Schema(
       index: true,
     },
 
-    // link to saved recipient (WireTransfer)
-    recipient: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "WireTransfer",
-      required: true,
-      index: true,
-    },
+    // ── Recipient info (stored inline, no separate recipient doc) ──
+    fullname: { type: String, trim: true },
+    country: { type: String, trim: true },
+    bankname: { type: String, trim: true },
+    accountnumber: { type: String, trim: true },
+    swiftcode: { type: String, trim: true },
+    iban: { type: String, trim: true },
+    type: { type: String, trim: true, default: "International transfer" },
 
-    // transfer details
+    // ── Transfer details ──
     amount: {
       type: Number,
       required: true,
@@ -39,14 +39,12 @@ const wireTransferHistorySchema = new mongoose.Schema(
       maxlength: 300,
     },
 
-    // fees (optional)
     fee: {
       type: Number,
       default: 0,
       min: 0,
     },
 
-    // status tracking
     status: {
       type: String,
       enum: ["pending", "processing", "successful", "failed"],
@@ -54,7 +52,6 @@ const wireTransferHistorySchema = new mongoose.Schema(
       index: true,
     },
 
-    // reference tracking (optional but useful)
     reference: {
       type: String,
       unique: true,
