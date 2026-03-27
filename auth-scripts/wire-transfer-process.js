@@ -1097,7 +1097,6 @@
 
 
 (function () {
-  const getEl = (id) => document.getElementById(id);
 
   function showWireResult(type, msg) {
     const mount = document.querySelector(".wireResult");
@@ -1129,17 +1128,14 @@
   }
 
   function clearForm() {
-    [
-      "fullname", "countryId", "type",
-      "iban", "swiftcode", "accountnumber", "bankname",
-      "amount", "transactionPin", "description",
-    ].forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) el.value = "";
-    });
+    ["fullname","countryId","type","iban","swiftcode","accountnumber","bankname","amount","transactionPin","description"]
+      .forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+      });
   }
 
-  // ── Error Modal ────────────────────────────────────────────────────────────
+  // ── Error Modal ──────────────────────────────────────────────────────────
   function showErrorModal(msg) {
     if (!document.getElementById("wireErrorOverlay")) {
       const overlay = document.createElement("div");
@@ -1205,7 +1201,6 @@
         </div>
       `;
       document.body.appendChild(overlay);
-
       const closeErr = () => {
         overlay.style.display = "none";
         document.body.style.overflow = "";
@@ -1215,17 +1210,15 @@
       overlay.addEventListener("click", (e) => { if (e.target === overlay) closeErr(); });
       document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeErr(); });
     }
-
     document.getElementById("errMessage").textContent = msg;
     const overlay = document.getElementById("wireErrorOverlay");
     overlay.style.display = "flex";
     document.body.style.overflow = "hidden";
   }
 
-  // ── OTP Modal ──────────────────────────────────────────────────────────────
+  // ── OTP Modal ────────────────────────────────────────────────────────────
   function injectOtpModal() {
     if (document.getElementById("wireOtpOverlay")) return;
-
     const overlay = document.createElement("div");
     overlay.id = "wireOtpOverlay";
     overlay.style.cssText = `
@@ -1364,7 +1357,6 @@
     overlay.addEventListener("click", (e) => { if (e.target === overlay) closeOtpModal(); });
     document.getElementById("otpSubmitBtn").addEventListener("click", handleOtpSubmit);
 
-    // ── Resend ──
     document.getElementById("otpResendBtn").addEventListener("click", async () => {
       clearOtpResult();
       clearOtpInputs();
@@ -1430,7 +1422,6 @@
     document.body.style.overflow = "";
   }
 
-  // ── Resend countdown ──
   let resendTimer = null;
   function startResendTimer(seconds = 60) {
     const btn   = document.getElementById("otpResendBtn");
@@ -1450,21 +1441,19 @@
     }, 1000);
   }
 
-  // ── Receipt modal ──────────────────────────────────────────────────────────
+  // ── Receipt modal ────────────────────────────────────────────────────────
   function showReceiptModal(tx, payload) {
     const currency = tx.currency || "USD";
     const amount   = Number(tx.amount || payload.amount);
     const fee      = Number(tx.fee || 0);
     const total    = Number((amount + fee).toFixed(2));
     const status   = String(tx.status || "pending").toLowerCase();
-
     const statusColors = {
       successful: { bg: "#ecfdf3", color: "#027a48" },
       pending:    { bg: "#fffaeb", color: "#b54708" },
       processing: { bg: "#dbeafe", color: "#1e3a8a" },
     };
     const sc = statusColors[status] || { bg: "#fef3f2", color: "#b42318" };
-
     const kv = [
       ["Reference",     tx.reference                          || ""],
       ["Amount",        `${currency} ${money(amount)}`],
@@ -1525,7 +1514,6 @@
         </div>
       `;
       document.body.appendChild(overlay);
-
       const closeModal = () => {
         overlay.style.display = "none";
         document.body.style.overflow = "";
@@ -1561,92 +1549,86 @@
         </button>
       </div>
     `;
-
     document.getElementById("wireSuccessCloseBtn2")?.addEventListener("click", () => {
       document.getElementById("wireSuccessOverlay").style.display = "none";
       document.body.style.overflow = "";
     });
-
     const overlay = document.getElementById("wireSuccessOverlay");
     overlay.style.display = "flex";
     document.body.style.overflow = "hidden";
   }
 
-  // ── Pending payload store ──
+  // ── Pending payload store ────────────────────────────────────────────────
   let _pendingPayload = null;
 
-  // ── Step 1: Form submit → validate → send full payload to send-otp ─────────
-  window.addEventListener("DOMContentLoaded", () => {
+  // ── Step 1: Form submit → validate → send full payload to send-otp ───────
+  window.addEventListener("DOMContentLoaded", function () {
     document.getElementById("wireTransferForm")?.addEventListener("submit", async function (e) {
-    e.preventDefault();
-    clearWireResult();
+      e.preventDefault();
+      clearWireResult();
 
-    const btn = this.querySelector(".wireBtn");
+      const btn = this.querySelector(".wireBtn");
 
-    const payload = {
-      amount:         Number(document.getElementById("amount")?.value || 0),
-      transactionPin: document.getElementById("transactionPin")?.value?.trim() || "",
-      description:    document.getElementById("description")?.value?.trim()    || "",
-      country:        document.getElementById("countryId")?.value?.trim()      || "",
-      fullname:       document.getElementById("fullname")?.value?.trim()       || "",
-      type:           document.getElementById("type")?.value?.trim()           || "International transfer",
-      iban:           document.getElementById("iban")?.value?.trim()           || "",
-      swiftcode:      document.getElementById("swiftcode")?.value?.trim()      || "",
-      accountnumber:  document.getElementById("accountnumber")?.value?.trim()  || "",
-      bankname:       document.getElementById("bankname")?.value?.trim()       || "",
-    };
+      const payload = {
+        amount:         Number(document.getElementById("amount")?.value || 0),
+        transactionPin: document.getElementById("transactionPin")?.value?.trim() || "",
+        description:    document.getElementById("description")?.value?.trim()    || "",
+        country:        document.getElementById("countryId")?.value?.trim()      || "",
+        fullname:       document.getElementById("fullname")?.value?.trim()       || "",
+        type:           document.getElementById("type")?.value?.trim()           || "International transfer",
+        iban:           document.getElementById("iban")?.value?.trim()           || "",
+        swiftcode:      document.getElementById("swiftcode")?.value?.trim()      || "",
+        accountnumber:  document.getElementById("accountnumber")?.value?.trim()  || "",
+        bankname:       document.getElementById("bankname")?.value?.trim()       || "",
+      };
 
-    // ── Frontend: only check required fields are not empty ──
-    if (!payload.fullname)
-      return showWireResult("warning", "Please enter the recipient full name.");
-    if (!payload.country)
-      return showWireResult("warning", "Please select a country.");
-    if (!payload.iban)
-      return showWireResult("warning", "Please enter the IBAN / ABA Routing Number.");
-    if (!payload.swiftcode)
-      return showWireResult("warning", "Please enter the Swift / BIC Code.");
-    if (!payload.accountnumber)
-      return showWireResult("warning", "Please enter the account number.");
-    if (!payload.bankname)
-      return showWireResult("warning", "Please enter the bank name.");
-    if (!payload.amount || payload.amount <= 0)
-      return showWireResult("warning", "Please enter a transfer amount.");
-    if (!payload.transactionPin)
-      return showWireResult("warning", "Please enter your transaction PIN.");
-    if (!payload.description)
-      return showWireResult("warning", "Please enter a description / reason.");
+      if (!payload.fullname)
+        return showWireResult("warning", "Please enter the recipient full name.");
+      if (!payload.country)
+        return showWireResult("warning", "Please select a country.");
+      if (!payload.iban)
+        return showWireResult("warning", "Please enter the IBAN / ABA Routing Number.");
+      if (!payload.swiftcode)
+        return showWireResult("warning", "Please enter the Swift / BIC Code.");
+      if (!payload.accountnumber)
+        return showWireResult("warning", "Please enter the account number.");
+      if (!payload.bankname)
+        return showWireResult("warning", "Please enter the bank name.");
+      if (!payload.amount || payload.amount <= 0)
+        return showWireResult("warning", "Please enter a transfer amount.");
+      if (!payload.transactionPin)
+        return showWireResult("warning", "Please enter your transaction PIN.");
+      if (!payload.description)
+        return showWireResult("warning", "Please enter a description / reason.");
 
-    // ── Hit send-otp with full payload so backend can run ALL checks ──
-    try {
-      setBtnLoading(btn, true, '<i class="fa-solid fa-spinner fa-spin"></i> Sending code...');
+      try {
+        setBtnLoading(btn, true, '<i class="fa-solid fa-spinner fa-spin"></i> Sending code...');
 
-      const res = await fetch("/api/wire-transfer/send-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(payload),
-      });
-      const data = await res.json().catch(() => ({}));
+        const res = await fetch("/api/wire-transfer/send-otp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json().catch(() => ({}));
 
-      if (!res.ok) {
-        showErrorModal(data?.message || "Failed to send verification code. Please try again.");
-        return;
+        if (!res.ok) {
+          showErrorModal(data?.message || "Failed to send verification code. Please try again.");
+          return;
+        }
+
+        _pendingPayload = payload;
+        openOtpModal();
+
+      } catch (err) {
+        showErrorModal(err?.message || "Network error. Please check your connection and try again.");
+      } finally {
+        setBtnLoading(btn, false);
       }
-
-      _pendingPayload = payload;
-      openOtpModal();
-
-    } catch (err) {
-      showErrorModal(err?.message || "Network error. Please check your connection and try again.");
-    } finally {
-      setBtnLoading(btn, false);
-    }
+    });
   });
 
-  // ── Step 2: OTP verify → process transfer ──────────────────────────────────
-    }); // end submit listener
-  }); // end DOMContentLoaded
-
+  // ── Step 2: OTP verify → process transfer ────────────────────────────────
   async function handleOtpSubmit() {
     clearOtpResult();
 
@@ -1675,12 +1657,10 @@
         return;
       }
 
-      // ── Success ──
       const savedPayload = { ..._pendingPayload };
       _pendingPayload = null;
       closeOtpModal();
       clearForm();
-
       showReceiptModal(data?.data || {}, savedPayload);
 
       if (typeof window.loadRecentTransactions === "function") {
