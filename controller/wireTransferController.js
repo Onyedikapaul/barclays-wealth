@@ -320,31 +320,38 @@ function gen6() {
 // before the OTP modal ever opens.
 export const sendWireOtp = async (req, res) => {
   try {
-    const {
-      amount,
-      transactionPin,
-      fullname,
-      description,
-    } = req.body;
+    console.log("sendWireOtp body:", JSON.stringify(req.body));
+    const { amount, transactionPin, fullname, description } = req.body;
 
     // ── Basic field checks ──
-    const amt = Number(amount);
-    if (!amt || amt <= 0)
-      return res.status(400).json({ success: false, message: "Amount must be greater than 0." });
+    // parse amount — handle string, number, or empty
+    const amt = parseFloat(String(amount || "").trim());
+    if (!amt || isNaN(amt) || amt <= 0)
+      return res
+        .status(400)
+        .json({ success: false, message: "Amount must be greater than 0." });
 
     if (!fullname?.trim())
-      return res.status(400).json({ success: false, message: "Recipient full name is required." });
+      return res
+        .status(400)
+        .json({ success: false, message: "Recipient full name is required." });
 
     if (!description?.trim())
-      return res.status(400).json({ success: false, message: "Description is required." });
+      return res
+        .status(400)
+        .json({ success: false, message: "Description is required." });
 
     if (!transactionPin?.toString().trim())
-      return res.status(400).json({ success: false, message: "Transaction PIN is required." });
+      return res
+        .status(400)
+        .json({ success: false, message: "Transaction PIN is required." });
 
     // ── Load user ──
     const user = await UserModel.findById(req.user._id);
     if (!user)
-      return res.status(404).json({ success: false, message: "User not found." });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found." });
 
     // ── Account status check ──
     if (user.status === "suspended" || user.status === "closed") {
@@ -376,7 +383,9 @@ export const sendWireOtp = async (req, res) => {
       });
 
     if (String(transactionPin) !== String(user.transactionPin))
-      return res.status(400).json({ success: false, message: "Incorrect transaction PIN." });
+      return res
+        .status(400)
+        .json({ success: false, message: "Incorrect transaction PIN." });
 
     // ── Balance check ──
     const FEE_PERCENT = 2;
@@ -386,10 +395,9 @@ export const sendWireOtp = async (req, res) => {
     if (user.accountBalance < totalDebit) {
       return res.status(400).json({
         success: false,
-        message: `Insufficient balance. Available: $${Number(user.accountBalance || 0).toLocaleString(
-          "en-US",
-          { minimumFractionDigits: 2 }
-        )}`,
+        message: `Insufficient balance. Available: $${Number(
+          user.accountBalance || 0,
+        ).toLocaleString("en-US", { minimumFractionDigits: 2 })}`,
       });
     }
 
@@ -502,16 +510,22 @@ export const processWireTransfer = async (req, res) => {
       type,
     } = req.body;
 
-    const amt = Number(amount);
-    if (!amt || amt <= 0)
-      return res.status(400).json({ success: false, message: "Amount must be greater than 0." });
+    const amt = parseFloat(String(amount || "").trim());
+    if (!amt || isNaN(amt) || amt <= 0)
+      return res
+        .status(400)
+        .json({ success: false, message: "Amount must be greater than 0." });
 
     if (!otp?.toString().trim())
-      return res.status(400).json({ success: false, message: "Verification code is required." });
+      return res
+        .status(400)
+        .json({ success: false, message: "Verification code is required." });
 
     const user = await UserModel.findById(req.user._id);
     if (!user)
-      return res.status(404).json({ success: false, message: "User not found." });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found." });
 
     // ── Re-check account status (safety net) ──
     if (user.status === "suspended" || user.status === "closed") {
@@ -567,15 +581,17 @@ export const processWireTransfer = async (req, res) => {
         accountBalance: { $gte: totalDebit },
       },
       { $inc: { accountBalance: -totalDebit } },
-      { new: true }
+      { new: true },
     );
 
     if (!updatedUser) {
-      const currentUser = await UserModel.findById(req.user._id).select("accountBalance");
+      const currentUser = await UserModel.findById(req.user._id).select(
+        "accountBalance",
+      );
       return res.status(400).json({
         success: false,
         message: `Insufficient balance. Available: $${Number(
-          currentUser?.accountBalance || 0
+          currentUser?.accountBalance || 0,
         ).toLocaleString("en-US", { minimumFractionDigits: 2 })}`,
       });
     }
@@ -620,7 +636,7 @@ export const getWireTransferHistory = async (req, res) => {
       .find({ user: req.user._id })
       .sort({ createdAt: -1 })
       .select(
-        "reference createdAt amount currency description fee status fullname bankname country accountnumber swiftcode iban type"
+        "reference createdAt amount currency description fee status fullname bankname country accountnumber swiftcode iban type",
       );
 
     return res.json({
