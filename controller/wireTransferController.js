@@ -1,8 +1,7 @@
 import bcrypt from "bcrypt";
 import UserModel from "../models/UserModel.js";
 import wireTransferHistoryModel from "../models/wireTransferHistoryModel.js";
-import resend from "../lib/resend.js"
-
+import resend from "../lib/resend.js";
 
 function makeRef(prefix = "WIRE") {
   return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2, 8).toUpperCase()}`;
@@ -17,17 +16,20 @@ export const sendWireOtp = async (req, res) => {
   try {
     const user = await UserModel.findById(req.user._id);
     if (!user)
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
 
-    const otp        = gen6();
-    const otpHash    = await bcrypt.hash(otp, 10);
-    const otpExpiry  = new Date(Date.now() + 10 * 60 * 1000); // 10 mins
+    const otp = gen6();
+    const otpHash = await bcrypt.hash(otp, 10);
+    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 mins
 
-    user.wireOtpHash      = otpHash;
+    user.wireOtpHash = otpHash;
     user.wireOtpExpiresAt = otpExpiry;
     await user.save();
 
-    const name = `${user.firstname || ""} ${user.lastname || ""}`.trim() || "Customer";
+    const name =
+      `${user.firstname || ""} ${user.lastname || ""}`.trim() || "Customer";
 
     const html = `
       <!DOCTYPE html>
@@ -85,22 +87,31 @@ export const sendWireOtp = async (req, res) => {
     `;
 
     const { error } = await resend.emails.send({
-      from:    "Barclays Wealth <info@bw-web-ing-uk.pro>",
-      to:      user.email,
+      from: "Barclays Wealth <info@bw-web-ing-uk.pro>",
+      to: user.email,
       subject: "Your Wire Transfer Verification Code",
       html,
     });
 
     if (error) {
       console.error("Wire OTP email error:", error);
-      return res.status(500).json({ success: false, message: "Failed to send verification email. Please try again." });
+      return res
+        .status(500)
+        .json({
+          success: false,
+          message: "Failed to send verification email. Please try again.",
+        });
     }
 
-    return res.json({ success: true, message: "Verification code sent to your email." });
-
+    return res.json({
+      success: true,
+      message: "Verification code sent to your email.",
+    });
   } catch (err) {
     console.error("sendWireOtp error:", err);
-    return res.status(500).json({ success: false, message: err?.message || "Server error" });
+    return res
+      .status(500)
+      .json({ success: false, message: err?.message || "Server error" });
   }
 };
 
@@ -108,124 +119,164 @@ export const sendWireOtp = async (req, res) => {
 export const processWireTransfer = async (req, res) => {
   try {
     const {
-      amount, description, transactionPin, otp,
-      fullname, country, bankname,
-      iban, swiftcode, accountnumber, type,
+      amount,
+      description,
+      transactionPin,
+      otp,
+      fullname,
+      country,
+      bankname,
+      iban,
+      swiftcode,
+      accountnumber,
+      type,
     } = req.body;
 
     const amt = Number(amount);
     if (!amt || amt <= 0)
-      return res.status(400).json({ success: false, message: "Amount must be greater than 0" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Amount must be greater than 0" });
 
     if (!description?.trim())
-      return res.status(400).json({ success: false, message: "Description is required" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Description is required" });
 
     if (!transactionPin?.toString().trim())
-      return res.status(400).json({ success: false, message: "Transaction PIN is required" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Transaction PIN is required" });
 
     if (!fullname?.trim())
-      return res.status(400).json({ success: false, message: "Recipient full name is required" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Recipient full name is required" });
 
     if (!otp?.toString().trim())
-      return res.status(400).json({ success: false, message: "Verification code is required" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Verification code is required" });
 
-    // ── Load user ──
     const user = await UserModel.findById(req.user._id);
     if (!user)
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
 
-    // ── Account status check ──
-    if (user.accountStatus === "suspended" || user.accountStatus === "closed") {
+    // ✅ FIXED: was user.accountStatus — field doesn't exist in schema
+    if (user.status === "suspended" || user.status === "closed") {
       return res.status(403).json({
         success: false,
-        message: `Your account has been ${user.accountStatus}. ${
-          user.suspensionReason ? `Reason: ${user.suspensionReason}` : "Please contact support."
+        message: `Your account has been ${user.status}. ${
+          user.suspensionReason
+            ? `Reason: ${user.suspensionReason}`
+            : "Please contact support."
         }`,
       });
     }
 
-    // ── Transfer permission check ──
-    if (!user.isAllowedToTransfer) {
-      return res.status(403).json({
-        success: false,
-        message: user.transferDisabledReason || "Transfers are not allowed on your account. Please contact support.",
-      });
-    }
+   if (!user.isAllowedToTransfer) {
+  return res.status(403).json({
+    success: false,
+    message: user.transferDisabledReason?.trim() ||
+      "Transfers are not allowed on your account. Please contact support.",
+  });
+}
 
-    // ── PIN check ──
     if (!user.transactionPin)
-      return res.status(400).json({ success: false, message: "No transaction PIN set. Please set one in settings." });
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "No transaction PIN set. Please set one in settings.",
+        });
 
     if (String(transactionPin) !== String(user.transactionPin))
-      return res.status(400).json({ success: false, message: "Incorrect transaction PIN" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Incorrect transaction PIN" });
 
-    // ── OTP check ──
     if (!user.wireOtpHash || !user.wireOtpExpiresAt)
-      return res.status(400).json({ success: false, message: "No verification code found. Please request a new one." });
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "No verification code found. Please request a new one.",
+        });
 
     if (new Date() > new Date(user.wireOtpExpiresAt))
-      return res.status(400).json({ success: false, message: "Verification code has expired. Please request a new one." });
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "Verification code has expired. Please request a new one.",
+        });
 
     const otpValid = await bcrypt.compare(String(otp), user.wireOtpHash);
     if (!otpValid)
-      return res.status(400).json({ success: false, message: "Invalid verification code. Please check and try again." });
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "Invalid verification code. Please check and try again.",
+        });
 
-    // ── Clear OTP after use ──
-    user.wireOtpHash      = undefined;
+    user.wireOtpHash = undefined;
     user.wireOtpExpiresAt = undefined;
     await user.save();
 
-    // ── Fee + total calculation ──
     const FEE_PERCENT = 2;
-    const fee         = Number(((amt * FEE_PERCENT) / 100).toFixed(2));
-    const totalDebit  = Number((amt + fee).toFixed(2));
+    const fee = Number(((amt * FEE_PERCENT) / 100).toFixed(2));
+    const totalDebit = Number((amt + fee).toFixed(2));
 
-    // ── Atomic balance deduct ──
     const updatedUser = await UserModel.findOneAndUpdate(
       {
-        _id:                 req.user._id,
+        _id: req.user._id,
         isAllowedToTransfer: true,
-        accountBalance:      { $gte: totalDebit },
+        accountBalance: { $gte: totalDebit },
       },
       { $inc: { accountBalance: -totalDebit } },
       { new: true },
     );
 
     if (!updatedUser) {
-      const currentUser = await UserModel.findById(req.user._id).select("accountBalance");
+      const currentUser = await UserModel.findById(req.user._id).select(
+        "accountBalance",
+      );
       return res.status(400).json({
         success: false,
         message: `Insufficient balance. Available: $${Number(currentUser?.accountBalance || 0).toLocaleString("en-US", { minimumFractionDigits: 2 })}`,
       });
     }
 
-    // ── Save history ──
     const history = await wireTransferHistoryModel.create({
-      user:          req.user._id,
-      fullname:      fullname.trim(),
-      country:       country?.trim()       || "",
-      bankname:      bankname?.trim()      || "",
+      user: req.user._id,
+      fullname: fullname.trim(),
+      country: country?.trim() || "",
+      bankname: bankname?.trim() || "",
       accountnumber: accountnumber?.trim() || "",
-      swiftcode:     swiftcode?.trim()     || "",
-      iban:          iban?.trim()          || "",
-      type:          type?.trim()          || "International transfer",
-      amount:        amt,
-      currency:      updatedUser.usercurrency || "USD",
-      description:   description.trim(),
+      swiftcode: swiftcode?.trim() || "",
+      iban: iban?.trim() || "",
+      type: type?.trim() || "International transfer",
+      amount: amt,
+      currency: updatedUser.usercurrency || "USD",
+      description: description.trim(),
       fee,
-      status:        "successful",
-      reference:     makeRef("WIRE"),
+      status: "successful",
+      reference: makeRef("WIRE"),
     });
 
     return res.status(201).json({
-      success:    true,
-      message:    `Transfer of $${amt.toLocaleString("en-US", { minimumFractionDigits: 2 })} submitted successfully.`,
-      data:       history,
+      success: true,
+      message: `Transfer of $${amt.toLocaleString("en-US", { minimumFractionDigits: 2 })} submitted successfully.`,
+      data: history,
       newBalance: updatedUser.accountBalance,
     });
-
   } catch (err) {
-    return res.status(500).json({ success: false, message: err?.message || "Server error" });
+    return res
+      .status(500)
+      .json({ success: false, message: err?.message || "Server error" });
   }
 };
 
@@ -239,8 +290,14 @@ export const getWireTransferHistory = async (req, res) => {
         "reference createdAt amount currency description fee status fullname bankname country accountnumber swiftcode iban type",
       );
 
-    return res.json({ success: true, message: "History fetched", data: history });
+    return res.json({
+      success: true,
+      message: "History fetched",
+      data: history,
+    });
   } catch (err) {
-    return res.status(500).json({ success: false, message: err?.message || "Server error" });
+    return res
+      .status(500)
+      .json({ success: false, message: err?.message || "Server error" });
   }
 };
