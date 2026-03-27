@@ -148,7 +148,7 @@ export const processWireTransfer = async (req, res) => {
     if (!user.isAllowedToTransfer) {
       return res.status(403).json({
         success: false,
-        message: user.blockedTransferReason || "Transfers are not allowed on your account. Please contact support.",
+        message: user.transferDisabledReason || "Transfers are not allowed on your account. Please contact support.",
       });
     }
 
