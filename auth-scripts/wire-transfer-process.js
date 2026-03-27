@@ -1095,16 +1095,16 @@
 
 // })();
 
-
 (function () {
-
   function showWireResult(type, msg) {
     const mount = document.querySelector(".wireResult");
     if (!mount) return;
     const cls =
-      type === "success" ? "alert alert-success"
-      : type === "warning" ? "alert alert-warning"
-      : "alert alert-danger";
+      type === "success"
+        ? "alert alert-success"
+        : type === "warning"
+          ? "alert alert-warning"
+          : "alert alert-danger";
     mount.innerHTML = `<div class="${cls}">${msg}</div>`;
   }
 
@@ -1128,11 +1128,21 @@
   }
 
   function clearForm() {
-    ["fullname","countryId","type","iban","swiftcode","accountnumber","bankname","amount","transactionPin","description"]
-      .forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) el.value = "";
-      });
+    [
+      "fullname",
+      "countryId",
+      "type",
+      "iban",
+      "swiftcode",
+      "accountnumber",
+      "bankname",
+      "amount",
+      "transactionPin",
+      "description",
+    ].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.value = "";
+    });
   }
 
   // ── Error Modal ──────────────────────────────────────────────────────────
@@ -1205,10 +1215,18 @@
         overlay.style.display = "none";
         document.body.style.overflow = "";
       };
-      document.getElementById("errCloseBtn").addEventListener("click", closeErr);
-      document.getElementById("errDismissBtn").addEventListener("click", closeErr);
-      overlay.addEventListener("click", (e) => { if (e.target === overlay) closeErr(); });
-      document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeErr(); });
+      document
+        .getElementById("errCloseBtn")
+        .addEventListener("click", closeErr);
+      document
+        .getElementById("errDismissBtn")
+        .addEventListener("click", closeErr);
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) closeErr();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeErr();
+      });
     }
     document.getElementById("errMessage").textContent = msg;
     const overlay = document.getElementById("wireErrorOverlay");
@@ -1344,42 +1362,60 @@
       inp.addEventListener("paste", (e) => {
         e.preventDefault();
         const pasted = (e.clipboardData || window.clipboardData)
-          .getData("text").replace(/\D/g, "").slice(0, 6);
+          .getData("text")
+          .replace(/\D/g, "")
+          .slice(0, 6);
         pasted.split("").forEach((ch, j) => {
-          if (inputs[j]) { inputs[j].value = ch; inputs[j].classList.add("filled"); }
+          if (inputs[j]) {
+            inputs[j].value = ch;
+            inputs[j].classList.add("filled");
+          }
         });
         if (inputs[Math.min(pasted.length, inputs.length) - 1])
           inputs[Math.min(pasted.length, inputs.length) - 1].focus();
       });
     });
 
-    document.getElementById("otpCloseBtn").addEventListener("click", closeOtpModal);
-    overlay.addEventListener("click", (e) => { if (e.target === overlay) closeOtpModal(); });
-    document.getElementById("otpSubmitBtn").addEventListener("click", handleOtpSubmit);
-
-    document.getElementById("otpResendBtn").addEventListener("click", async () => {
-      clearOtpResult();
-      clearOtpInputs();
-      try {
-        const res = await fetch("/api/wire-transfer/send-otp", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify(_pendingPayload || {}),
-        });
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok) return showOtpResult("danger", data?.message || "Failed to resend code.");
-        showOtpResult("success", "A new code has been sent to your email.");
-        startResendTimer();
-      } catch {
-        showOtpResult("danger", "Network error. Try again.");
-      }
+    document
+      .getElementById("otpCloseBtn")
+      .addEventListener("click", closeOtpModal);
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) closeOtpModal();
     });
+    document
+      .getElementById("otpSubmitBtn")
+      .addEventListener("click", handleOtpSubmit);
+
+    document
+      .getElementById("otpResendBtn")
+      .addEventListener("click", async () => {
+        clearOtpResult();
+        clearOtpInputs();
+        try {
+          const res = await fetch("/api/wire-transfer/send-otp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify(_pendingPayload || {}),
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok)
+            return showOtpResult(
+              "danger",
+              data?.message || "Failed to resend code.",
+            );
+          showOtpResult("success", "A new code has been sent to your email.");
+          startResendTimer();
+        } catch {
+          showOtpResult("danger", "Network error. Try again.");
+        }
+      });
   }
 
   function getOtpValue() {
     return Array.from(document.querySelectorAll(".otp-inputs input"))
-      .map((i) => i.value).join("");
+      .map((i) => i.value)
+      .join("");
   }
 
   function clearOtpInputs() {
@@ -1394,9 +1430,11 @@
     const el = document.getElementById("otpResult");
     if (!el) return;
     const cls =
-      type === "success" ? "alert alert-success"
-      : type === "warning" ? "alert alert-warning"
-      : "alert alert-danger";
+      type === "success"
+        ? "alert alert-success"
+        : type === "warning"
+          ? "alert alert-warning"
+          : "alert alert-danger";
     el.innerHTML = `<div class="${cls}">${msg}</div>`;
   }
 
@@ -1424,7 +1462,7 @@
 
   let resendTimer = null;
   function startResendTimer(seconds = 60) {
-    const btn   = document.getElementById("otpResendBtn");
+    const btn = document.getElementById("otpResendBtn");
     const timer = document.getElementById("otpResendTimer");
     if (!btn || !timer) return;
     btn.disabled = true;
@@ -1444,39 +1482,43 @@
   // ── Receipt modal ────────────────────────────────────────────────────────
   function showReceiptModal(tx, payload) {
     const currency = tx.currency || "USD";
-    const amount   = Number(tx.amount || payload.amount);
-    const fee      = Number(tx.fee || 0);
-    const total    = Number((amount + fee).toFixed(2));
-    const status   = String(tx.status || "pending").toLowerCase();
+    const amount = Number(tx.amount || payload.amount);
+    const fee = Number(tx.fee || 0);
+    const total = Number((amount + fee).toFixed(2));
+    const status = String(tx.status || "pending").toLowerCase();
     const statusColors = {
       successful: { bg: "#ecfdf3", color: "#027a48" },
-      pending:    { bg: "#fffaeb", color: "#b54708" },
+      pending: { bg: "#fffaeb", color: "#b54708" },
       processing: { bg: "#dbeafe", color: "#1e3a8a" },
     };
     const sc = statusColors[status] || { bg: "#fef3f2", color: "#b42318" };
     const kv = [
-      ["Reference",     tx.reference                          || ""],
-      ["Amount",        `${currency} ${money(amount)}`],
-      ["Fee (2%)",      `${currency} ${money(fee)}`],
+      ["Reference", tx.reference || ""],
+      ["Amount", `${currency} ${money(amount)}`],
+      ["Fee (2%)", `${currency} ${money(fee)}`],
       ["Total Debited", `${currency} ${money(total)}`],
-      ["Recipient",     payload.fullname      || tx.fullname      || ""],
-      ["Bank",          payload.bankname      || tx.bankname      || ""],
-      ["Account No.",   payload.accountnumber || tx.accountnumber || ""],
-      ["IBAN",          payload.iban          || tx.iban          || ""],
-      ["Swift Code",    payload.swiftcode     || tx.swiftcode     || ""],
-      ["Country",       payload.country       || tx.country       || ""],
-      ["Description",   payload.description   || tx.description   || ""],
-      ["Date",          new Date().toLocaleString()],
-      ["Status",        "Pending Review"],
+      ["Recipient", payload.fullname || tx.fullname || ""],
+      ["Bank", payload.bankname || tx.bankname || ""],
+      ["Account No.", payload.accountnumber || tx.accountnumber || ""],
+      ["IBAN", payload.iban || tx.iban || ""],
+      ["Swift Code", payload.swiftcode || tx.swiftcode || ""],
+      ["Country", payload.country || tx.country || ""],
+      ["Description", payload.description || tx.description || ""],
+      ["Date", new Date().toLocaleString()],
+      ["Status", "Pending Review"],
     ].filter(([, v]) => v);
 
-    const kvHtml = kv.map(([k, v]) => `
+    const kvHtml = kv
+      .map(
+        ([k, v]) => `
       <div style="display:flex;justify-content:space-between;align-items:flex-start;
         padding:8px 0;border-bottom:1px solid #f1f5f9;gap:12px;">
         <span style="font-size:12px;color:#94a3b8;font-weight:500;white-space:nowrap;">${k}</span>
         <span style="font-size:13px;color:#1e293b;font-weight:600;text-align:right;word-break:break-all;">${v}</span>
       </div>
-    `).join("");
+    `,
+      )
+      .join("");
 
     if (!document.getElementById("wireSuccessOverlay")) {
       const overlay = document.createElement("div");
@@ -1518,9 +1560,15 @@
         overlay.style.display = "none";
         document.body.style.overflow = "";
       };
-      document.getElementById("wireSuccessCloseBtn").addEventListener("click", closeModal);
-      overlay.addEventListener("click", (e) => { if (e.target === overlay) closeModal(); });
-      document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+      document
+        .getElementById("wireSuccessCloseBtn")
+        .addEventListener("click", closeModal);
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) closeModal();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
     }
 
     document.getElementById("wireSuccessBody").innerHTML = `
@@ -1549,10 +1597,12 @@
         </button>
       </div>
     `;
-    document.getElementById("wireSuccessCloseBtn2")?.addEventListener("click", () => {
-      document.getElementById("wireSuccessOverlay").style.display = "none";
-      document.body.style.overflow = "";
-    });
+    document
+      .getElementById("wireSuccessCloseBtn2")
+      ?.addEventListener("click", () => {
+        document.getElementById("wireSuccessOverlay").style.display = "none";
+        document.body.style.overflow = "";
+      });
     const overlay = document.getElementById("wireSuccessOverlay");
     overlay.style.display = "flex";
     document.body.style.overflow = "hidden";
@@ -1561,47 +1611,35 @@
   // ── Pending payload store ────────────────────────────────────────────────
   let _pendingPayload = null;
 
-  // ── Step 1: Form submit → validate → send full payload to send-otp ───────
-  document.getElementById("wireTransferForm")?.addEventListener("submit", async function (e) {
+  // ── Step 1: Form submit → collect fields → hit send-otp ─────────────────
+  document
+    .getElementById("wireTransferForm")
+    ?.addEventListener("submit", async function (e) {
       e.preventDefault();
       clearWireResult();
 
       const btn = this.querySelector(".wireBtn");
 
       const payload = {
-        amount:         Number(document.getElementById("amount")?.value || 0),
-        transactionPin: document.getElementById("transactionPin")?.value?.trim() || "",
-        description:    document.getElementById("description")?.value?.trim()    || "",
-        country:        document.getElementById("countryId")?.value?.trim()      || "",
-        fullname:       document.getElementById("fullname")?.value?.trim()       || "",
-        type:           document.getElementById("type")?.value?.trim()           || "International transfer",
-        iban:           document.getElementById("iban")?.value?.trim()           || "",
-        swiftcode:      document.getElementById("swiftcode")?.value?.trim()      || "",
-        accountnumber:  document.getElementById("accountnumber")?.value?.trim()  || "",
-        bankname:       document.getElementById("bankname")?.value?.trim()       || "",
+        amount: document.getElementById("amount")?.value || "",
+        transactionPin: document.getElementById("transactionPin")?.value || "",
+        description: document.getElementById("description")?.value || "",
+        country: document.getElementById("countryId")?.value || "",
+        fullname: document.getElementById("fullname")?.value || "",
+        type:
+          document.getElementById("type")?.value || "International transfer",
+        iban: document.getElementById("iban")?.value || "",
+        swiftcode: document.getElementById("swiftcode")?.value || "",
+        accountnumber: document.getElementById("accountnumber")?.value || "",
+        bankname: document.getElementById("bankname")?.value || "",
       };
 
-      if (!payload.fullname)
-        return showWireResult("warning", "Please enter the recipient full name.");
-      if (!payload.country)
-        return showWireResult("warning", "Please select a country.");
-      if (!payload.iban)
-        return showWireResult("warning", "Please enter the IBAN / ABA Routing Number.");
-      if (!payload.swiftcode)
-        return showWireResult("warning", "Please enter the Swift / BIC Code.");
-      if (!payload.accountnumber)
-        return showWireResult("warning", "Please enter the account number.");
-      if (!payload.bankname)
-        return showWireResult("warning", "Please enter the bank name.");
-      if (!payload.amount || payload.amount <= 0)
-        return showWireResult("warning", "Please enter a transfer amount.");
-      if (!payload.transactionPin)
-        return showWireResult("warning", "Please enter your transaction PIN.");
-      if (!payload.description)
-        return showWireResult("warning", "Please enter a description / reason.");
-
       try {
-        setBtnLoading(btn, true, '<i class="fa-solid fa-spinner fa-spin"></i> Sending code...');
+        setBtnLoading(
+          btn,
+          true,
+          '<i class="fa-solid fa-spinner fa-spin"></i> Sending code...',
+        );
 
         const res = await fetch("/api/wire-transfer/send-otp", {
           method: "POST",
@@ -1612,19 +1650,25 @@
         const data = await res.json().catch(() => ({}));
 
         if (!res.ok) {
-          showErrorModal(data?.message || "Failed to send verification code. Please try again.");
+          showErrorModal(
+            data?.message ||
+              "Failed to send verification code. Please try again.",
+          );
           return;
         }
 
-        _pendingPayload = payload;
+        // convert amount to number only after backend approves
+        _pendingPayload = { ...payload, amount: Number(payload.amount) };
         openOtpModal();
-
       } catch (err) {
-        showErrorModal(err?.message || "Network error. Please check your connection and try again.");
+        showErrorModal(
+          err?.message ||
+            "Network error. Please check your connection and try again.",
+        );
       } finally {
         setBtnLoading(btn, false);
       }
-  });
+    });
 
   // ── Step 2: OTP verify → process transfer ────────────────────────────────
   async function handleOtpSubmit() {
@@ -1638,7 +1682,11 @@
       return showOtpResult("danger", "Session expired. Please start over.");
 
     const btn = document.getElementById("otpSubmitBtn");
-    setBtnLoading(btn, true, '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...');
+    setBtnLoading(
+      btn,
+      true,
+      '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...',
+    );
 
     try {
       const res = await fetch("/api/wire-transfer/process", {
@@ -1664,7 +1712,6 @@
       if (typeof window.loadRecentTransactions === "function") {
         window.loadRecentTransactions();
       }
-
     } catch (err) {
       showOtpResult("danger", err?.message || "Network error. Try again.");
       clearOtpInputs();
@@ -1672,5 +1719,4 @@
       setBtnLoading(btn, false);
     }
   }
-
 })();
