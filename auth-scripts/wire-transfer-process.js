@@ -1576,7 +1576,8 @@
   let _pendingPayload = null;
 
   // ── Step 1: Form submit → validate → send full payload to send-otp ─────────
-  document.getElementById("wireTransferForm")?.addEventListener("submit", async function (e) {
+  window.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("wireTransferForm")?.addEventListener("submit", async function (e) {
     e.preventDefault();
     clearWireResult();
 
@@ -1643,6 +1644,9 @@
   });
 
   // ── Step 2: OTP verify → process transfer ──────────────────────────────────
+    }); // end submit listener
+  }); // end DOMContentLoaded
+
   async function handleOtpSubmit() {
     clearOtpResult();
 
